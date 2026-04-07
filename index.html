@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ternis EDV | Wir sind Web.</title>
+    <style>
+        :root {
+            --bg-color: #0d0d0d;
+            --text-main: #f2f2f2;
+            --text-muted: #888888;
+            --accent: #00ffa3; /* Tech-focused neon green accent */
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Subtle animated background grid */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: linear-gradient(var(--card-border) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--card-border) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.3;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        main {
+            width: 100%;
+            max-width: 800px;
+            padding: 4rem 2rem;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4rem;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 1.5rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .github-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .github-link:hover {
+            color: var(--text-main);
+        }
+
+        .hero {
+            margin-bottom: 4rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 500px;
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 1.5rem;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--text-muted);
+        }
+
+        .card ul {
+            list-style: none;
+        }
+
+        .card li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .card li::before {
+            content: "→";
+            color: var(--accent);
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .card li span.badge {
+            font-size: 0.7rem;
+            background: var(--card-border);
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            margin-left: auto;
+            color: var(--text-muted);
+        }
+
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--card-border);
+            color: var(--text-muted);
+        }
+
+        .contact-box {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border: 1px dashed var(--text-muted);
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-box:hover {
+            border-color: var(--accent);
+            color: var(--text-main);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <header>
+            <div class="logo">Ternis<span>EDV</span></div>
+            <a href="https://github.com/ternis-edv" target="_blank" class="github-link">
+                <svg height="20" viewBox="0 0 16 16" width="20" fill="currentColor">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+                GitHub
+            </a>
+        </header>
+
+        <section class="hero">
+            <h1>Wir sind Web.</h1>
+            <p>Minimalistischer Code, maximale Performance. Wir entwickeln, betreiben und skalieren digitale Infrastrukturen.</p>
+        </section>
+
+        <div class="grid">
+            <div class="card">
+                <div class="section-title">Wir Betreiben</div>
+                <ul>
+                    <li>xpsystems.eu / .de</li>
+                    <li>MTEX.dev</li>
+                    <li>api-sandbox.de</li>
+                    <li>httpclient.de</li>
+                    <li>dnbx.de</li>
+                    <li style="color: var(--text-muted); font-size: 0.9rem;">... und mehr.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="section-title">Unsere Kunden</div>
+                <ul>
+                    <li>Louixch.de</li>
+                    <li>Wonnegauer-Designwerkstatt.de <span class="badge">In Arbeit</span></li>
+                    <li>Kaufenhof.de</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p style="margin-bottom: 1rem; font-size: 0.9rem;">Lass uns schreiben.</p>
+            <div class="contact-box" onclick="alert('Bitte abtippen oder kopieren!')">
+                <span id="mail-display">kontakt [at] ternis-edv.de</span>
+            </div>
+            <p style="font-size: 0.75rem; margin-top: 2rem;">&copy; <script>document.write(new Date().getFullYear())</script> Ternis EDV</p>
+        </footer>
+    </main>
+
+</body>
+</html>
