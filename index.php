@@ -97,18 +97,17 @@ $projects = [
     <title>ternis-edv — Webentwicklung & Digitale Lösungen</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="theme-dark">
-    <div class="grain" aria-hidden="true"></div>
 
-    <!-- Cookie Consent Banner -->
-    <div id="cookie-consent" class="cookie-consent" role="dialog" aria-labelledby="cc-title">
-        <div class="cc-inner">
-            <h4 id="cc-title">Cookies & Privatsphäre</h4>
-            <p>Wir nutzen Cookies, um das Nutzererlebnis zu verbessern. Wählen Sie Ihre Einstellungen.</p>
-            <div class="cc-actions">
+    <!-- Cookie Consent -->
+    <div id="cookie-consent" class="cookie-banner" role="dialog" aria-labelledby="cc-title">
+        <div class="cb-content">
+            <h4 id="cc-title" class="cb-title">Cookies & Privatsphäre</h4>
+            <p class="cb-text">Wir nutzen Cookies, um die Nutzererfahrung zu verbessern. Wählen Sie, welche Cookies Sie zulassen möchten.</p>
+            <div class="cb-actions">
                 <button id="cc-accept-all" class="btn-p">Alle akzeptieren</button>
                 <button id="cc-settings-trigger" class="btn-g">Einstellungen</button>
             </div>
@@ -122,7 +121,6 @@ $projects = [
         <div id="modal-impressum" class="modal-content">
             <button class="modal-close" aria-label="Schließen">&times;</button>
             <div class="modal-body">
-                <div class="label">// Rechtliches</div>
                 <h2>Impressum</h2>
                 <div class="modal-section">
                     <h3>Angaben gemäß § 5 TMG</h3>
@@ -130,7 +128,7 @@ $projects = [
                 </div>
                 <div class="modal-section">
                     <h3>Kontakt</h3>
-                    <p>E-Mail: info@ternis-edv.de<br>Web: ternis-edv.de</p>
+                    <p>E-Mail: info@ternis-edv.de</p>
                 </div>
                 <div class="modal-section">
                     <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
@@ -143,15 +141,11 @@ $projects = [
         <div id="modal-datenschutz" class="modal-content">
             <button class="modal-close" aria-label="Schließen">&times;</button>
             <div class="modal-body">
-                <div class="label">// Privatsphäre</div>
                 <h2>Datenschutz</h2>
                 <div class="modal-section">
-                    <h3>Allgemeine Hinweise</h3>
-                    <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen.</p>
-                </div>
-                <div class="modal-section">
-                    <h3>Datenerfassung auf dieser Website</h3>
-                    <p>Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten können Sie dem Impressum dieser Website entnehmen.</p>
+                    <p>Wir verarbeiten Ihre Daten ausschließlich auf Grundlage der gesetzlichen Bestimmungen (DSGVO, TMG).</p>
+                    <h3>Datenspeicherung</h3>
+                    <p>Es werden keine personenbezogenen Daten ohne Ihre Einwilligung gespeichert.</p>
                 </div>
             </div>
         </div>
@@ -160,24 +154,23 @@ $projects = [
         <div id="modal-cookie-settings" class="modal-content">
             <button class="modal-close" aria-label="Schließen">&times;</button>
             <div class="modal-body">
-                <div class="label">// Konfiguration</div>
                 <h2>Cookie-Einstellungen</h2>
                 <div class="setting-item">
                     <div class="setting-info">
-                        <h4>Notwendige Cookies</h4>
-                        <p>Diese Cookies sind für den technischen Betrieb der Seite erforderlich und können nicht deaktiviert werden.</p>
+                        <h4>Notwendig</h4>
+                        <p>Erforderlich für den Betrieb der Seite.</p>
                     </div>
                     <label class="switch-ui"><input type="checkbox" checked disabled><span></span></label>
                 </div>
                 <div class="setting-item">
                     <div class="setting-info">
-                        <h4>Analyse-Cookies</h4>
-                        <p>Helfen uns zu verstehen, wie Besucher mit der Seite interagieren.</p>
+                        <h4>Analyse</h4>
+                        <p>Helfen uns die Website zu verbessern.</p>
                     </div>
-                    <label class="switch-ui"><input type="checkbox" id="pref-analytics"><span></span></label>
+                    <label class="switch-ui"><input type="checkbox" id="cc-analytics"><span></span></label>
                 </div>
                 <div class="modal-actions">
-                    <button id="save-cookie-settings" class="btn-p">Einstellungen speichern</button>
+                    <button id="cc-save-settings" class="btn-p">Speichern</button>
                 </div>
             </div>
         </div>
@@ -186,44 +179,43 @@ $projects = [
         <div id="modal-a11y" class="modal-content">
             <button class="modal-close" aria-label="Schließen">&times;</button>
             <div class="modal-body">
-                <div class="label">// Barrierefreiheit</div>
-                <h2>Einstellungen</h2>
+                <h2>Barrierefreiheit</h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Kontrast erhöhen</h4>
+                        <p>Optimiert die Farben für bessere Lesbarkeit.</p>
+                    </div>
+                    <label class="switch-ui"><input type="checkbox" id="a11y-contrast"><span></span></label>
+                </div>
                 <div class="setting-item">
                     <div class="setting-info">
                         <h4>Größere Schrift</h4>
-                        <p>Erhöht die Lesbarkeit durch Skalierung der Texte.</p>
+                        <p>Skaliert alle Texte der Website.</p>
                     </div>
-                    <label class="switch-ui"><input type="checkbox" id="pref-large-font"><span></span></label>
-                </div>
-                <div class="setting-item">
-                    <div class="setting-info">
-                        <h4>Hoher Kontrast</h4>
-                        <p>Optimiert die Farbdarstellung für besseren Kontrast.</p>
-                    </div>
-                    <label class="switch-ui"><input type="checkbox" id="pref-high-contrast"><span></span></label>
+                    <label class="switch-ui"><input type="checkbox" id="a11y-font"><span></span></label>
                 </div>
                 <div class="modal-actions">
-                    <button id="save-a11y-settings" class="btn-p">Anwenden</button>
+                    <button id="a11y-save" class="btn-p">Anwenden</button>
                 </div>
             </div>
         </div>
-
     </div>
 
     <nav id="nav">
-        <a href="#" class="nav-logo" aria-label="Home">ternis<span>-edv</span></a>
+        <a href="#" class="nav-logo">ternis<span>-edv</span></a>
         <ul class="nav-links">
             <li><a href="#services">Leistungen</a></li>
             <li><a href="#work">Projekte</a></li>
             <li><a href="#about">Über uns</a></li>
+            <li><a href="#contact">Kontakt</a></li>
         </ul>
         <div class="nav-actions">
-            <button id="theme-toggle" aria-label="Theme umschalten">
-                <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-                <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <button id="theme-toggle" aria-label="Toggle Theme">
+                <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
-            <button id="open-a11y" class="a11y-btn" aria-label="Barrierefreiheit">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+            <button id="a11y-trigger" aria-label="Accessibility Settings" style="background:none;border:none;cursor:pointer;color:inherit;display:flex;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
             </button>
             <a href="#contact" class="nav-cta">Projekt starten →</a>
         </div>
@@ -231,11 +223,11 @@ $projects = [
 
     <main>
         <section class="hero" id="home">
-            <div class="hero-grid" aria-hidden="true"></div>
+            <div class="hero-grid"></div>
             <div class="hero-content">
                 <div class="hero-eyebrow">// Webentwicklung aus Deutschland</div>
                 <h1 class="hero-title">Wir bauen<br>das <em>Web</em><br>von morgen.</h1>
-                <p class="hero-sub">Präzise entwickelte Websites und Applikationen für digitale Vorreiter.</p>
+                <p class="hero-sub">Websites, Landingpages und Web-Applikationen — präzise entwickelt, leichtgewichtig und ohne Bloat.</p>
                 <div class="hero-actions">
                     <a href="#work" class="btn-p">Projekte ansehen →</a>
                     <a href="#contact" class="btn-g">Kontakt aufnehmen</a>
@@ -247,34 +239,30 @@ $projects = [
         <section class="services" id="services">
             <div class="services-hd">
                 <div class="label reveal">// 01 Leistungen</div>
-                <h2 class="sec-title reveal">Unsere Kompetenzen</h2>
+                <h2 class="sec-title reveal">Was wir<br>für dich bauen</h2>
             </div>
             <div class="svc-grid">
                 <div class="svc-card reveal">
-                    <div class="svc-icon" aria-hidden="true">01</div>
-                    <div class="svc-name">High-End Websites</div>
-                    <p class="svc-desc">Performance-optimierte Erlebnisse, die Ihre Marke im Web perfekt repräsentieren.</p>
+                    <div class="svc-name">Websites</div>
+                    <p class="svc-desc">Schnelle, zugängliche und suchmaschinenoptimierte Webseiten — maßgeschneidert, ohne unnötigen Overhead.</p>
                 </div>
                 <div class="svc-card reveal">
-                    <div class="svc-icon" aria-hidden="true">02</div>
-                    <div class="svc-name">Individuelle Apps</div>
-                    <p class="svc-desc">Maßgeschneiderte Web-Applikationen, die Ihre Geschäftsprozesse digitalisieren.</p>
+                    <div class="svc-name">Landingpages</div>
+                    <p class="svc-desc">Conversion-optimierte Seiten, die Besucher in Kunden verwandeln. Klar, fokussiert und messbar.</p>
                 </div>
                 <div class="svc-card reveal">
-                    <div class="svc-icon" aria-hidden="true">03</div>
-                    <div class="svc-name">E-Commerce</div>
-                    <p class="svc-desc">Verkaufsstarke Online-Shops mit nahtloser Integration und Fokus auf Conversion.</p>
+                    <div class="svc-name">Web-Applikationen</div>
+                    <p class="svc-desc">Komplexe Webanwendungen, APIs und Backends — von der Konzeption bis zum Deployment.</p>
                 </div>
                 <div class="svc-card reveal">
-                    <div class="svc-icon" aria-hidden="true">04</div>
-                    <div class="svc-name">Wartung & Hosting</div>
-                    <p class="svc-desc">Sorgenfreier Betrieb Ihrer digitalen Produkte auf moderner Infrastruktur.</p>
+                    <div class="svc-name">Hosting & Pflege</div>
+                    <p class="svc-desc">Zuverlässiges Hosting, kontinuierliche Wartung und persönliche Betreuung deiner digitalen Präsenz.</p>
                 </div>
             </div>
         </section>
 
         <section class="work" id="work">
-            <div class="work-progress" id="work-progress" aria-hidden="true"></div>
+            <div class="work-progress" id="work-progress"></div>
             <div class="work-hd">
                 <div class="label reveal">// 02 Projekte</div>
                 <h2 class="sec-title reveal">Ausgewählte Arbeiten</h2>
@@ -294,7 +282,7 @@ $projects = [
                                         <span class="tag"><?= $tech ?></span>
                                     <?php endforeach; ?>
                                 </div>
-                                <a href="<?= $project['link'] ?>" target="_blank" class="p-link">Projekt öffnen →</a>
+                                <a href="<?= $project['link'] ?>" target="_blank" class="p-link">Live ansehen ↗</a>
                             </div>
                         </div>
                         <div class="project-visual">
@@ -308,7 +296,8 @@ $projects = [
                                         <img src="<?= $project['images']['dark'] ?>" alt="<?= $project['name'] ?>" class="work-img dark-only" loading="lazy">
                                         <img src="<?= $project['images']['light'] ?>" alt="<?= $project['name'] ?>" class="work-img light-only" loading="lazy">
                                     <?php else: ?>
-                                        <img src="<?= isset($project['images']['dark']) ? $project['images']['dark'] : $project['images']['light'] ?>" alt="<?= $project['name'] ?>" class="work-img" loading="lazy">
+                                        <?php $img = isset($project['images']['dark']) ? $project['images']['dark'] : $project['images']['light']; ?>
+                                        <img src="<?= $img ?>" alt="<?= $project['name'] ?>" class="work-img" loading="lazy">
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -321,18 +310,18 @@ $projects = [
         <section class="about" id="about">
             <div class="about-content">
                 <div class="label reveal">// 03 Über uns</div>
-                <h2 class="sec-title reveal">Digitaler Fokus.</h2>
-                <p class="about-p reveal">Wir sind ein agiles Team spezialisiert auf die Entwicklung von digitalen Produkten, die durch exzellente Technik und durchdachtes Design überzeugen.</p>
+                <h2 class="sec-title reveal">Digital handgemacht.</h2>
+                <p class="about-p reveal">ternis-edv ist ein kleines Studio aus Deutschland, das digitale Produkte entwickelt, die funktionieren. Keine aufgeblähten Frameworks, kein generischer Code — jedes Projekt entsteht mit Bedacht und handwerklichem Anspruch.</p>
                 <div class="stats">
                     <div class="stat"><div class="stat-n">60+</div><div class="stat-l">Projekte</div></div>
-                    <div class="stat"><div class="stat-n">7+</div><div class="stat-l">Jahre Expertise</div></div>
+                    <div class="stat"><div class="stat-n">7+</div><div class="stat-l">Jahre</div></div>
                 </div>
             </div>
         </section>
 
         <section class="contact" id="contact">
             <div class="label reveal">// 04 Kontakt</div>
-            <h2 class="contact-title reveal">Lass uns etwas<br><em>Großartiges</em> bauen.</h2>
+            <h2 class="contact-title reveal">Dein Projekt<br>wartet auf <em>uns.</em></h2>
             <a href="mailto:info@ternis-edv.de" class="contact-mail">info@ternis-edv.de</a>
         </section>
     </main>
@@ -340,13 +329,13 @@ $projects = [
     <footer>
         <div class="f-logo">ternis<span>-edv</span></div>
         <div class="f-links">
-            <a href="#" id="open-impressum">Impressum</a>
-            <a href="#" id="open-datenschutz">Datenschutz</a>
+            <a href="#" id="trigger-impressum">Impressum</a>
+            <a href="#" id="trigger-datenschutz">Datenschutz</a>
         </div>
         <span class="f-copy">© <?= date('Y') ?> ternis-edv.de</span>
     </footer>
 
-    <button id="back-to-top" class="back-to-top" aria-label="Nach oben scrollen">
+    <button id="back-to-top" class="back-to-top" aria-label="Back to Top">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
     </button>
 
