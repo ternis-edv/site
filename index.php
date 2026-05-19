@@ -44,10 +44,46 @@ $projects = [
     <title>ternis-edv — Webentwicklung & Digitale Lösungen</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="theme-dark"> <!-- Default to dark as per one.html -->
+<body class="theme-dark">
+    <div class="grain"></div>
+
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" class="cookie-banner">
+        <div class="cb-content">
+            <h4 class="cb-title">Cookies & Privatsphäre</h4>
+            <p class="cb-text">Wir nutzen Cookies, um die Nutzererfahrung zu verbessern. Wählen Sie, welche Cookies Sie zulassen möchten.</p>
+            <div class="cb-actions">
+                <button id="cb-accept-all" class="btn-p">Alle akzeptieren</button>
+                <button id="cb-settings" class="btn-g">Einstellungen</button>
+                <button id="cb-reject-all" class="btn-g">Nur Notwendige</button>
+            </div>
+        </div>
+        <div id="cb-modal" class="cb-modal">
+            <div class="cbm-content">
+                <h5>Cookie-Einstellungen</h5>
+                <div class="cbm-option">
+                    <label>
+                        <input type="checkbox" checked disabled>
+                        <span>Notwendig (immer aktiv)</span>
+                    </label>
+                    <p>Erforderlich für die Grundfunktionen der Website.</p>
+                </div>
+                <div class="cbm-option">
+                    <label>
+                        <input type="checkbox" id="cookie-analytics">
+                        <span>Analyse</span>
+                    </label>
+                    <p>Hilft uns zu verstehen, wie Besucher mit der Website interagieren.</p>
+                </div>
+                <div class="cb-actions">
+                    <button id="cb-save-settings" class="btn-p">Speichern</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <nav id="nav">
         <a href="#" class="nav-logo">ternis<span>-edv</span></a>
@@ -186,6 +222,10 @@ $projects = [
         <div class="f-logo">ternis<span>-edv</span></div>
         <span class="f-copy">© <?= date('Y') ?> ternis-edv.de</span>
     </footer>
+
+    <button id="back-to-top" class="back-to-top" aria-label="Back to Top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
 
     <script src="assets/js/main.js"></script>
 </body>

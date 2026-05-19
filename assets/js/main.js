@@ -7,14 +7,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'theme-light' : 'theme-dark');
     body.className = savedTheme;
 
-    themeToggle.addEventListener('click', () => {
-        if (body.classList.contains('theme-dark')) {
-            body.classList.replace('theme-dark', 'theme-light');
-            localStorage.setItem('theme', 'theme-light');
-        } else {
-            body.classList.replace('theme-light', 'theme-dark');
-            localStorage.setItem('theme', 'theme-dark');
-        }
+    // Cookie Banner
+    const banner = document.getElementById('cookie-banner');
+    const cbAcceptAll = document.getElementById('cb-accept-all');
+    const cbRejectAll = document.getElementById('cb-reject-all');
+    const cbSettings = document.getElementById('cb-settings');
+    const cbModal = document.getElementById('cb-modal');
+    const cbSaveSettings = document.getElementById('cb-save-settings');
+
+    if (!localStorage.getItem('cookies-accepted')) {
+        setTimeout(() => banner.classList.add('show'), 1000);
+    }
+
+    cbAcceptAll.addEventListener('click', () => {
+        localStorage.setItem('cookies-accepted', 'all');
+        banner.classList.remove('show');
+    });
+
+    cbRejectAll.addEventListener('click', () => {
+        localStorage.setItem('cookies-accepted', 'necessary');
+        banner.classList.remove('show');
+    });
+
+    cbSettings.addEventListener('click', () => {
+        cbModal.classList.add('show');
+    });
+
+    cbSaveSettings.addEventListener('click', () => {
+        const analytics = document.getElementById('cookie-analytics').checked;
+        localStorage.setItem('cookies-accepted', analytics ? 'custom-analytics' : 'necessary');
+        cbModal.classList.remove('show');
+        banner.classList.remove('show');
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === cbModal) cbModal.classList.remove('show');
     });
 
     // Nav Scroll Effect
@@ -27,16 +54,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, { passive: true });
 
+    // Back to Top
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backToTop.classList.add('show');
+        } else {
+            backToTop.classList.remove('show');
+        }
+    }, { passive: true });
+
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
     // Reveal Animations
-    const revealElements = document.querySelectorAll('.reveal');
+    const revealElements = document.querySelectorAll('.reveal, .project-section');
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // revealObserver.unobserve(entry.target); // Optional: keep animating or once?
             }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.15 });
 
     revealElements.forEach(el => revealObserver.observe(el));
 
