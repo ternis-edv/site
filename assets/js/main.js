@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
     
     const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'theme-light' : 'theme-dark');
-    body.className = savedTheme;
+    body.classList.add(savedTheme);
 
     themeToggle.addEventListener('click', () => {
         if (body.classList.contains('theme-dark')) {
@@ -16,35 +16,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Cookie Consent Rework
+    // Cookie Consent Logic
     const consent = document.getElementById('cookie-consent');
-    const ccAccept = document.getElementById('cc-accept');
     const ccAcceptAll = document.getElementById('cc-accept-all');
+    const ccSettingsTrigger = document.getElementById('cc-settings-trigger');
 
     if (!localStorage.getItem('cc-choice')) {
         setTimeout(() => consent.classList.add('show'), 1500);
     }
-
-    ccAccept.addEventListener('click', () => {
-        const analytics = document.getElementById('cc-analytics').checked;
-        localStorage.setItem('cc-choice', analytics ? 'custom' : 'essential');
-        consent.classList.remove('show');
-    });
 
     ccAcceptAll.addEventListener('click', () => {
         localStorage.setItem('cc-choice', 'all');
         consent.classList.remove('show');
     });
 
-    // Legal Modals
+    // Modals Handling
     const overlay = document.getElementById('modal-overlay');
-    const modalImpressum = document.getElementById('modal-impressum');
-    const modalDatenschutz = document.getElementById('modal-datenschutz');
-    const openImpressum = document.getElementById('open-impressum');
-    const openDatenschutz = document.getElementById('open-datenschutz');
+    const modals = document.querySelectorAll('.modal-content');
     const closeButtons = document.querySelectorAll('.modal-close');
 
-    const openModal = (modal) => {
+    const openModal = (id) => {
+        const modal = document.getElementById(id);
         overlay.classList.add('show');
         modal.classList.add('active');
         body.style.overflow = 'hidden';
@@ -52,15 +44,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const closeModal = () => {
         overlay.classList.remove('show');
-        modalImpressum.classList.remove('active');
-        modalDatenschutz.classList.remove('active');
+        modals.forEach(m => m.classList.remove('active'));
         body.style.overflow = '';
     };
 
-    openImpressum.addEventListener('click', (e) => { e.preventDefault(); openModal(modalImpressum); });
-    openDatenschutz.addEventListener('click', (e) => { e.preventDefault(); openModal(modalDatenschutz); });
+    ccSettingsTrigger.addEventListener('click', () => {
+        consent.classList.remove('show');
+        openModal('modal-cookie-settings');
+    });
+
+    document.getElementById('open-impressum').addEventListener('click', (e) => { e.preventDefault(); openModal('modal-impressum'); });
+    document.getElementById('open-datenschutz').addEventListener('click', (e) => { e.preventDefault(); openModal('modal-datenschutz'); });
+    document.getElementById('open-a11y').addEventListener('click', () => openModal('modal-a11y'));
+
     closeButtons.forEach(btn => btn.addEventListener('click', closeModal));
     overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+
+    // Cookie Settings Save
+    document.getElementById('save-cookie-settings').addEventListener('click', () => {
+        const analytics = document.getElementById('pref-analytics').checked;
+        localStorage.setItem('cc-choice', analytics ? 'custom-analytics' : 'essential');
+        closeModal();
+    });
+
+    // Accessibility Settings
+    const prefLargeFont = document.getElementById('pref-large-font');
+    const prefHighContrast = document.getElementById('pref-high-contrast');
+
+    // Load Prefs
+    if (localStorage.getItem('a11y-large-font') === 'true') {
+        prefLargeFont.checked = true;
+        document.documentElement.style.setProperty('--font-scale', '1.2');
+    }
+    if (localStorage.getItem('a11y-high-contrast') === 'true') {
+        prefHighContrast.checked = true;
+        body.classList.add('high-contrast');
+    }
+
+    document.getElementById('save-a11y-settings').addEventListener('click', () => {
+        const largeFont = prefLargeFont.checked;
+        const highContrast = prefHighContrast.checked;
+
+        localStorage.setItem('a11y-large-font', largeFont);
+        localStorage.setItem('a11y-high-contrast', highContrast);
+
+        document.documentElement.style.setProperty('--font-scale', largeFont ? '1.2' : '1');
+        body.classList.toggle('high-contrast', highContrast);
+        
+        closeModal();
+    });
 
     // Nav Scroll Effect
     const nav = document.getElementById('nav');
@@ -82,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectSections = document.querySelectorAll('.project-section');
     
     const updateWork = () => {
+        if (!workSection) return;
         const rect = workSection.getBoundingClientRect();
         const totalHeight = workSection.offsetHeight;
         const scrolled = Math.max(0, -rect.top);
@@ -97,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        if (activeColor) {
+        if (activeColor && !body.classList.contains('high-contrast')) {
             const r = parseInt(activeColor.slice(1, 3), 16);
             const g = parseInt(activeColor.slice(3, 5), 16);
             const b = parseInt(activeColor.slice(5, 7), 16);
