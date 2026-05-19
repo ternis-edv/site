@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const onScroll = () => {
         const scrollY = window.scrollY;
-        
+
         // Nav & BackToTop
         nav.classList.toggle('scrolled', scrollY > 50);
         backToTop.classList.toggle('show', scrollY > 800);
@@ -137,27 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const progress = Math.min(100, (scrolled / (totalHeight - window.innerHeight)) * 100);
 
             if (workProgress) workProgress.style.height = `${progress}%`;
-
-            let activeColor = '';
-            projectSections.forEach(section => {
-                const sRect = section.getBoundingClientRect();
-                // Check if section is crossing the middle of the viewport
-                if (sRect.top < window.innerHeight / 2 && sRect.bottom > window.innerHeight / 2) {
-                    activeColor = section.getAttribute('data-color');
-                }
-            });
-
-            if (activeColor && !body.classList.contains('high-contrast')) {
-                const r = parseInt(activeColor.slice(1, 3), 16);
-                const g = parseInt(activeColor.slice(3, 5), 16);
-                const b = parseInt(activeColor.slice(5, 7), 16);
-                const opacity = body.classList.contains('theme-light') ? 0.05 : 0.03;
-                body.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${opacity})`;
-                document.documentElement.style.setProperty('--accent', activeColor);
-            } else {
-                body.style.backgroundColor = '';
-                document.documentElement.style.removeProperty('--accent');
-            }
         }
         ticking = false;
     };
