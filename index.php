@@ -3,36 +3,77 @@ $projects = [
     [
         'id' => 'dnbx',
         'name' => 'dnbx.de',
-        'type' => 'Web App / SaaS',
-        'desc' => 'A modern platform for digital assets and collaboration. Focus on performance and seamless user experience.',
-        'stack' => ['React', 'Node.js', 'PostgreSQL'],
+        'type' => 'Digital Asset SaaS',
+        'desc' => 'A high-performance platform for managing digital assets. Features advanced filtering, real-time collaboration, and a highly optimized delivery network.',
+        'stack' => ['React', 'Node.js', 'PostgreSQL', 'Redis'],
         'images' => [
             'light' => 'assets/img/work/dnbx.de__LIGHT.png',
             'dark' => 'assets/img/work/dnbx.de__DARK.png'
         ],
-        'link' => 'https://dnbx.de'
+        'link' => 'https://dnbx.de',
+        'color' => '#C1FF47'
     ],
     [
         'id' => 'dogwaterdev',
         'name' => 'dogwaterdev.de',
-        'type' => 'Portfolio / Community',
-        'desc' => 'A community-driven platform for developers to share and collaborate on open-source projects.',
-        'stack' => ['Next.js', 'Tailwind', 'Supabase'],
+        'type' => 'Dev Community',
+        'desc' => 'A community hub for open-source enthusiasts. Focused on project discovery and collaborative coding environments.',
+        'stack' => ['Next.js', 'Tailwind', 'Supabase', 'TypeScript'],
         'images' => [
+            'light' => 'assets/img/work/dogwaterdev.de__LIGHT.png',
             'dark' => 'assets/img/work/dogwaterdev.de__DARK.png'
         ],
-        'link' => 'https://dogwaterdev.de'
+        'link' => 'https://dogwaterdev.de',
+        'color' => '#3b82f6'
+    ],
+    [
+        'id' => 'getmyname',
+        'name' => 'getmy.name',
+        'type' => 'Domain Branding Tool',
+        'desc' => 'Intelligent domain name generator and branding assistant. Helps startups find the perfect digital identity through AI-driven suggestions.',
+        'stack' => ['Vue 3', 'Python/FastAPI', 'OpenAI'],
+        'images' => [
+            'light' => 'assets/img/work/getmy.name_lander_LIGHT.png',
+            'dark' => 'assets/img/work/getmy.name_lander_DARK.png'
+        ],
+        'link' => 'https://getmy.name',
+        'color' => '#8b5cf6'
+    ],
+    [
+        'id' => 'louixch',
+        'name' => 'louixch.de',
+        'type' => 'Creative Portfolio',
+        'desc' => 'Portfolio for a creative director, emphasizing minimal aesthetics and fluid motion design principles.',
+        'stack' => ['GSAP', 'HTML5 Canvas', 'PHP'],
+        'images' => [
+            'dark' => 'assets/img/work/louixch.de__DARK.png'
+        ],
+        'link' => '#',
+        'color' => '#f43f5e'
+    ],
+    [
+        'id' => 'api-sandbox',
+        'name' => 'API Sandbox',
+        'type' => 'Developer Tool',
+        'desc' => 'A lightweight testing environment for RESTful APIs. Simplifies the debugging process for backend engineers.',
+        'stack' => ['SvelteKit', 'Go', 'Docker'],
+        'images' => [
+            'light' => 'assets/img/work/api-sandbox.de_lander__LIGHT.png'
+        ],
+        'link' => '#',
+        'color' => '#10b981'
     ],
     [
         'id' => 'wonnegauer',
-        'name' => 'Wonnegauer Designwerkstatt',
-        'type' => 'Landingpage',
-        'desc' => 'High-conversion landingpage for a local design workshop, showcasing their unique craft and services.',
-        'stack' => ['HTML', 'CSS', 'Vanilla JS'],
+        'name' => 'Wonnegauer Design',
+        'type' => 'Agency Landingpage',
+        'desc' => 'Premium showcase for a traditional design workshop. High-resolution imagery and elegant typography drive the user experience.',
+        'stack' => ['Vanilla JS', 'SASS', 'Intersection Observer'],
         'images' => [
             'light' => 'assets/img/work/wonnegauer-designwerkstatt.de_LANDER__LIGHT.png'
         ],
-        'link' => '#'
+        'link' => '#',
+        'color' => '#d97706'
     ]
 ];
 ?>
@@ -108,7 +149,7 @@ $projects = [
             <div class="hero-content">
                 <div class="hero-eyebrow">// Webentwicklung aus Deutschland</div>
                 <h1 class="hero-title">Wir bauen<br>das <em>Web</em><br>von morgen.</h1>
-                <p class="hero-sub">Websites, Landingpages und Web-Applikationen — präzise entwickelt, leichtgewichtig und ohne Bloat.</p>
+                <p class="hero-sub">Präzise entwickelte Websites und Applikationen für digitale Vorreiter.</p>
                 <div class="hero-actions">
                     <a href="#work" class="btn-p">Projekte ansehen →</a>
                     <a href="#contact" class="btn-g">Kontakt aufnehmen</a>
@@ -120,24 +161,28 @@ $projects = [
         <section class="services" id="services">
             <div class="services-hd">
                 <div class="label reveal">// 01 Leistungen</div>
-                <h2 class="sec-title reveal">Was wir<br>für dich bauen</h2>
+                <h2 class="sec-title reveal">Unsere Kompetenzen</h2>
             </div>
             <div class="svc-grid">
                 <div class="svc-card reveal">
-                    <div class="svc-name">Websites</div>
-                    <p class="svc-desc">Schnelle, zugängliche und suchmaschinenoptimierte Webseiten — maßgeschneidert, ohne unnötigen Overhead.</p>
+                    <div class="svc-icon">01</div>
+                    <div class="svc-name">High-End Websites</div>
+                    <p class="svc-desc">Performance-optimierte Erlebnisse, die Ihre Marke im Web perfekt repräsentieren.</p>
                 </div>
                 <div class="svc-card reveal">
-                    <div class="svc-name">Landingpages</div>
-                    <p class="svc-desc">Conversion-optimierte Seiten, die Besucher in Kunden verwandeln. Klar, fokussiert und messbar.</p>
+                    <div class="svc-icon">02</div>
+                    <div class="svc-name">Individuelle Apps</div>
+                    <p class="svc-desc">Maßgeschneiderte Web-Applikationen, die Ihre Geschäftsprozesse digitalisieren.</p>
                 </div>
                 <div class="svc-card reveal">
-                    <div class="svc-name">Web-Applikationen</div>
-                    <p class="svc-desc">Komplexe Webanwendungen, APIs und Backends — von der Konzeption bis zum Deployment.</p>
+                    <div class="svc-icon">03</div>
+                    <div class="svc-name">E-Commerce</div>
+                    <p class="svc-desc">Verkaufsstarke Online-Shops mit nahtloser Integration und Fokus auf Conversion.</p>
                 </div>
                 <div class="svc-card reveal">
-                    <div class="svc-name">Hosting & Pflege</div>
-                    <p class="svc-desc">Zuverlässiges Hosting, kontinuierliche Wartung und persönliche Betreuung deiner digitalen Präsenz.</p>
+                    <div class="svc-icon">04</div>
+                    <div class="svc-name">Wartung & Hosting</div>
+                    <p class="svc-desc">Sorgenfreier Betrieb Ihrer digitalen Produkte auf moderner Infrastruktur.</p>
                 </div>
             </div>
         </section>
@@ -150,7 +195,10 @@ $projects = [
             </div>
 
             <?php foreach ($projects as $index => $project): ?>
-                <div class="project-section" id="project-<?= $project['id'] ?>" data-index="<?= $index ?>">
+                <div class="project-section" 
+                     id="project-<?= $project['id'] ?>" 
+                     data-index="<?= $index ?>" 
+                     data-color="<?= $project['color'] ?>">
                     <div class="project-container">
                         <div class="project-info">
                             <div class="pi-content">
@@ -163,7 +211,10 @@ $projects = [
                                         <span class="tag"><?= $tech ?></span>
                                     <?php endforeach; ?>
                                 </div>
-                                <a href="<?= $project['link'] ?>" target="_blank" class="p-link">Live ansehen ↗</a>
+                                <a href="<?= $project['link'] ?>" target="_blank" class="p-link">
+                                    Projekt öffnen
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                                </a>
                             </div>
                         </div>
                         <div class="project-visual">
@@ -202,24 +253,28 @@ $projects = [
         <section class="about" id="about">
             <div class="about-content">
                 <div class="label reveal">// 03 Über uns</div>
-                <h2 class="sec-title reveal">Digital handgemacht.</h2>
-                <p class="about-p reveal">ternis-edv ist ein kleines Studio aus Deutschland, das digitale Produkte entwickelt, die funktionieren. Keine aufgeblähten Frameworks, kein generischer Code — jedes Projekt entsteht mit Bedacht und handwerklichem Anspruch.</p>
+                <h2 class="sec-title reveal">Digitaler Fokus.</h2>
+                <p class="about-p reveal">Wir sind ein agiles Team spezialisiert auf die Entwicklung von digitalen Produkten, die durch exzellente Technik und durchdachtes Design überzeugen.</p>
                 <div class="stats">
-                    <div class="stat"><div class="stat-n">40+</div><div class="stat-l">Projekte</div></div>
-                    <div class="stat"><div class="stat-n">5+</div><div class="stat-l">Jahre</div></div>
+                    <div class="stat"><div class="stat-n">60+</div><div class="stat-l">Projekte</div></div>
+                    <div class="stat"><div class="stat-n">7+</div><div class="stat-l">Jahre Expertise</div></div>
                 </div>
             </div>
         </section>
 
         <section class="contact" id="contact">
             <div class="label reveal">// 04 Kontakt</div>
-            <h2 class="contact-title reveal">Dein Projekt<br>wartet auf <em>uns.</em></h2>
+            <h2 class="contact-title reveal">Lass uns etwas<br><em>Großartiges</em> bauen.</h2>
             <a href="mailto:info@ternis-edv.de" class="contact-mail">info@ternis-edv.de</a>
         </section>
     </main>
 
     <footer>
         <div class="f-logo">ternis<span>-edv</span></div>
+        <div class="f-links">
+            <a href="#">Impressum</a>
+            <a href="#">Datenschutz</a>
+        </div>
         <span class="f-copy">© <?= date('Y') ?> ternis-edv.de</span>
     </footer>
 

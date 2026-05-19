@@ -7,6 +7,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'theme-light' : 'theme-dark');
     body.className = savedTheme;
 
+    themeToggle.addEventListener('click', () => {
+        if (body.classList.contains('theme-dark')) {
+            body.classList.replace('theme-dark', 'theme-light');
+            localStorage.setItem('theme', 'theme-light');
+        } else {
+            body.classList.replace('theme-light', 'theme-dark');
+            localStorage.setItem('theme', 'theme-dark');
+        }
+    });
+
     // Cookie Banner
     const banner = document.getElementById('cookie-banner');
     const cbAcceptAll = document.getElementById('cb-accept-all');
@@ -68,6 +78,48 @@ document.addEventListener('DOMContentLoaded', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
+    // Work Section - Color Shift & Progress
+    const workSection = document.getElementById('work');
+    const workProgress = document.getElementById('work-progress');
+    const projectSections = document.querySelectorAll('.project-section');
+    
+    const updateWork = () => {
+        const rect = workSection.getBoundingClientRect();
+        const totalHeight = workSection.offsetHeight;
+        const scrolled = Math.max(0, -rect.top);
+        const progress = Math.min(100, (scrolled / (totalHeight - window.innerHeight)) * 100);
+        
+        if (workProgress) workProgress.style.height = `${progress}%`;
+
+        // Color shifting
+        let activeColor = '';
+        projectSections.forEach(section => {
+            const sRect = section.getBoundingClientRect();
+            if (sRect.top < window.innerHeight / 2 && sRect.bottom > window.innerHeight / 2) {
+                activeColor = section.getAttribute('data-color');
+            }
+        });
+
+        if (activeColor) {
+            // Apply a subtle version of the color to the body background
+            // We use an RGBA version to keep it readable and premium
+            const r = parseInt(activeColor.slice(1, 3), 16);
+            const g = parseInt(activeColor.slice(3, 5), 16);
+            const b = parseInt(activeColor.slice(5, 7), 16);
+            
+            const opacity = body.classList.contains('theme-light') ? 0.08 : 0.05;
+            body.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${opacity})`;
+            
+            // Also update the accent color variable dynamically for a "pulsing" feel
+            document.documentElement.style.setProperty('--accent', activeColor);
+        } else {
+            body.style.backgroundColor = '';
+            document.documentElement.style.removeProperty('--accent');
+        }
+    };
+
+    window.addEventListener('scroll', () => requestAnimationFrame(updateWork), { passive: true });
+
     // Reveal Animations
     const revealElements = document.querySelectorAll('.reveal, .project-section');
     const revealObserver = new IntersectionObserver((entries) => {
@@ -79,18 +131,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.15 });
 
     revealElements.forEach(el => revealObserver.observe(el));
-
-    // Work Progress
-    const workSection = document.getElementById('work');
-    const workProgress = document.getElementById('work-progress');
-    
-    window.addEventListener('scroll', () => {
-        const rect = workSection.getBoundingClientRect();
-        const totalHeight = workSection.offsetHeight;
-        const scrolled = Math.max(0, -rect.top);
-        const progress = Math.min(100, (scrolled / totalHeight) * 100);
-        workProgress.style.height = `${progress}%`;
-    }, { passive: true });
-
-    // The CSS sticky handles the core request of sticky info with scrolling tall images.
 });
