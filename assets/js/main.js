@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
     
-    // Load saved theme
     const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'theme-light' : 'theme-dark');
     body.className = savedTheme;
 
@@ -17,66 +16,65 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Cookie Banner
-    const banner = document.getElementById('cookie-banner');
-    const cbAcceptAll = document.getElementById('cb-accept-all');
-    const cbRejectAll = document.getElementById('cb-reject-all');
-    const cbSettings = document.getElementById('cb-settings');
-    const cbModal = document.getElementById('cb-modal');
-    const cbSaveSettings = document.getElementById('cb-save-settings');
+    // Cookie Consent Rework
+    const consent = document.getElementById('cookie-consent');
+    const ccAccept = document.getElementById('cc-accept');
+    const ccAcceptAll = document.getElementById('cc-accept-all');
 
-    if (!localStorage.getItem('cookies-accepted')) {
-        setTimeout(() => banner.classList.add('show'), 1000);
+    if (!localStorage.getItem('cc-choice')) {
+        setTimeout(() => consent.classList.add('show'), 1500);
     }
 
-    cbAcceptAll.addEventListener('click', () => {
-        localStorage.setItem('cookies-accepted', 'all');
-        banner.classList.remove('show');
+    ccAccept.addEventListener('click', () => {
+        const analytics = document.getElementById('cc-analytics').checked;
+        localStorage.setItem('cc-choice', analytics ? 'custom' : 'essential');
+        consent.classList.remove('show');
     });
 
-    cbRejectAll.addEventListener('click', () => {
-        localStorage.setItem('cookies-accepted', 'necessary');
-        banner.classList.remove('show');
+    ccAcceptAll.addEventListener('click', () => {
+        localStorage.setItem('cc-choice', 'all');
+        consent.classList.remove('show');
     });
 
-    cbSettings.addEventListener('click', () => {
-        cbModal.classList.add('show');
-    });
+    // Legal Modals
+    const overlay = document.getElementById('modal-overlay');
+    const modalImpressum = document.getElementById('modal-impressum');
+    const modalDatenschutz = document.getElementById('modal-datenschutz');
+    const openImpressum = document.getElementById('open-impressum');
+    const openDatenschutz = document.getElementById('open-datenschutz');
+    const closeButtons = document.querySelectorAll('.modal-close');
 
-    cbSaveSettings.addEventListener('click', () => {
-        const analytics = document.getElementById('cookie-analytics').checked;
-        localStorage.setItem('cookies-accepted', analytics ? 'custom-analytics' : 'necessary');
-        cbModal.classList.remove('show');
-        banner.classList.remove('show');
-    });
+    const openModal = (modal) => {
+        overlay.classList.add('show');
+        modal.classList.add('active');
+        body.style.overflow = 'hidden';
+    };
 
-    window.addEventListener('click', (e) => {
-        if (e.target === cbModal) cbModal.classList.remove('show');
-    });
+    const closeModal = () => {
+        overlay.classList.remove('show');
+        modalImpressum.classList.remove('active');
+        modalDatenschutz.classList.remove('active');
+        body.style.overflow = '';
+    };
+
+    openImpressum.addEventListener('click', (e) => { e.preventDefault(); openModal(modalImpressum); });
+    openDatenschutz.addEventListener('click', (e) => { e.preventDefault(); openModal(modalDatenschutz); });
+    closeButtons.forEach(btn => btn.addEventListener('click', closeModal));
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
 
     // Nav Scroll Effect
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            nav.classList.add('scrolled');
-        } else {
-            nav.classList.remove('scrolled');
-        }
+        nav.classList.toggle('scrolled', window.scrollY > 50);
     }, { passive: true });
 
     // Back to Top
     const backToTop = document.getElementById('back-to-top');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 500) {
-            backToTop.classList.add('show');
-        } else {
-            backToTop.classList.remove('show');
-        }
+        backToTop.classList.toggle('show', window.scrollY > 800);
     }, { passive: true });
 
-    backToTop.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
     // Work Section - Color Shift & Progress
     const workSection = document.getElementById('work');
@@ -91,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (workProgress) workProgress.style.height = `${progress}%`;
 
-        // Color shifting
         let activeColor = '';
         projectSections.forEach(section => {
             const sRect = section.getBoundingClientRect();
@@ -101,16 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (activeColor) {
-            // Apply a subtle version of the color to the body background
-            // We use an RGBA version to keep it readable and premium
             const r = parseInt(activeColor.slice(1, 3), 16);
             const g = parseInt(activeColor.slice(3, 5), 16);
             const b = parseInt(activeColor.slice(5, 7), 16);
-            
-            const opacity = body.classList.contains('theme-light') ? 0.08 : 0.05;
+            const opacity = body.classList.contains('theme-light') ? 0.05 : 0.03;
             body.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${opacity})`;
-            
-            // Also update the accent color variable dynamically for a "pulsing" feel
             document.documentElement.style.setProperty('--accent', activeColor);
         } else {
             body.style.backgroundColor = '';
@@ -128,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 entry.target.classList.add('visible');
             }
         });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.1 });
 
     revealElements.forEach(el => revealObserver.observe(el));
 });
