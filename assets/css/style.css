@@ -511,6 +511,43 @@ body.modal-open {
   font-family: var(--fm);
   font-size: 0.8rem;
   color: var(--muted);
+  gap: 2rem;
+}
+
+.footer-legal-v2 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-legal-v2 a {
+  color: var(--muted-b);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-legal-v2 a:hover {
+  color: var(--accent);
+}
+
+.footer-list a.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: default;
+}
+
+.footer-list a.disabled small {
+  font-size: 0.7rem;
+  opacity: 0.8;
+  margin-left: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .footer-bottom-v2 {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
 }
 
 /* ── Error Page V2 ── */

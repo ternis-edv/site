@@ -24,8 +24,9 @@
                 <div class="footer-col">
                     <div class="col-label">Social</div>
                     <ul class="footer-list">
-                        <li><a href="#" target="_blank">LinkedIn</a></li>
-                        <li><a href="#" target="_blank">Instagram</a></li>
+                        <li><a href="https://codeberg.org/ternis" target="_blank" rel="noopener">Codeberg</a></li>
+                        <li><a href="https://github.com/ternis-edv" target="_blank" rel="noopener">GitHub</a></li>
+                        <li><a href="#" class="disabled">Instagram <small>(SOON)</small></a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -39,7 +40,8 @@
 
             <div class="footer-bottom-v2">
                 <div class="footer-legal-v2">
-                    &copy; <?= date('Y') ?> ternis-edv. Handcrafted in Germany.
+                    <div class="copy-line">&copy; <?= date('Y') ?> <a href="https://ternis-edv.de">ternis-edv.de</a> &amp; <a href="https://xpsystems.eu">xpsystems.eu</a></div>
+                    <div class="credit-line">Webdesign &amp; Webentwicklung by <a href="https://ternis-edv.de">ternis-edv.de</a>, <a href="https://xpsystems.eu">xpsystems.eu</a> &amp; <a href="https://fabianternis.de">fabianternis.de</a></div>
                 </div>
                 <div class="footer-time-v2" id="current-time">
                     <!-- Loaded via JS -->
