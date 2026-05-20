@@ -195,6 +195,27 @@ $projects = [
                     </div>
                     <label class="switch-ui"><input type="checkbox" id="a11y-font"><span></span></label>
                 </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Bewegung reduzieren</h4>
+                        <p>Deaktiviert Animationen und Übergänge.</p>
+                    </div>
+                    <label class="switch-ui"><input type="checkbox" id="a11y-reduce-motion"><span></span></label>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Links hervorheben</h4>
+                        <p>Macht alle anklickbaren Links deutlicher sichtbar.</p>
+                    </div>
+                    <label class="switch-ui"><input type="checkbox" id="a11y-highlight-links"><span></span></label>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Schriftart für Legastheniker</h4>
+                        <p>Verwendet eine besser lesbare Schriftart.</p>
+                    </div>
+                    <label class="switch-ui"><input type="checkbox" id="a11y-dyslexia-font"><span></span></label>
+                </div>
                 <div class="modal-actions">
                     <button id="a11y-save" class="btn-p">Anwenden</button>
                 </div>
@@ -226,7 +247,13 @@ $projects = [
                 <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
             <button id="a11y-trigger" aria-label="Accessibility Settings" style="background:none;border:none;cursor:pointer;color:inherit;display:flex;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="5" r="2.5"></circle>
+                    <path d="M12 7.5v8.5"></path>
+                    <path d="M5 10.5h14"></path>
+                    <path d="M12 16l-4 6"></path>
+                    <path d="M12 16l4 6"></path>
+                </svg>
             </button>
             <a href="#contact" class="nav-cta">Projekt starten →</a>
         </div>
