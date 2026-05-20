@@ -101,6 +101,7 @@ $projects = [
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="theme-dark">
+    <div id="page-progress"></div>
 
     <!-- Cookie Consent -->
     <div id="cookie-consent" class="cookie-banner" role="dialog" aria-labelledby="cc-title">
@@ -272,7 +273,6 @@ $projects = [
         </section>
 
         <section class="work" id="work">
-            <div class="work-progress" id="work-progress"></div>
             <div class="work-hd">
                 <div class="label reveal">// 02 Projekte</div>
                 <h2 class="sec-title reveal">Ausgewählte Arbeiten</h2>
