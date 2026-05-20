@@ -270,15 +270,15 @@ $projects = [
         <section class="hero" id="home">
             <div class="hero-grid"></div>
             <div class="hero-content">
-                <div class="hero-eyebrow">// Webentwicklung aus Deutschland</div>
-                <h1 class="hero-title">Wir bauen<br>das <em>Web</em><br>von morgen.</h1>
-                <p class="hero-sub">Websites, Landingpages und Web-Applikationen — präzise entwickelt, leichtgewichtig und ohne Bloat.</p>
-                <div class="hero-actions">
-                    <a href="#work" class="btn-p">Projekte ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1em; height: 1em;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                <div class="hero-eyebrow reveal">// Webentwicklung aus Deutschland</div>
+                <h1 class="hero-title reveal">Wir bauen<br>das <em>Web</em><br>von morgen.</h1>
+                <p class="hero-sub reveal">Websites, Landingpages und Web-Applikationen — präzise entwickelt, leichtgewichtig und ohne Bloat.</p>
+                <div class="hero-actions reveal">
+                    <a href="#work" class="btn-p">Projekte ansehen →</a>
                     <a href="#contact" class="btn-g">Kontakt aufnehmen</a>
                 </div>
             </div>
-            <div class="hero-hint">scroll down</div>
+            <div class="hero-hint reveal">scroll down</div>
         </section>
 
         <section class="services" id="services">
@@ -288,18 +288,22 @@ $projects = [
             </div>
             <div class="svc-grid">
                 <div class="svc-card reveal">
+                    <div class="svc-icon">01</div>
                     <div class="svc-name">Websites</div>
                     <p class="svc-desc">Schnelle, zugängliche und suchmaschinenoptimierte Webseiten — maßgeschneidert, ohne unnötigen Overhead.</p>
                 </div>
                 <div class="svc-card reveal">
+                    <div class="svc-icon">02</div>
                     <div class="svc-name">Landingpages</div>
                     <p class="svc-desc">Conversion-optimierte Seiten, die Besucher in Kunden verwandeln. Klar, fokussiert und messbar.</p>
                 </div>
                 <div class="svc-card reveal">
+                    <div class="svc-icon">03</div>
                     <div class="svc-name">Web-Applikationen</div>
                     <p class="svc-desc">Komplexe Webanwendungen, APIs und Backends — von der Konzeption bis zum Deployment.</p>
                 </div>
                 <div class="svc-card reveal">
+                    <div class="svc-icon">04</div>
                     <div class="svc-name">Hosting & Pflege</div>
                     <p class="svc-desc">Zuverlässiges Hosting, kontinuierliche Wartung und persönliche Betreuung deiner digitalen Präsenz.</p>
                 </div>
