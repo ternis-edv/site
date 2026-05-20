@@ -141,6 +141,90 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModal();
     });
 
+    // Progressive Image Loading
+    const progressiveImages = document.querySelectorAll('.progressive-img');
+    const preloadQueue = [];
+    
+    const loadHighRes = (container) => {
+        const darkSrc = container.getAttribute('data-dark');
+        const lightSrc = container.getAttribute('data-light');
+        const singleSrc = container.getAttribute('data-src');
+        
+        const loadImg = (src, className, isPreload = false) => {
+            if (!src) return;
+            const highRes = new Image();
+            highRes.src = `/img?src=${src}&w=1200&q=85`;
+            highRes.className = `work-img ${className} high-res ${isPreload ? 'preloaded' : ''}`;
+            highRes.onload = () => {
+                container.appendChild(highRes);
+                if (!isPreload) {
+                    setTimeout(() => highRes.classList.add('loaded'), 50);
+                    // After primary high-res is loaded, queue the alternate theme for background preloading
+                    if (darkSrc && lightSrc) {
+                        const altSrc = className === 'dark-only' ? lightSrc : darkSrc;
+                        const altClass = className === 'dark-only' ? 'light-only' : 'dark-only';
+                        preloadQueue.push({ container, src: altSrc, className: altClass });
+                        processPreloadQueue();
+                    }
+                }
+            };
+        };
+
+        if (singleSrc) {
+            loadImg(singleSrc, '');
+        } else {
+            const isDark = body.classList.contains('theme-dark');
+            loadImg(isDark ? darkSrc : lightSrc, isDark ? 'dark-only' : 'light-only');
+        }
+    };
+
+    let isPreloading = false;
+    const processPreloadQueue = () => {
+        if (isPreloading || preloadQueue.length === 0) return;
+        isPreloading = true;
+        
+        const item = preloadQueue.shift();
+        const highRes = new Image();
+        highRes.src = `/img?src=${item.src}&w=1200&q=85`;
+        highRes.className = `work-img ${item.className} high-res preloaded`;
+        highRes.onload = () => {
+            item.container.appendChild(highRes);
+            setTimeout(() => {
+                highRes.classList.add('loaded');
+                isPreloading = false;
+                processPreloadQueue();
+            }, 200); // Small delay between preloads to keep main thread happy
+        };
+    };
+
+    const imgObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                loadHighRes(entry.target);
+                imgObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    progressiveImages.forEach(img => imgObserver.observe(img));
+
+    // Magnetic Footer Elements
+    const magneticElements = document.querySelectorAll('.f-logo, .f-links a, .f-large-text');
+    magneticElements.forEach(el => {
+        el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            const multiplier = el.classList.contains('f-large-text') ? 0.1 : 0.4;
+            el.style.transform = `translate(${x * multiplier}px, ${y * multiplier}px)`;
+        });
+        
+        el.addEventListener('mouseleave', () => {
+            el.style.transform = 'translate(0, 0)';
+        });
+    });
+
     // Scroll Logic (Performance Optimized)
     const nav = document.getElementById('nav');
     const backToTop = document.getElementById('back-to-top');
@@ -163,8 +247,38 @@ document.addEventListener('DOMContentLoaded', () => {
             const scrollPercent = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
             pageProgress.style.width = `${scrollPercent}%`;
         }
+
+        // Project Background Transition
+        if (workSection) {
+            let activeProject = null;
+            const threshold = window.innerHeight * 0.4;
+
+            projectSections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= threshold && rect.bottom >= threshold) {
+                    activeProject = section;
+                }
+            });
+
+            if (activeProject) {
+                const color = activeProject.getAttribute('data-color');
+                const isDark = body.classList.contains('theme-dark');
+                if (color) {
+                    // Apply subtle color overlay
+                    workSection.style.backgroundColor = isDark ? `rgba(${hexToRgb(color)}, 0.05)` : `rgba(${hexToRgb(color)}, 0.03)`;
+                }
+            } else {
+                workSection.style.backgroundColor = 'var(--bg)';
+            }
+        }
+
         ticking = false;
     };
+
+    function hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '0,0,0';
+    }
 
     window.addEventListener('scroll', () => {
         if (!ticking) {
