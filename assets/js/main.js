@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Theme Toggle
     const themeToggle = document.getElementById('theme-toggle');
     const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'theme-light' : 'theme-dark');
+    body.classList.remove('theme-dark', 'theme-light');
     body.classList.add(savedTheme);
 
     themeToggle.addEventListener('click', () => {
