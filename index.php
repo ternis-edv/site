@@ -287,7 +287,7 @@ $projects = [
         <section class="services" id="services">
             <div class="services-hd">
                 <div class="label reveal">// 01 Leistungen</div>
-                <h2 class="sec-title reveal">Was wir<br>für dich bauen</h2>
+                <h2 class="sec-title reveal">Was wir <br class="mobile-break">für dich bauen</h2>
             </div>
             <div class="svc-grid">
                 <div class="svc-card reveal">
@@ -368,7 +368,7 @@ $projects = [
 
         <section class="contact" id="contact">
             <div class="label reveal">// 04 Kontakt</div>
-            <h2 class="contact-title reveal">Dein Projekt<br>wartet auf <em>uns.</em></h2>
+            <h2 class="contact-title reveal">Dein Projekt <br class="mobile-break">wartet auf <em>uns.</em></h2>
             <a href="mailto:info@ternis-edv.de" class="contact-mail">info@ternis-edv.de</a>
         </section>
     </main>
