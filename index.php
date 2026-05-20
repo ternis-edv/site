@@ -120,7 +120,7 @@ $projects = [
         
         <!-- Impressum Modal -->
         <div id="modal-impressum" class="modal-content">
-            <button class="modal-close" aria-label="Schließen">&times;</button>
+            <button class="modal-close" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             <div class="modal-body">
                 <h2>Impressum</h2>
                 <div class="modal-section">
@@ -132,6 +132,10 @@ $projects = [
                     <p>E-Mail: info@ternis-edv.de</p>
                 </div>
                 <div class="modal-section">
+                    <h3>Umsatzsteuer-ID</h3>
+                    <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br>DE123456789</p>
+                </div>
+                <div class="modal-section">
                     <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
                     <p>Fabian Ternis<br>Alzeyer Str. 97<br>67592 Flörsheim-Dalsheim</p>
                 </div>
@@ -140,20 +144,22 @@ $projects = [
 
         <!-- Datenschutz Modal -->
         <div id="modal-datenschutz" class="modal-content">
-            <button class="modal-close" aria-label="Schließen">&times;</button>
+            <button class="modal-close" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             <div class="modal-body">
                 <h2>Datenschutz</h2>
                 <div class="modal-section">
                     <p>Wir verarbeiten Ihre Daten ausschließlich auf Grundlage der gesetzlichen Bestimmungen (DSGVO, TMG).</p>
-                    <h3>Datenspeicherung</h3>
-                    <p>Es werden keine personenbezogenen Daten ohne Ihre Einwilligung gespeichert.</p>
+                    <h3>1. Datenschutz auf einen Blick</h3>
+                    <p><strong>Allgemeine Hinweise</strong><br>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen.</p>
+                    <h3>2. Datenerfassung auf dieser Website</h3>
+                    <p><strong>Cookies</strong><br>Unsere Internetseiten verwenden teilweise sogenannte "Cookies". Cookies richten auf Ihrem Rechner keinen Schaden an und enthalten keine Viren.</p>
                 </div>
             </div>
         </div>
 
         <!-- Cookie Settings Modal -->
         <div id="modal-cookie-settings" class="modal-content">
-            <button class="modal-close" aria-label="Schließen">&times;</button>
+            <button class="modal-close" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             <div class="modal-body">
                 <h2>Cookie-Einstellungen</h2>
                 <div class="setting-item">
@@ -178,7 +184,7 @@ $projects = [
 
         <!-- Accessibility Modal -->
         <div id="modal-a11y" class="modal-content">
-            <button class="modal-close" aria-label="Schließen">&times;</button>
+            <button class="modal-close" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             <div class="modal-body">
                 <h2>Barrierefreiheit</h2>
                 <div class="setting-item">
@@ -256,7 +262,7 @@ $projects = [
                     <path d="M12 16l4 6"></path>
                 </svg>
             </button>
-            <a href="#contact" class="nav-cta">Projekt starten →</a>
+            <a href="#contact" class="nav-cta">Projekt starten <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1em; height: 1em;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
         </div>
     </nav>
 
@@ -268,7 +274,7 @@ $projects = [
                 <h1 class="hero-title">Wir bauen<br>das <em>Web</em><br>von morgen.</h1>
                 <p class="hero-sub">Websites, Landingpages und Web-Applikationen — präzise entwickelt, leichtgewichtig und ohne Bloat.</p>
                 <div class="hero-actions">
-                    <a href="#work" class="btn-p">Projekte ansehen →</a>
+                    <a href="#work" class="btn-p">Projekte ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1em; height: 1em;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                     <a href="#contact" class="btn-g">Kontakt aufnehmen</a>
                 </div>
             </div>
@@ -320,7 +326,7 @@ $projects = [
                                         <span class="tag"><?= $tech ?></span>
                                     <?php endforeach; ?>
                                 </div>
-                                <a href="<?= $project['link'] ?>" target="_blank" class="p-link">Live ansehen ↗</a>
+                                <a href="<?= $project['link'] ?>" target="_blank" class="p-link">Live ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1em; height: 1em;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
                             </div>
                         </div>
                         <div class="project-visual">
