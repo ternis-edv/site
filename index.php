@@ -86,6 +86,30 @@ $projects = [
         ],
         'link' => '#',
         'color' => '#d97706'
+    ],
+    [
+        'id' => 'pleasehireme',
+        'name' => 'pleasehireme.eu',
+        'type' => 'Job Matching Platform',
+        'desc' => 'A modern platform connecting developers with innovative startups. Built with a focus on candidate experience and streamlined hiring workflows.',
+        'stack' => ['Vue.js', 'Firebase', 'Tailwind'],
+        'images' => [
+            'light' => 'assets/img/work/pleasehireme.eu__LIGHT.png'
+        ],
+        'link' => 'https://pleasehireme.eu',
+        'color' => '#ef4444'
+    ],
+    [
+        'id' => 'nocturne',
+        'name' => 'Nocturne Lander',
+        'type' => 'Design Template',
+        'desc' => 'A dark-themed, high-impact landing page template designed for creative agencies and digital artists.',
+        'stack' => ['HTML5', 'CSS3', 'GSAP'],
+        'images' => [
+            'dark' => 'assets/img/work/TEMPLATE__nocturne_lander__DARK.png'
+        ],
+        'link' => '#',
+        'color' => '#f59e0b'
     ]
 ];
 ?>
