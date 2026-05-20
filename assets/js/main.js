@@ -117,8 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const nav = document.getElementById('nav');
     const backToTop = document.getElementById('back-to-top');
     const workSection = document.getElementById('work');
-    const workProgress = document.getElementById('work-progress');
     const projectSections = document.querySelectorAll('.project-section');
+    const pageProgress = document.getElementById('page-progress');
     
     let ticking = false;
 
@@ -129,14 +129,11 @@ document.addEventListener('DOMContentLoaded', () => {
         nav.classList.toggle('scrolled', scrollY > 50);
         backToTop.classList.toggle('show', scrollY > 800);
 
-        // Work Section
-        if (workSection) {
-            const rect = workSection.getBoundingClientRect();
-            const totalHeight = workSection.offsetHeight;
-            const scrolled = Math.max(0, -rect.top);
-            const progress = Math.min(100, (scrolled / (totalHeight - window.innerHeight)) * 100);
-
-            if (workProgress) workProgress.style.height = `${progress}%`;
+        // Global Page Progress
+        if (pageProgress) {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+            pageProgress.style.width = `${scrollPercent}%`;
         }
         ticking = false;
     };
