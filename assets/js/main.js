@@ -93,6 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Accessibility
     const a11yContrast = document.getElementById('a11y-contrast');
     const a11yFont = document.getElementById('a11y-font');
+    const a11yReduceMotion = document.getElementById('a11y-reduce-motion');
+    const a11yHighlightLinks = document.getElementById('a11y-highlight-links');
+    const a11yDyslexiaFont = document.getElementById('a11y-dyslexia-font');
 
     if (localStorage.getItem('a11y-contrast') === 'true') {
         a11yContrast.checked = true;
@@ -102,14 +105,38 @@ document.addEventListener('DOMContentLoaded', () => {
         a11yFont.checked = true;
         document.documentElement.style.setProperty('--font-scale', '1.15');
     }
+    if (localStorage.getItem('a11y-reduce-motion') === 'true') {
+        a11yReduceMotion.checked = true;
+        body.classList.add('a11y-reduce-motion');
+    }
+    if (localStorage.getItem('a11y-highlight-links') === 'true') {
+        a11yHighlightLinks.checked = true;
+        body.classList.add('a11y-highlight-links');
+    }
+    if (localStorage.getItem('a11y-dyslexia-font') === 'true') {
+        a11yDyslexiaFont.checked = true;
+        body.classList.add('a11y-dyslexia-font');
+    }
 
     document.getElementById('a11y-save').addEventListener('click', () => {
         const contrast = a11yContrast.checked;
         const font = a11yFont.checked;
+        const reduceMotion = a11yReduceMotion.checked;
+        const highlightLinks = a11yHighlightLinks.checked;
+        const dyslexiaFont = a11yDyslexiaFont.checked;
+
         localStorage.setItem('a11y-contrast', contrast);
         localStorage.setItem('a11y-font', font);
+        localStorage.setItem('a11y-reduce-motion', reduceMotion);
+        localStorage.setItem('a11y-highlight-links', highlightLinks);
+        localStorage.setItem('a11y-dyslexia-font', dyslexiaFont);
+
         body.classList.toggle('high-contrast', contrast);
         document.documentElement.style.setProperty('--font-scale', font ? '1.15' : '1');
+        body.classList.toggle('a11y-reduce-motion', reduceMotion);
+        body.classList.toggle('a11y-highlight-links', highlightLinks);
+        body.classList.toggle('a11y-dyslexia-font', dyslexiaFont);
+
         closeModal();
     });
 
