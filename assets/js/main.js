@@ -208,8 +208,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     progressiveImages.forEach(img => imgObserver.observe(img));
 
-    // Magnetic Footer Elements
-    const magneticElements = document.querySelectorAll('.f-logo, .f-links a, .f-large-text');
+    // Footer Time
+    const timeEl = document.getElementById('current-time');
+    if (timeEl) {
+        const updateTime = () => {
+            const now = new Date();
+            timeEl.textContent = now.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' — Germany';
+        };
+        setInterval(updateTime, 1000);
+        updateTime();
+    }
+
+    // Mascot Eye Movement
+    const mascot = document.querySelector('.footer-mascot');
+    const eyes = document.querySelectorAll('.mascot-eye');
+    if (mascot && eyes.length > 0) {
+        document.addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            eyes.forEach(eye => {
+                const rect = eye.getBoundingClientRect();
+                const eyeX = rect.left + rect.width / 2;
+                const eyeY = rect.top + rect.height / 2;
+                const angle = Math.atan2(clientY - eyeY, clientX - eyeX);
+                const distance = Math.min(rect.width / 4, Math.hypot(clientX - eyeX, clientY - eyeY) / 10);
+                const moveX = Math.cos(angle) * distance;
+                const moveY = Math.sin(angle) * distance;
+                eye.style.setProperty('--eye-x', `${moveX}px`);
+                eye.style.setProperty('--eye-y', `${moveY}px`);
+            });
+        });
+    }
+
+    // Magnetic Elements
+    const magneticElements = document.querySelectorAll('.footer-mail-v2, .footer-list a, .error-actions a');
     magneticElements.forEach(el => {
         el.addEventListener('mousemove', (e) => {
             const rect = el.getBoundingClientRect();
