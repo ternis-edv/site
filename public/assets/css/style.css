@@ -71,6 +71,10 @@ body {
 
 a { text-decoration: none; color: inherit; }
 
+/* ── Selection ── */
+::selection { background: var(--accent); color: var(--bg); }
+::-moz-selection { background: var(--accent); color: var(--bg); }
+
 /* ── Accessibility: Focus States ── */
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
@@ -162,11 +166,16 @@ nav.scrolled {
 .label { font-family: var(--fm); font-size: .7rem; color: var(--accent); letter-spacing: .15em; text-transform: uppercase; margin-bottom: .8rem; }
 .sec-title { font-family: var(--fd); font-size: clamp(2rem, 5vw, 4.5rem); font-weight: 700; line-height: 1; letter-spacing: -.03em; }
 .svc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem; }
-.svc-card { background: var(--surface); padding: 3rem; border-radius: 12px; transition: all 0.4s; position: relative; border: 1px solid var(--border); overflow: hidden; }
-.svc-icon { font-family: var(--fd); font-size: 4rem; font-weight: 800; color: var(--accent); opacity: 0.1; position: absolute; top: 1.5rem; right: 2rem; }
-.svc-card:hover { transform: translateY(-5px); border-color: var(--border-b); }
-.svc-name { font-family: var(--fd); font-weight: 700; font-size: 2rem; margin-bottom: 1.2rem; }
-.svc-desc { font-size: 1.05rem; color: var(--muted-b); line-height: 1.6; }
+.svc-card { background: var(--surface); padding: 3rem; border-radius: 12px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; border: 1px solid var(--border); overflow: hidden; }
+.svc-icon { width: 48px; height: 48px; color: var(--muted-b); margin-bottom: 2rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.svc-icon svg { width: 100%; height: 100%; }
+.svc-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+.theme-light .svc-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+.svc-card:hover .svc-icon { color: var(--accent); transform: scale(1.1) translateY(-5px); }
+.svc-name { font-family: var(--fd); font-weight: 700; font-size: 2rem; margin-bottom: 1.2rem; transition: color 0.4s; }
+.svc-card:hover .svc-name { color: var(--accent); }
+.svc-desc { font-size: 1.05rem; color: var(--muted-b); line-height: 1.6; transition: color 0.4s; }
+.svc-card:hover .svc-desc { color: var(--text); }
 
 /* ── Work ── */
 .work { background: var(--bg); position: relative; transition: background-color 0.8s ease; }
@@ -313,12 +322,18 @@ body.modal-open, body.menu-open {
 .cb-actions button { flex: 1; padding: 0.6rem; font-size: 0.8rem; }
 
 /* ── Footer ── */
-footer { padding: 6rem 3rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); }
-.f-logo { font-family: var(--fd); font-weight: 800; font-size: 1.5rem; }
+footer { padding: 6rem 3rem 3rem; border-top: 1px solid var(--border); position: relative; overflow: hidden; display: flex; flex-direction: column; }
+.f-large-text { font-family: var(--fd); font-size: 15vw; font-weight: 800; line-height: 0.8; letter-spacing: -0.05em; text-align: center; margin-bottom: 4rem; color: transparent; -webkit-text-stroke: 1px var(--border-b); cursor: default; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); white-space: nowrap; }
+.f-large-text:hover { -webkit-text-stroke: 2px var(--accent); transform: scale(1.02); }
+.f-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.f-logo { font-family: var(--fd); font-weight: 800; font-size: 1.5rem; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: inline-block; cursor: pointer; }
+.f-logo:hover { transform: scale(1.05) rotate(-2deg); }
 .f-logo span { color: var(--accent); }
 .f-links { display: flex; gap: 2.5rem; }
-.f-links a { font-weight: 600; color: var(--muted-b); transition: color 0.3s; }
-.f-links a:hover { color: var(--text); }
+.f-links a { font-weight: 600; color: var(--muted-b); position: relative; padding-bottom: 4px; transition: color 0.3s, transform 0.3s; display: inline-block; }
+.f-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: right; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.f-links a:hover { color: var(--text); transform: translateY(-2px); }
+.f-links a:hover::after { transform: scaleX(1); transform-origin: left; }
 .f-copy { font-family: var(--fm); font-size: 1rem; color: var(--muted); }
 
 /* ── Utils ── */
@@ -347,6 +362,7 @@ footer { padding: 6rem 3rem; display: flex; justify-content: space-between; alig
   .project-container { flex-direction: column; }
   .project-info { width: 100%; height: auto; position: relative; border-right: none; padding: 4rem 2rem; border-bottom: 1px solid var(--border); }
   .project-visual { width: 100%; padding: 4rem 2rem; }
+  .f-content { flex-direction: column; gap: 2rem; text-align: center; }
 }
 
 /* --- Responsive Breakpoints Override --- */
