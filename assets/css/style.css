@@ -151,7 +151,7 @@ nav.scrolled {
 .services { padding: 8rem 3rem; border-top: 1px solid var(--border); }
 .services-hd { margin-bottom: 5rem; }
 .label { font-family: var(--fm); font-size: .7rem; color: var(--accent); letter-spacing: .15em; text-transform: uppercase; margin-bottom: .8rem; }
-.sec-title { font-family: var(--fd); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; line-height: 1; letter-spacing: -.03em; }
+.sec-title { font-family: var(--fd); font-size: clamp(2rem, 5vw, 4.5rem); font-weight: 700; line-height: 1; letter-spacing: -.03em; }
 .svc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem; }
 .svc-card { background: var(--surface); padding: 3rem; border-radius: 12px; transition: all 0.4s; position: relative; border: 1px solid var(--border); overflow: hidden; }
 .svc-icon { font-family: var(--fd); font-size: 4rem; font-weight: 800; color: var(--accent); opacity: 0.1; position: absolute; top: 1.5rem; right: 2rem; }
@@ -216,13 +216,13 @@ nav.scrolled {
 /* ── About & Contact ── */
 .about { padding: 12rem 3rem; border-top: 1px solid var(--border); }
 .about-content { max-width: 900px; }
-.about-p { font-size: clamp(1.2rem, 3vw, 1.8rem); font-weight: 300; line-height: 1.4; color: var(--muted-b); margin: 3rem 0; font-family: var(--fb); }
+.about-p { font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 300; line-height: 1.6; color: var(--muted-b); margin: 3rem 0; font-family: var(--fb); }
 .stats { display: flex; gap: 6rem; }
 .stat-n { font-family: var(--fd); font-size: 3rem; font-weight: 800; color: var(--accent); line-height: 1; }
 .stat-l { font-size: .9rem; text-transform: uppercase; letter-spacing: .15em; color: var(--muted); margin-top: 0.5rem; font-weight: 600; }
 
 .contact { padding: 150px 3rem; text-align: left; border-top: 1px solid var(--border); }
-.contact-title { font-family: var(--fd); font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 800; margin-bottom: 4rem; letter-spacing: -0.04em; line-height: 0.9; }
+.contact-title { font-family: var(--fd); font-size: clamp(2.5rem, 7vw, 6rem); font-weight: 800; margin-bottom: 4rem; letter-spacing: -0.04em; line-height: 0.9; }
 .contact-title em { font-style: normal; color: var(--accent); }
 .contact-mail { font-family: var(--fd); font-size: clamp(1.5rem, 4vw, 3rem); font-weight: 700; color: var(--text); border-bottom: 3px solid var(--accent); padding-bottom: 0.5rem; transition: all 0.3s; }
 .contact-mail:hover { color: var(--accent); padding-bottom: 1rem; }
@@ -368,9 +368,13 @@ footer { padding: 6rem 3rem; display: flex; justify-content: space-between; alig
   .hero-title { font-size: clamp(3rem, 12vw, 5rem); } /* Fix hero text wrapping */
   .cookie-banner { width: calc(100% - 4rem); left: 2rem; right: 2rem; }
   .stats { flex-direction: column; gap: 3rem; }
-  .about-p { font-size: 1.5rem; }
+  .about-p { font-size: 1.1rem; }
 }
 
 @media (max-width: 768px) {
   .back-to-top { bottom: 1.5rem; right: 1.5rem; }
+}
+
+@media (min-width: 769px) {
+  .mobile-break { display: none; }
 }
