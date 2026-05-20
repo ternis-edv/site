@@ -86,6 +86,30 @@ $projects = [
         ],
         'link' => '#',
         'color' => '#d97706'
+    ],
+    [
+        'id' => 'pleasehireme',
+        'name' => 'pleasehireme.eu',
+        'type' => 'Job Matching Platform',
+        'desc' => 'A modern platform connecting developers with innovative startups. Built with a focus on candidate experience and streamlined hiring workflows.',
+        'stack' => ['Vue.js', 'Firebase', 'Tailwind'],
+        'images' => [
+            'light' => 'assets/img/work/pleasehireme.eu__LIGHT.png'
+        ],
+        'link' => 'https://pleasehireme.eu',
+        'color' => '#ef4444'
+    ],
+    [
+        'id' => 'nocturne',
+        'name' => 'Nocturne Lander',
+        'type' => 'Design Template',
+        'desc' => 'A dark-themed, high-impact landing page template designed for creative agencies and digital artists.',
+        'stack' => ['HTML5', 'CSS3', 'GSAP'],
+        'images' => [
+            'dark' => 'assets/img/work/TEMPLATE__nocturne_lander__DARK.png'
+        ],
+        'link' => '#',
+        'color' => '#f59e0b'
     ]
 ];
 ?>
@@ -101,6 +125,7 @@ $projects = [
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="theme-dark">
+    <div id="page-progress"></div>
 
     <!-- Cookie Consent -->
     <div id="cookie-consent" class="cookie-banner" role="dialog" aria-labelledby="cc-title">
@@ -119,7 +144,7 @@ $projects = [
         
         <!-- Impressum Modal -->
         <div id="modal-impressum" class="modal-content">
-            <button class="modal-close" aria-label="Schließen">&times;</button>
+            <button class="modal-close" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             <div class="modal-body">
                 <h2>Impressum</h2>
                 <div class="modal-section">
@@ -139,20 +164,29 @@ $projects = [
 
         <!-- Datenschutz Modal -->
         <div id="modal-datenschutz" class="modal-content">
-            <button class="modal-close" aria-label="Schließen">&times;</button>
+            <button class="modal-close" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             <div class="modal-body">
                 <h2>Datenschutz</h2>
                 <div class="modal-section">
-                    <p>Wir verarbeiten Ihre Daten ausschließlich auf Grundlage der gesetzlichen Bestimmungen (DSGVO, TMG).</p>
-                    <h3>Datenspeicherung</h3>
-                    <p>Es werden keine personenbezogenen Daten ohne Ihre Einwilligung gespeichert.</p>
+                    <p>Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.</p>
+
+                    <h3>1. Allgemeine Hinweise</h3>
+                    <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.</p>
+
+                    <h3>2. Datenerfassung auf dieser Website</h3>
+                    <p><strong>Server-Log-Dateien</strong><br>Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten Server-Log-Dateien, die Ihr Browser automatisch an uns übermittelt. Dies sind: Browsertyp und Browserversion, verwendetes Betriebssystem, Referrer URL, Hostname des zugreifenden Rechners, Uhrzeit der Serveranfrage, IP-Adresse. Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen.</p>
+                    <p><strong>Cookies</strong><br>Unsere Internetseiten verwenden teilweise so genannte "Cookies". Cookies richten auf Ihrem Rechner keinen Schaden an und enthalten keine Viren. Sie dienen dazu, unser Angebot nutzerfreundlicher, effektiver und sicherer zu machen.</p>
+                    <p><strong>Kontaktanfragen</strong><br>Wenn Sie uns per E-Mail kontaktieren, werden Ihre Angaben inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
+
+                    <h3>3. Ihre Rechte</h3>
+                    <p>Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung oder Löschung dieser Daten zu verlangen. Hierzu sowie zu weiteren Fragen zum Thema Datenschutz können Sie sich jederzeit unter der im Impressum angegebenen Adresse an uns wenden.</p>
                 </div>
             </div>
         </div>
 
         <!-- Cookie Settings Modal -->
         <div id="modal-cookie-settings" class="modal-content">
-            <button class="modal-close" aria-label="Schließen">&times;</button>
+            <button class="modal-close" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             <div class="modal-body">
                 <h2>Cookie-Einstellungen</h2>
                 <div class="setting-item">
@@ -177,7 +211,7 @@ $projects = [
 
         <!-- Accessibility Modal -->
         <div id="modal-a11y" class="modal-content">
-            <button class="modal-close" aria-label="Schließen">&times;</button>
+            <button class="modal-close" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             <div class="modal-body">
                 <h2>Barrierefreiheit</h2>
                 <div class="setting-item">
@@ -194,6 +228,27 @@ $projects = [
                     </div>
                     <label class="switch-ui"><input type="checkbox" id="a11y-font"><span></span></label>
                 </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Bewegung reduzieren</h4>
+                        <p>Deaktiviert Animationen und Übergänge.</p>
+                    </div>
+                    <label class="switch-ui"><input type="checkbox" id="a11y-reduce-motion"><span></span></label>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Links hervorheben</h4>
+                        <p>Macht alle anklickbaren Links deutlicher sichtbar.</p>
+                    </div>
+                    <label class="switch-ui"><input type="checkbox" id="a11y-highlight-links"><span></span></label>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Schriftart für Legastheniker</h4>
+                        <p>Verwendet eine besser lesbare Schriftart.</p>
+                    </div>
+                    <label class="switch-ui"><input type="checkbox" id="a11y-dyslexia-font"><span></span></label>
+                </div>
                 <div class="modal-actions">
                     <button id="a11y-save" class="btn-p">Anwenden</button>
                 </div>
@@ -203,21 +258,38 @@ $projects = [
 
     <nav id="nav">
         <a href="#" class="nav-logo">ternis<span>-edv</span></a>
-        <ul class="nav-links">
+
+        <!-- Mobile Toggle Added -->
+        <button id="mobile-toggle" aria-label="Menü öffnen" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path class="line-1" d="M4 6h16"/>
+                <path class="line-2" d="M4 12h16"/>
+                <path class="line-3" d="M4 18h16"/>
+            </svg>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
             <li><a href="#services">Leistungen</a></li>
             <li><a href="#work">Projekte</a></li>
             <li><a href="#about">Über uns</a></li>
             <li><a href="#contact">Kontakt</a></li>
         </ul>
         <div class="nav-actions">
+            <!-- Theme Toggle Re-added to Nav -->
             <button id="theme-toggle" aria-label="Toggle Theme">
                 <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                 <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
             <button id="a11y-trigger" aria-label="Accessibility Settings" style="background:none;border:none;cursor:pointer;color:inherit;display:flex;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="5" r="2.5"></circle>
+                    <path d="M12 7.5v8.5"></path>
+                    <path d="M5 10.5h14"></path>
+                    <path d="M12 16l-4 6"></path>
+                    <path d="M12 16l4 6"></path>
+                </svg>
             </button>
-            <a href="#contact" class="nav-cta">Projekt starten →</a>
+            <a href="#contact" class="nav-cta">Projekt starten <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1em; height: 1em;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
         </div>
     </nav>
 
@@ -229,7 +301,7 @@ $projects = [
                 <h1 class="hero-title">Wir bauen<br>das <em>Web</em><br>von morgen.</h1>
                 <p class="hero-sub">Websites, Landingpages und Web-Applikationen — präzise entwickelt, leichtgewichtig und ohne Bloat.</p>
                 <div class="hero-actions">
-                    <a href="#work" class="btn-p">Projekte ansehen →</a>
+                    <a href="#work" class="btn-p">Projekte ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1em; height: 1em;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                     <a href="#contact" class="btn-g">Kontakt aufnehmen</a>
                 </div>
             </div>
@@ -239,22 +311,34 @@ $projects = [
         <section class="services" id="services">
             <div class="services-hd">
                 <div class="label reveal">// 01 Leistungen</div>
-                <h2 class="sec-title reveal">Was wir<br>für dich bauen</h2>
+                <h2 class="sec-title reveal">Was wir <br class="mobile-break">für dich bauen</h2>
             </div>
             <div class="svc-grid">
                 <div class="svc-card reveal">
+                    <div class="svc-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    </div>
                     <div class="svc-name">Websites</div>
                     <p class="svc-desc">Schnelle, zugängliche und suchmaschinenoptimierte Webseiten — maßgeschneidert, ohne unnötigen Overhead.</p>
                 </div>
                 <div class="svc-card reveal">
+                    <div class="svc-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    </div>
                     <div class="svc-name">Landingpages</div>
                     <p class="svc-desc">Conversion-optimierte Seiten, die Besucher in Kunden verwandeln. Klar, fokussiert und messbar.</p>
                 </div>
                 <div class="svc-card reveal">
+                    <div class="svc-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                    </div>
                     <div class="svc-name">Web-Applikationen</div>
                     <p class="svc-desc">Komplexe Webanwendungen, APIs und Backends — von der Konzeption bis zum Deployment.</p>
                 </div>
                 <div class="svc-card reveal">
+                    <div class="svc-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    </div>
                     <div class="svc-name">Hosting & Pflege</div>
                     <p class="svc-desc">Zuverlässiges Hosting, kontinuierliche Wartung und persönliche Betreuung deiner digitalen Präsenz.</p>
                 </div>
@@ -262,7 +346,6 @@ $projects = [
         </section>
 
         <section class="work" id="work">
-            <div class="work-progress" id="work-progress"></div>
             <div class="work-hd">
                 <div class="label reveal">// 02 Projekte</div>
                 <h2 class="sec-title reveal">Ausgewählte Arbeiten</h2>
@@ -282,7 +365,7 @@ $projects = [
                                         <span class="tag"><?= $tech ?></span>
                                     <?php endforeach; ?>
                                 </div>
-                                <a href="<?= $project['link'] ?>" target="_blank" class="p-link">Live ansehen ↗</a>
+                                <a href="<?= $project['link'] ?>" target="_blank" class="p-link">Live ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1em; height: 1em;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
                             </div>
                         </div>
                         <div class="project-visual">
@@ -321,18 +404,21 @@ $projects = [
 
         <section class="contact" id="contact">
             <div class="label reveal">// 04 Kontakt</div>
-            <h2 class="contact-title reveal">Dein Projekt<br>wartet auf <em>uns.</em></h2>
+            <h2 class="contact-title reveal">Dein Projekt <br class="mobile-break">wartet auf <em>uns.</em></h2>
             <a href="mailto:info@ternis-edv.de" class="contact-mail">info@ternis-edv.de</a>
         </section>
     </main>
 
     <footer>
-        <div class="f-logo">ternis<span>-edv</span></div>
-        <div class="f-links">
-            <a href="#" id="trigger-impressum">Impressum</a>
-            <a href="#" id="trigger-datenschutz">Datenschutz</a>
+        <div class="f-large-text" aria-hidden="true">ternis-edv</div>
+        <div class="f-content">
+            <div class="f-logo">ternis<span>-edv</span></div>
+            <div class="f-links">
+                <a href="#" id="trigger-impressum">Impressum</a>
+                <a href="#" id="trigger-datenschutz">Datenschutz</a>
+            </div>
+            <span class="f-copy">© <?= date('Y') ?> ternis-edv.de</span>
         </div>
-        <span class="f-copy">© <?= date('Y') ?> ternis-edv.de</span>
     </footer>
 
     <button id="back-to-top" class="back-to-top" aria-label="Back to Top">

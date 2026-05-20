@@ -1,19 +1,39 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Determine scrollbar width to prevent layout shift during modal open
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
+
+    const body = document.body;
+
     // Theme Toggle
     const themeToggle = document.getElementById('theme-toggle');
-    const body = document.body;
-    
     const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'theme-light' : 'theme-dark');
+    body.classList.remove('theme-dark', 'theme-light');
     body.classList.add(savedTheme);
 
     themeToggle.addEventListener('click', () => {
-        if (body.classList.contains('theme-dark')) {
-            body.classList.replace('theme-dark', 'theme-light');
-            localStorage.setItem('theme', 'theme-light');
-        } else {
-            body.classList.replace('theme-light', 'theme-dark');
-            localStorage.setItem('theme', 'theme-dark');
-        }
+        const isDark = body.classList.contains('theme-dark');
+        body.classList.replace(isDark ? 'theme-dark' : 'theme-light', isDark ? 'theme-light' : 'theme-dark');
+        localStorage.setItem('theme', isDark ? 'theme-light' : 'theme-dark');
+    });
+
+    // Mobile Menu Logic
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const navLinks = document.getElementById('nav-links');
+
+    mobileToggle.addEventListener('click', () => {
+        const isExpanded = mobileToggle.getAttribute('aria-expanded') === 'true';
+        mobileToggle.setAttribute('aria-expanded', !isExpanded);
+        navLinks.classList.toggle('active');
+        body.classList.toggle('menu-open');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileToggle.setAttribute('aria-expanded', 'false');
+            navLinks.classList.remove('active');
+            body.classList.remove('menu-open');
+        });
     });
 
     // Modals
@@ -25,13 +45,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById(id);
         overlay.classList.add('show');
         modal.classList.add('active');
-        body.style.overflow = 'hidden';
+        body.classList.add('modal-open');
     };
 
     const closeModal = () => {
         overlay.classList.remove('show');
         modals.forEach(m => m.classList.remove('active'));
-        body.style.overflow = '';
+        body.classList.remove('modal-open');
     };
 
     document.getElementById('trigger-impressum').addEventListener('click', (e) => { e.preventDefault(); openModal('modal-impressum'); });
@@ -40,6 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeButtons.forEach(btn => btn.addEventListener('click', closeModal));
     overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+
+    // Accessibility: ESC to close modal
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('show')) closeModal();
+    });
 
     // Cookie Consent
     const consent = document.getElementById('cookie-consent');
@@ -69,6 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Accessibility
     const a11yContrast = document.getElementById('a11y-contrast');
     const a11yFont = document.getElementById('a11y-font');
+    const a11yReduceMotion = document.getElementById('a11y-reduce-motion');
+    const a11yHighlightLinks = document.getElementById('a11y-highlight-links');
+    const a11yDyslexiaFont = document.getElementById('a11y-dyslexia-font');
 
     if (localStorage.getItem('a11y-contrast') === 'true') {
         a11yContrast.checked = true;
@@ -78,72 +106,81 @@ document.addEventListener('DOMContentLoaded', () => {
         a11yFont.checked = true;
         document.documentElement.style.setProperty('--font-scale', '1.15');
     }
+    if (localStorage.getItem('a11y-reduce-motion') === 'true') {
+        a11yReduceMotion.checked = true;
+        body.classList.add('a11y-reduce-motion');
+    }
+    if (localStorage.getItem('a11y-highlight-links') === 'true') {
+        a11yHighlightLinks.checked = true;
+        body.classList.add('a11y-highlight-links');
+    }
+    if (localStorage.getItem('a11y-dyslexia-font') === 'true') {
+        a11yDyslexiaFont.checked = true;
+        body.classList.add('a11y-dyslexia-font');
+    }
 
     document.getElementById('a11y-save').addEventListener('click', () => {
         const contrast = a11yContrast.checked;
         const font = a11yFont.checked;
+        const reduceMotion = a11yReduceMotion.checked;
+        const highlightLinks = a11yHighlightLinks.checked;
+        const dyslexiaFont = a11yDyslexiaFont.checked;
+
         localStorage.setItem('a11y-contrast', contrast);
         localStorage.setItem('a11y-font', font);
+        localStorage.setItem('a11y-reduce-motion', reduceMotion);
+        localStorage.setItem('a11y-highlight-links', highlightLinks);
+        localStorage.setItem('a11y-dyslexia-font', dyslexiaFont);
+
         body.classList.toggle('high-contrast', contrast);
         document.documentElement.style.setProperty('--font-scale', font ? '1.15' : '1');
+        body.classList.toggle('a11y-reduce-motion', reduceMotion);
+        body.classList.toggle('a11y-highlight-links', highlightLinks);
+        body.classList.toggle('a11y-dyslexia-font', dyslexiaFont);
+
         closeModal();
     });
 
-    // Nav Scroll
+    // Scroll Logic (Performance Optimized)
     const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-        nav.classList.toggle('scrolled', window.scrollY > 50);
-    }, { passive: true });
-
-    // Back to Top
     const backToTop = document.getElementById('back-to-top');
-    window.addEventListener('scroll', () => {
-        backToTop.classList.toggle('show', window.scrollY > 800);
-    }, { passive: true });
-    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-    // Work Section - Color Shift & Progress
     const workSection = document.getElementById('work');
-    const workProgress = document.getElementById('work-progress');
     const projectSections = document.querySelectorAll('.project-section');
+    const pageProgress = document.getElementById('page-progress');
     
-    const updateWork = () => {
-        if (!workSection) return;
-        const rect = workSection.getBoundingClientRect();
-        const totalHeight = workSection.offsetHeight;
-        const scrolled = Math.max(0, -rect.top);
-        const progress = Math.min(100, (scrolled / (totalHeight - window.innerHeight)) * 100);
-        
-        if (workProgress) workProgress.style.height = `${progress}%`;
+    let ticking = false;
 
-        let activeColor = '';
-        projectSections.forEach(section => {
-            const sRect = section.getBoundingClientRect();
-            if (sRect.top < window.innerHeight / 2 && sRect.bottom > window.innerHeight / 2) {
-                activeColor = section.getAttribute('data-color');
-            }
-        });
+    const onScroll = () => {
+        const scrollY = window.scrollY;
 
-        if (activeColor && !body.classList.contains('high-contrast')) {
-            const r = parseInt(activeColor.slice(1, 3), 16);
-            const g = parseInt(activeColor.slice(3, 5), 16);
-            const b = parseInt(activeColor.slice(5, 7), 16);
-            const opacity = body.classList.contains('theme-light') ? 0.05 : 0.03;
-            body.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${opacity})`;
-            document.documentElement.style.setProperty('--accent', activeColor);
-        } else {
-            body.style.backgroundColor = '';
-            document.documentElement.style.removeProperty('--accent');
+        // Nav & BackToTop
+        nav.classList.toggle('scrolled', scrollY > 50);
+        backToTop.classList.toggle('show', scrollY > 800);
+
+        // Global Page Progress
+        if (pageProgress) {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+            pageProgress.style.width = `${scrollPercent}%`;
         }
+        ticking = false;
     };
 
-    window.addEventListener('scroll', () => requestAnimationFrame(updateWork), { passive: true });
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(onScroll);
+            ticking = true;
+        }
+    }, { passive: true });
+
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
     // Reveals
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+                revealObserver.unobserve(entry.target); // Stop observing once visible to save memory
             }
         });
     }, { threshold: 0.1 });
