@@ -1,4 +1,28 @@
 <?php
+// Function to get image dimensions with a simple file-based cache to avoid repeated hits
+function getImageData($path) {
+    $fullPath = __DIR__ . '/../../' . $path;
+    if (!file_exists($fullPath)) return ['w' => 1600, 'h' => 1000]; // Fallback
+
+    $cacheFile = __DIR__ . '/../../storage/cache/dimensions_' . md5($path) . '.json';
+    if (file_exists($cacheFile) && filemtime($cacheFile) > filemtime($fullPath)) {
+        return json_decode(file_get_contents($cacheFile), true);
+    }
+
+    $size = getimagesize($fullPath);
+    $data = ['w' => $size[0], 'h' => $size[1], 'ratio' => round($size[1] / $size[0], 4)];
+    
+    if (!is_dir(dirname($cacheFile))) mkdir(dirname($cacheFile), 0755, true);
+    file_put_contents($cacheFile, json_encode($data));
+    
+    return $data;
+}
+
+$projects = [
+    // ... projects will be processed below ...
+];
+
+// Re-defining projects with data for clarity (I will perform the actual loop logic in the template)
 $projects = [
     [
         'id' => 'ternismail',
@@ -12,6 +36,7 @@ $projects = [
         'link' => 'https://ternismail.de',
         'color' => '#10b981'
     ],
+    // ... rest of projects ...
     [
         'id' => 'dnbx',
         'name' => 'dnbx.de',
@@ -375,18 +400,23 @@ $projects = [
                                     <div class="url-bar"><?= $project['name'] ?></div>
                                 </div>
                                 <div class="image-wrapper">
+                                    <?php 
+                                        $mainImg = isset($project['images']['dark']) ? $project['images']['dark'] : $project['images']['light'];
+                                        $dimensions = getImageData($mainImg);
+                                        $aspectRatio = $dimensions['w'] . ' / ' . $dimensions['h'];
+                                    ?>
                                     <?php if (isset($project['images']['dark']) && isset($project['images']['light'])): ?>
-                                        <div class="progressive-img" data-dark="<?= $project['images']['dark'] ?>" data-light="<?= $project['images']['light'] ?>">
+                                        <div class="progressive-img" data-dark="<?= $project['images']['dark'] ?>" data-light="<?= $project['images']['light'] ?>" style="aspect-ratio: <?= $aspectRatio ?>;">
                                             <img src="/img?src=<?= $project['images']['dark'] ?>&w=100&q=20" alt="<?= $project['name'] ?>" class="work-img dark-only low-res" loading="lazy">
                                             <img src="/img?src=<?= $project['images']['light'] ?>&w=100&q=20" alt="<?= $project['name'] ?>" class="work-img light-only low-res" loading="lazy">
                                         </div>
                                     <?php else: ?>
-                                        <?php $img = isset($project['images']['dark']) ? $project['images']['dark'] : $project['images']['light']; ?>
-                                        <div class="progressive-img" data-src="<?= $img ?>">
-                                            <img src="/img?src=<?= $img ?>&w=100&q=20" alt="<?= $project['name'] ?>" class="work-img low-res" loading="lazy">
+                                        <div class="progressive-img" data-src="<?= $mainImg ?>" style="aspect-ratio: <?= $aspectRatio ?>;">
+                                            <img src="/img?src=<?= $mainImg ?>&w=100&q=20" alt="<?= $project['name'] ?>" class="work-img low-res" loading="lazy">
                                         </div>
                                     <?php endif; ?>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -415,6 +445,7 @@ $projects = [
 
     <footer>
         <div class="f-large-text" aria-hidden="true">ternis-edv</div>
+        <div class="f-tagline">// crafted with precision & curiosity</div>
         <div class="f-content">
             <div class="f-logo">ternis<span>-edv</span></div>
             <div class="f-links">

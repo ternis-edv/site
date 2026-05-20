@@ -12,7 +12,8 @@ class ImageProcessor {
             $this->error("Source image missing", 400);
         }
 
-        $realPath = realpath(__DIR__ . '/../../public/' . $src);
+        // Assets are now in root /assets
+        $realPath = realpath(__DIR__ . '/../../' . $src);
         if (!$realPath || !file_exists($realPath)) {
             $this->error("Image not found: " . $src, 404);
         }
@@ -23,18 +24,34 @@ class ImageProcessor {
         }
 
         $mime = $info['mime'];
-        header("Content-Type: $mime");
 
-        // If no width specified, just output the original (with potential quality loss for JPEGs)
+        // If no width specified, just output the original
         if (!$width) {
+            header("Content-Type: $mime");
             readfile($realPath);
             exit;
         }
 
-        $this->resize($realPath, $mime, $width, $quality);
+        // Caching logic
+        $cacheDir = __DIR__ . '/../../storage/cache/img';
+        if (!is_dir($cacheDir)) {
+            mkdir($cacheDir, 0755, true);
+        }
+
+        $cacheKey = md5($src . $width . $quality) . '.' . pathinfo($src, PATHINFO_EXTENSION);
+        $cachePath = $cacheDir . '/' . $cacheKey;
+
+        if (file_exists($cachePath) && filemtime($cachePath) > filemtime($realPath)) {
+            header("Content-Type: $mime");
+            header("X-Cache: HIT");
+            readfile($cachePath);
+            exit;
+        }
+
+        $this->resize($realPath, $mime, $width, $quality, $cachePath);
     }
 
-    private function resize($path, $mime, $width, $quality) {
+    private function resize($path, $mime, $width, $quality, $cachePath) {
         list($origWidth, $origHeight) = getimagesize($path);
         $ratio = $origHeight / $origWidth;
         $height = (int)($width * $ratio);
@@ -49,7 +66,7 @@ class ImageProcessor {
 
         $dstImg = imagecreatetruecolor($width, $height);
 
-        // Preserve transparency for PNG and WebP
+        // Preserve transparency
         if ($mime == 'image/png' || $mime == 'image/webp') {
             imagealphablending($dstImg, false);
             imagesavealpha($dstImg, true);
@@ -57,13 +74,23 @@ class ImageProcessor {
 
         imagecopyresampled($dstImg, $srcImg, 0, 0, 0, 0, $width, $height, $origWidth, $origHeight);
 
+        header("Content-Type: $mime");
+        header("X-Cache: MISS");
+
         switch ($mime) {
-            case 'image/jpeg': imagejpeg($dstImg, null, $quality); break;
+            case 'image/jpeg': 
+                imagejpeg($dstImg, $cachePath, $quality);
+                imagejpeg($dstImg, null, $quality); 
+                break;
             case 'image/png': 
-                $pngQuality = (int)((100 - $quality) / 10); // 0-9 for PNG
+                $pngQuality = (int)((100 - $quality) / 10);
+                imagepng($dstImg, $cachePath, $pngQuality); 
                 imagepng($dstImg, null, $pngQuality); 
                 break;
-            case 'image/webp': imagewebp($dstImg, null, $quality); break;
+            case 'image/webp': 
+                imagewebp($dstImg, $cachePath, $quality);
+                imagewebp($dstImg, null, $quality); 
+                break;
         }
 
         imagedestroy($srcImg);
