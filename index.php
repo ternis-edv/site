@@ -203,7 +203,17 @@ $projects = [
 
     <nav id="nav">
         <a href="#" class="nav-logo">ternis<span>-edv</span></a>
-        <ul class="nav-links">
+
+        <!-- Mobile Toggle Added -->
+        <button id="mobile-toggle" aria-label="Menü öffnen" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path class="line-1" d="M4 6h16"/>
+                <path class="line-2" d="M4 12h16"/>
+                <path class="line-3" d="M4 18h16"/>
+            </svg>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
             <li><a href="#services">Leistungen</a></li>
             <li><a href="#work">Projekte</a></li>
             <li><a href="#about">Über uns</a></li>
