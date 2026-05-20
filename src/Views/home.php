@@ -364,11 +364,15 @@ $projects = [
                                 </div>
                                 <div class="image-wrapper">
                                     <?php if (isset($project['images']['dark']) && isset($project['images']['light'])): ?>
-                                        <img src="<?= $project['images']['dark'] ?>" alt="<?= $project['name'] ?>" class="work-img dark-only" loading="lazy">
-                                        <img src="<?= $project['images']['light'] ?>" alt="<?= $project['name'] ?>" class="work-img light-only" loading="lazy">
+                                        <div class="progressive-img" data-dark="<?= $project['images']['dark'] ?>" data-light="<?= $project['images']['light'] ?>">
+                                            <img src="/img?src=<?= $project['images']['dark'] ?>&w=100&q=20" alt="<?= $project['name'] ?>" class="work-img dark-only low-res" loading="lazy">
+                                            <img src="/img?src=<?= $project['images']['light'] ?>&w=100&q=20" alt="<?= $project['name'] ?>" class="work-img light-only low-res" loading="lazy">
+                                        </div>
                                     <?php else: ?>
                                         <?php $img = isset($project['images']['dark']) ? $project['images']['dark'] : $project['images']['light']; ?>
-                                        <img src="<?= $img ?>" alt="<?= $project['name'] ?>" class="work-img" loading="lazy">
+                                        <div class="progressive-img" data-src="<?= $img ?>">
+                                            <img src="/img?src=<?= $img ?>&w=100&q=20" alt="<?= $project['name'] ?>" class="work-img low-res" loading="lazy">
+                                        </div>
                                     <?php endif; ?>
                                 </div>
                             </div>

@@ -141,6 +141,46 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModal();
     });
 
+    // Progressive Image Loading
+    const progressiveImages = document.querySelectorAll('.progressive-img');
+    
+    const loadHighRes = (container) => {
+        const isDark = body.classList.contains('theme-dark');
+        const darkSrc = container.getAttribute('data-dark');
+        const lightSrc = container.getAttribute('data-light');
+        const singleSrc = container.getAttribute('data-src');
+        
+        const loadImg = (src, className) => {
+            if (!src) return;
+            const highRes = new Image();
+            // Requesting a high-res version via processor (e.g. 1200px)
+            highRes.src = `/img?src=${src}&w=1200&q=85`;
+            highRes.className = `work-img ${className} high-res`;
+            highRes.onload = () => {
+                container.appendChild(highRes);
+                setTimeout(() => highRes.classList.add('loaded'), 50);
+            };
+        };
+
+        if (singleSrc) {
+            loadImg(singleSrc, '');
+        } else {
+            loadImg(darkSrc, 'dark-only');
+            loadImg(lightSrc, 'light-only');
+        }
+    };
+
+    const imgObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                loadHighRes(entry.target);
+                imgObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    progressiveImages.forEach(img => imgObserver.observe(img));
+
     // Scroll Logic (Performance Optimized)
     const nav = document.getElementById('nav');
     const backToTop = document.getElementById('back-to-top');
