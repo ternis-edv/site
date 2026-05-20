@@ -132,10 +132,6 @@ $projects = [
                     <p>E-Mail: info@ternis-edv.de</p>
                 </div>
                 <div class="modal-section">
-                    <h3>Umsatzsteuer-ID</h3>
-                    <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br>DE123456789</p>
-                </div>
-                <div class="modal-section">
                     <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
                     <p>Fabian Ternis<br>Alzeyer Str. 97<br>67592 Flörsheim-Dalsheim</p>
                 </div>
@@ -148,11 +144,18 @@ $projects = [
             <div class="modal-body">
                 <h2>Datenschutz</h2>
                 <div class="modal-section">
-                    <p>Wir verarbeiten Ihre Daten ausschließlich auf Grundlage der gesetzlichen Bestimmungen (DSGVO, TMG).</p>
-                    <h3>1. Datenschutz auf einen Blick</h3>
-                    <p><strong>Allgemeine Hinweise</strong><br>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen.</p>
+                    <p>Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.</p>
+
+                    <h3>1. Allgemeine Hinweise</h3>
+                    <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.</p>
+
                     <h3>2. Datenerfassung auf dieser Website</h3>
-                    <p><strong>Cookies</strong><br>Unsere Internetseiten verwenden teilweise sogenannte "Cookies". Cookies richten auf Ihrem Rechner keinen Schaden an und enthalten keine Viren.</p>
+                    <p><strong>Server-Log-Dateien</strong><br>Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten Server-Log-Dateien, die Ihr Browser automatisch an uns übermittelt. Dies sind: Browsertyp und Browserversion, verwendetes Betriebssystem, Referrer URL, Hostname des zugreifenden Rechners, Uhrzeit der Serveranfrage, IP-Adresse. Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen.</p>
+                    <p><strong>Cookies</strong><br>Unsere Internetseiten verwenden teilweise so genannte "Cookies". Cookies richten auf Ihrem Rechner keinen Schaden an und enthalten keine Viren. Sie dienen dazu, unser Angebot nutzerfreundlicher, effektiver und sicherer zu machen.</p>
+                    <p><strong>Kontaktanfragen</strong><br>Wenn Sie uns per E-Mail kontaktieren, werden Ihre Angaben inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
+
+                    <h3>3. Ihre Rechte</h3>
+                    <p>Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung oder Löschung dieser Daten zu verlangen. Hierzu sowie zu weiteren Fragen zum Thema Datenschutz können Sie sich jederzeit unter der im Impressum angegebenen Adresse an uns wenden.</p>
                 </div>
             </div>
         </div>
@@ -270,15 +273,15 @@ $projects = [
         <section class="hero" id="home">
             <div class="hero-grid"></div>
             <div class="hero-content">
-                <div class="hero-eyebrow reveal">// Webentwicklung aus Deutschland</div>
-                <h1 class="hero-title reveal">Wir bauen<br>das <em>Web</em><br>von morgen.</h1>
-                <p class="hero-sub reveal">Websites, Landingpages und Web-Applikationen — präzise entwickelt, leichtgewichtig und ohne Bloat.</p>
-                <div class="hero-actions reveal">
-                    <a href="#work" class="btn-p">Projekte ansehen →</a>
+                <div class="hero-eyebrow">// Webentwicklung aus Deutschland</div>
+                <h1 class="hero-title">Wir bauen<br>das <em>Web</em><br>von morgen.</h1>
+                <p class="hero-sub">Websites, Landingpages und Web-Applikationen — präzise entwickelt, leichtgewichtig und ohne Bloat.</p>
+                <div class="hero-actions">
+                    <a href="#work" class="btn-p">Projekte ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1em; height: 1em;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                     <a href="#contact" class="btn-g">Kontakt aufnehmen</a>
                 </div>
             </div>
-            <div class="hero-hint reveal">scroll down</div>
+            <div class="hero-hint">scroll down</div>
         </section>
 
         <section class="services" id="services">
@@ -288,22 +291,18 @@ $projects = [
             </div>
             <div class="svc-grid">
                 <div class="svc-card reveal">
-                    <div class="svc-icon">01</div>
                     <div class="svc-name">Websites</div>
                     <p class="svc-desc">Schnelle, zugängliche und suchmaschinenoptimierte Webseiten — maßgeschneidert, ohne unnötigen Overhead.</p>
                 </div>
                 <div class="svc-card reveal">
-                    <div class="svc-icon">02</div>
                     <div class="svc-name">Landingpages</div>
                     <p class="svc-desc">Conversion-optimierte Seiten, die Besucher in Kunden verwandeln. Klar, fokussiert und messbar.</p>
                 </div>
                 <div class="svc-card reveal">
-                    <div class="svc-icon">03</div>
                     <div class="svc-name">Web-Applikationen</div>
                     <p class="svc-desc">Komplexe Webanwendungen, APIs und Backends — von der Konzeption bis zum Deployment.</p>
                 </div>
                 <div class="svc-card reveal">
-                    <div class="svc-icon">04</div>
                     <div class="svc-name">Hosting & Pflege</div>
                     <p class="svc-desc">Zuverlässiges Hosting, kontinuierliche Wartung und persönliche Betreuung deiner digitalen Präsenz.</p>
                 </div>
