@@ -337,13 +337,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Reveals
+    const revealElements = document.querySelectorAll('.reveal, .project-section');
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                revealObserver.unobserve(entry.target); // Stop observing once visible to save memory
+                revealObserver.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal, .project-section').forEach(el => revealObserver.observe(el));
+    }, { 
+        threshold: 0.05,
+        rootMargin: '0px 0px -20px 0px' 
+    });
+
+    const checkReveals = () => {
+        revealElements.forEach(el => {
+            if (!el.classList.contains('visible')) {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 20) {
+                    el.classList.add('visible');
+                    revealObserver.unobserve(el);
+                }
+            }
+        });
+    };
+
+    revealElements.forEach(el => revealObserver.observe(el));
+    
+    // Initial check for elements already in view (especially when landing on anchor)
+    setTimeout(checkReveals, 100);
+    window.addEventListener('load', checkReveals);
 });
