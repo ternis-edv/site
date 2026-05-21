@@ -1,6 +1,6 @@
 <section class="services" id="services">
     <div class="services-hd">
-        <div class="label reveal">// 01 Leistungen</div>
+        <div class="label reveal">// Leistungen</div>
         <h2 class="sec-title reveal">Was wir <br class="mobile-break">für dich bauen</h2>
     </div>
     <div class="svc-grid">
