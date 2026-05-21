@@ -1,6 +1,6 @@
 <section class="work" id="work">
     <div class="work-hd">
-        <div class="label reveal">// 02 Projekte</div>
+        <div class="label reveal">// Projekte</div>
         <h2 class="sec-title reveal">Ausgewählte Arbeiten</h2>
     </div>
 
