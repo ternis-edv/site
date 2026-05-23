@@ -22,6 +22,38 @@ require_once __DIR__ . '/partials/header.php';
             </div>
         </section>
     </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const eyes = document.querySelectorAll('.m-eye');
+        if (eyes.length > 0) {
+            document.addEventListener('mousemove', (e) => {
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+
+                eyes.forEach(eye => {
+                    const rect = eye.getBoundingClientRect();
+                    const eyeCenterX = rect.left + rect.width / 2;
+                    const eyeCenterY = rect.top + rect.height / 2;
+
+                    const deltaX = mouseX - eyeCenterX;
+                    const deltaY = mouseY - eyeCenterY;
+
+                    // Calculate max movement distance
+                    const maxDist = 8;
+                    const angle = Math.atan2(deltaY, deltaX);
+                    const dist = Math.min(Math.hypot(deltaX, deltaY) / 20, maxDist);
+
+                    const moveX = Math.cos(angle) * dist;
+                    const moveY = Math.sin(angle) * dist;
+
+                    eye.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                });
+            });
+        }
+    });
+</script>
+
 <?php
 require_once __DIR__ . '/partials/footer.php';
 ?>

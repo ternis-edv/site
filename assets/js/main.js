@@ -302,17 +302,55 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('load', checkReveals);
 
     // Project Navigation
-    const navButtons = document.querySelectorAll('.nav-btn');
-    navButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const targetIndex = btn.getAttribute('data-target');
-            if (targetIndex !== null) {
-                const targetProject = document.querySelector(`.project-section[data-index="${targetIndex}"]`);
-                if (targetProject) {
-                    targetProject.scrollIntoView({ behavior: 'smooth' });
+    const globalNav = document.querySelector('.global-project-nav');
+    const prevBtn = document.querySelector('.global-project-nav .prev-btn');
+    const nextBtn = document.querySelector('.global-project-nav .next-btn');
+    const projectSections = document.querySelectorAll('.project-section');
+
+    if (globalNav && prevBtn && nextBtn && projectSections.length > 0) {
+        // IntersectionObserver to determine current project
+        const projectObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
+                    const index = parseInt(entry.target.getAttribute('data-index'));
+                    const maxIndex = projectSections.length - 1;
+
+                    if (index === 0) {
+                        prevBtn.disabled = true;
+                        prevBtn.removeAttribute('data-target');
+                    } else {
+                        prevBtn.disabled = false;
+                        prevBtn.setAttribute('data-target', index - 1);
+                    }
+
+                    if (index === maxIndex) {
+                        nextBtn.disabled = true;
+                        nextBtn.removeAttribute('data-target');
+                    } else {
+                        nextBtn.disabled = false;
+                        nextBtn.setAttribute('data-target', index + 1);
+                    }
                 }
-            }
+            });
+        }, {
+            threshold: [0.3]
         });
-    });
+
+        projectSections.forEach(section => projectObserver.observe(section));
+
+        const navButtons = document.querySelectorAll('.nav-btn');
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if(btn.disabled) return;
+                const targetIndex = btn.getAttribute('data-target');
+                if (targetIndex !== null) {
+                    const targetProject = document.querySelector(`.project-section[data-index="${targetIndex}"]`);
+                    if (targetProject) {
+                        targetProject.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+    }
 
 });
