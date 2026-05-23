@@ -203,28 +203,22 @@ nav.scrolled {
 .svc-card:hover .svc-desc { color: var(--text); }
 
 /* ── Work ── */
-.work { background: var(--bg); position: relative; transition: background-color 0.8s ease; z-index: 10; overflow: hidden; }
+.work { background: var(--bg); position: relative; transition: background-color 0.8s ease; z-index: 10; }
 .work-hd { padding: 10rem 3rem 5rem; }
 
-/* Desktop Horizontal Scroll Layout */
-.work-scroll-track { height: auto; position: relative; } /* Height gets set by JS based on container width */
-.work-scroll-sticky { position: sticky; top: 0; left: 0; width: 100vw; height: 100vh; overflow: hidden; }
-.work-scroll-container { display: flex; height: 100%; will-change: transform; flex-wrap: nowrap; width: max-content; }
-
-.project-section { width: 100vw; height: 100vh; flex-shrink: 0; position: relative; border-right: 1px solid var(--border); background: var(--bg); }
-.project-container { display: flex; align-items: center; width: 100%; height: 100%; }
+/* Desktop Vertical Layout */
+.work-list { display: flex; flex-direction: column; }
+.project-section { width: 100%; position: relative; border-bottom: 1px solid var(--border); background: transparent; }
+.project-container { display: flex; align-items: flex-start; width: 100%; }
 .project-info {
   width: 40%;
-  height: 100%;
+  height: 100vh;
+  position: sticky;
+  top: 0;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 5rem;
+  align-items: center;
+  padding: 0 4rem;
   border-right: 1px solid var(--border);
-  background: var(--bg);
-  overflow-y: auto;
-  scrollbar-width: thin; scrollbar-color: var(--border-b) transparent;
-  z-index: 2;
 }
 .project-info::-webkit-scrollbar { width: 6px; }
 .project-info::-webkit-scrollbar-thumb { background: var(--border-b); border-radius: 10px; }
@@ -244,8 +238,7 @@ nav.scrolled {
 .p-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--accent); transform: scaleX(0.2); transform-origin: left; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 .p-link:hover::after { transform: scaleX(1); }
 
-.project-visual { width: 60%; padding: 4rem 5vw; height: 100%; display: flex; align-items: center; justify-content: center; }
-.project-section.visible .project-visual { opacity: 1; }
+.project-visual { width: 60%; padding: 10vh 5vw; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
 .browser-frame {
   background: var(--surface); border: 1px solid var(--border-b); border-radius: 8px;
   overflow: hidden; box-shadow: none;
@@ -755,13 +748,10 @@ body.modal-open {
 #mobile-toggle[aria-expanded="true"] .line-3 { transform: translateY(-6px) rotate(-45deg); transform-origin: center; }
 
 @media (max-width: 1024px) {
-  .work-scroll-track { height: auto !important; }
-  .work-scroll-sticky { position: relative; height: auto; width: 100%; }
-  .work-scroll-container { display: block; width: 100%; transform: none !important; }
   .project-section { width: 100%; height: auto; border-right: none; }
   .project-container { flex-direction: column; height: auto; }
   .project-info { width: 100%; height: auto; position: relative; border-right: none; padding: 4rem 2rem; border-bottom: 1px solid var(--border); }
-  .project-visual { width: 100%; padding: 4rem 2rem; height: auto; }
+  .project-visual { width: 100%; padding: 10vh 5vw; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
   .footer-links-grid { grid-template-columns: 1fr; gap: 3rem; }
 }
 
