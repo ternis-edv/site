@@ -300,4 +300,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial check for elements already in view (especially when landing on anchor)
     setTimeout(checkReveals, 100);
     window.addEventListener('load', checkReveals);
+
+    // Project Navigation
+    const navButtons = document.querySelectorAll('.nav-btn');
+    navButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetIndex = btn.getAttribute('data-target');
+            if (targetIndex !== null) {
+                const targetProject = document.querySelector(`.project-section[data-index="${targetIndex}"]`);
+                if (targetProject) {
+                    targetProject.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    });
+
 });
