@@ -141,73 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModal();
     });
 
-    // Progressive Image Loading
-    const progressiveImages = document.querySelectorAll('.progressive-img');
-    const preloadQueue = [];
-    
-    const loadHighRes = (container) => {
-        const darkSrc = container.getAttribute('data-dark');
-        const lightSrc = container.getAttribute('data-light');
-        const singleSrc = container.getAttribute('data-src');
-        
-        const loadImg = (src, className, isPreload = false) => {
-            if (!src) return;
-            const highRes = new Image();
-            highRes.src = `/img?src=${src}&w=1200&q=85`;
-            highRes.className = `work-img ${className} high-res ${isPreload ? 'preloaded' : ''}`;
-            highRes.onload = () => {
-                container.appendChild(highRes);
-                if (!isPreload) {
-                    setTimeout(() => highRes.classList.add('loaded'), 50);
-                    // After primary high-res is loaded, queue the alternate theme for background preloading
-                    if (darkSrc && lightSrc) {
-                        const altSrc = className === 'dark-only' ? lightSrc : darkSrc;
-                        const altClass = className === 'dark-only' ? 'light-only' : 'dark-only';
-                        preloadQueue.push({ container, src: altSrc, className: altClass });
-                        processPreloadQueue();
-                    }
-                }
-            };
-        };
-
-        if (singleSrc) {
-            loadImg(singleSrc, '');
-        } else {
-            const isDark = body.classList.contains('theme-dark');
-            loadImg(isDark ? darkSrc : lightSrc, isDark ? 'dark-only' : 'light-only');
-        }
-    };
-
-    let isPreloading = false;
-    const processPreloadQueue = () => {
-        if (isPreloading || preloadQueue.length === 0) return;
-        isPreloading = true;
-        
-        const item = preloadQueue.shift();
-        const highRes = new Image();
-        highRes.src = `/img?src=${item.src}&w=1200&q=85`;
-        highRes.className = `work-img ${item.className} high-res preloaded`;
-        highRes.onload = () => {
-            item.container.appendChild(highRes);
-            setTimeout(() => {
-                highRes.classList.add('loaded');
-                isPreloading = false;
-                processPreloadQueue();
-            }, 200); // Small delay between preloads to keep main thread happy
-        };
-    };
-
-    const imgObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                loadHighRes(entry.target);
-                imgObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    progressiveImages.forEach(img => imgObserver.observe(img));
-
     // Footer Time
     const timeEl = document.getElementById('current-time');
     if (timeEl) {
@@ -256,6 +189,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Horizontal Scroll Hijacking Setup
+    const workScrollTrack = document.getElementById('work-scroll-track');
+    const workScrollContainer = document.getElementById('work-scroll-container');
+
+    const initHorizontalScroll = () => {
+        if (!workScrollTrack || !workScrollContainer) return;
+
+        if (window.innerWidth > 1024) {
+            const containerWidth = workScrollContainer.scrollWidth;
+            // The height of the track equals the horizontal scroll distance plus viewport height
+            const trackHeight = containerWidth - window.innerWidth + window.innerHeight;
+            workScrollTrack.style.height = `${trackHeight}px`;
+        } else {
+            workScrollTrack.style.height = 'auto';
+        }
+    };
+
+    // Initialize and handle resizes
+    if (workScrollTrack && workScrollContainer) {
+        initHorizontalScroll();
+        window.addEventListener('resize', initHorizontalScroll);
+    }
+
     // Scroll Logic (Performance Optimized)
     const nav = document.getElementById('nav');
     const backToTop = document.getElementById('back-to-top');
@@ -270,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Nav & BackToTop
         nav.classList.toggle('scrolled', scrollY > 50);
-        backToTop.classList.toggle('show', scrollY > 800);
+        if (backToTop) backToTop.classList.toggle('show', scrollY > 800);
 
         // Global Page Progress
         if (pageProgress) {
@@ -279,23 +235,50 @@ document.addEventListener('DOMContentLoaded', () => {
             pageProgress.style.width = `${scrollPercent}%`;
         }
 
+        // Horizontal Scroll Translation
+        if (workScrollTrack && workScrollContainer && window.innerWidth > 1024) {
+            const trackRect = workScrollTrack.getBoundingClientRect();
+            // Start scrolling horizontally when the track reaches the top of the viewport
+            if (trackRect.top <= 0 && trackRect.bottom >= window.innerHeight) {
+                const scrollProgress = -trackRect.top;
+                workScrollContainer.style.transform = `translateX(-${scrollProgress}px)`;
+            } else if (trackRect.top > 0) {
+                workScrollContainer.style.transform = `translateX(0px)`;
+            } else if (trackRect.bottom < window.innerHeight) {
+                const maxScroll = workScrollContainer.scrollWidth - window.innerWidth;
+                workScrollContainer.style.transform = `translateX(-${maxScroll}px)`;
+            }
+        } else if (workScrollContainer) {
+            workScrollContainer.style.transform = `none`;
+        }
+
         // Project Background Transition
         if (workSection) {
             let activeProject = null;
-            const threshold = window.innerHeight * 0.4;
 
-            projectSections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                if (rect.top <= threshold && rect.bottom >= threshold) {
-                    activeProject = section;
-                }
-            });
+            if (window.innerWidth > 1024 && workScrollTrack) {
+                const threshold = window.innerWidth * 0.4;
+                projectSections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    // On desktop, elements translate horizontally
+                    if (rect.left <= threshold && rect.right >= threshold) {
+                        activeProject = section;
+                    }
+                });
+            } else {
+                const threshold = window.innerHeight * 0.4;
+                projectSections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= threshold && rect.bottom >= threshold) {
+                        activeProject = section;
+                    }
+                });
+            }
 
             if (activeProject) {
                 const color = activeProject.getAttribute('data-color');
                 const isDark = body.classList.contains('theme-dark');
                 if (color) {
-                    // Apply subtle color overlay
                     workSection.style.backgroundColor = isDark ? `rgba(${hexToRgb(color)}, 0.05)` : `rgba(${hexToRgb(color)}, 0.03)`;
                 }
             } else {

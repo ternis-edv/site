@@ -56,7 +56,7 @@
 ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
 
 * { box-sizing: border-box; margin: 0; padding: 0; outline-color: var(--accent); }
-html { scroll-behavior: smooth; scroll-snap-type: y proximity; font-size: calc(16px * var(--font-scale)); scrollbar-width: thin; scrollbar-color: var(--border-b) var(--bg); }
+html { scroll-behavior: smooth; font-size: calc(16px * var(--font-scale)); scrollbar-width: thin; scrollbar-color: var(--border-b) var(--bg); }
 html::-webkit-scrollbar { width: 8px; }
 html::-webkit-scrollbar-track { background: var(--bg); }
 html::-webkit-scrollbar-thumb { background: var(--border-b); border-radius: 4px; }
@@ -203,25 +203,27 @@ nav.scrolled {
 .svc-card:hover .svc-desc { color: var(--text); }
 
 /* ── Work ── */
-.work { background: var(--bg); position: relative; transition: background-color 0.8s ease; z-index: 10; }
+.work { background: var(--bg); position: relative; transition: background-color 0.8s ease; z-index: 10; overflow: hidden; }
 .work-hd { padding: 10rem 3rem 5rem; }
 
-.project-section { position: relative; border-top: 1px solid var(--border); scroll-snap-align: start; background: var(--bg); }
-.project-container { display: flex; align-items: flex-start; }
+/* Desktop Horizontal Scroll Layout */
+.work-scroll-track { height: auto; position: relative; } /* Height gets set by JS based on container width */
+.work-scroll-sticky { position: sticky; top: 0; left: 0; width: 100vw; height: 100vh; overflow: hidden; }
+.work-scroll-container { display: flex; height: 100%; will-change: transform; flex-wrap: nowrap; width: max-content; }
+
+.project-section { width: 100vw; height: 100vh; flex-shrink: 0; position: relative; border-right: 1px solid var(--border); background: var(--bg); }
+.project-container { display: flex; align-items: center; width: 100%; height: 100%; }
 .project-info {
-  /* Modify existing .project-info */
   width: 40%;
-  height: 100vh;
-  position: sticky;
-  top: 0;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 5rem;
   border-right: 1px solid var(--border);
   background: var(--bg);
-  overflow-y: auto; /* Required if content > viewport */
-  scrollbar-width: thin; scrollbar-color: var(--border-b) transparent; /* Style scrollbar */
+  overflow-y: auto;
+  scrollbar-width: thin; scrollbar-color: var(--border-b) transparent;
   z-index: 2;
 }
 .project-info::-webkit-scrollbar { width: 6px; }
@@ -242,7 +244,7 @@ nav.scrolled {
 .p-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--accent); transform: scaleX(0.2); transform-origin: left; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 .p-link:hover::after { transform: scaleX(1); }
 
-.project-visual { width: 60%; padding: 10rem 5vw; }
+.project-visual { width: 60%; padding: 4rem 5vw; height: 100%; display: flex; align-items: center; justify-content: center; }
 .project-section.visible .project-visual { opacity: 1; }
 .browser-frame {
   background: var(--surface); border: 1px solid var(--border-b); border-radius: 8px;
@@ -258,7 +260,7 @@ nav.scrolled {
   background: var(--surface); 
   position: relative;
 }
-.progressive-img { 
+.native-img {
   position: relative; 
   width: 100%; 
   background: var(--surface);
@@ -268,12 +270,8 @@ nav.scrolled {
   width: 100%; 
   height: auto; 
   display: block; 
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, filter 0.6s ease; 
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.work-img.low-res { filter: blur(10px); }
-.work-img.high-res { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; z-index: 2; }
-.work-img.high-res.loaded { opacity: 1; }
-.work-img.high-res.loaded + .low-res { opacity: 0; }
 
 .theme-dark .light-only, .theme-light .dark-only { display: none; }
 
@@ -757,9 +755,13 @@ body.modal-open {
 #mobile-toggle[aria-expanded="true"] .line-3 { transform: translateY(-6px) rotate(-45deg); transform-origin: center; }
 
 @media (max-width: 1024px) {
-  .project-container { flex-direction: column; }
+  .work-scroll-track { height: auto !important; }
+  .work-scroll-sticky { position: relative; height: auto; width: 100%; }
+  .work-scroll-container { display: block; width: 100%; transform: none !important; }
+  .project-section { width: 100%; height: auto; border-right: none; }
+  .project-container { flex-direction: column; height: auto; }
   .project-info { width: 100%; height: auto; position: relative; border-right: none; padding: 4rem 2rem; border-bottom: 1px solid var(--border); }
-  .project-visual { width: 100%; padding: 4rem 2rem; }
+  .project-visual { width: 100%; padding: 4rem 2rem; height: auto; }
   .footer-links-grid { grid-template-columns: 1fr; gap: 3rem; }
 }
 
