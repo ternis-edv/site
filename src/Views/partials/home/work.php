@@ -4,10 +4,13 @@
         <h2 class="sec-title reveal">Ausgewählte Arbeiten</h2>
     </div>
 
-    <?php foreach ($projects as $index => $project): ?>
-        <div class="project-section" id="project-<?= $project['id'] ?>" data-index="<?= $index ?>" data-color="<?= $project['color'] ?>">
-            <div class="project-container">
-                <div class="project-info">
+    <div class="work-scroll-track" id="work-scroll-track">
+        <div class="work-scroll-sticky">
+            <div class="work-scroll-container" id="work-scroll-container">
+                <?php foreach ($projects as $index => $project): ?>
+                    <div class="project-section" id="project-<?= $project['id'] ?>" data-index="<?= $index ?>" data-color="<?= $project['color'] ?>">
+                        <div class="project-container">
+                            <div class="project-info">
                     <div class="pi-content">
                         <span class="p-num"><?= str_pad($index + 1, 2, '0', STR_PAD_LEFT) ?> / <?= str_pad(count($projects), 2, '0', STR_PAD_LEFT) ?></span>
                         <h3 class="p-name"><?= $project['name'] ?></h3>
@@ -33,21 +36,22 @@
                                 $dimensions = getImageData($mainImg);
                                 $aspectRatio = $dimensions['w'] . ' / ' . $dimensions['h'];
                             ?>
-                            <?php if (isset($project['images']['dark']) && isset($project['images']['light'])): ?>
-                                <div class="progressive-img" data-dark="<?= $project['images']['dark'] ?>" data-light="<?= $project['images']['light'] ?>" style="aspect-ratio: <?= $aspectRatio ?>;">
-                                    <img src="/img?src=<?= $project['images']['dark'] ?>&w=100&q=20" alt="<?= $project['name'] ?>" class="work-img dark-only low-res" loading="lazy">
-                                    <img src="/img?src=<?= $project['images']['light'] ?>&w=100&q=20" alt="<?= $project['name'] ?>" class="work-img light-only low-res" loading="lazy">
-                                </div>
-                            <?php else: ?>
-                                <div class="progressive-img" data-src="<?= $mainImg ?>" style="aspect-ratio: <?= $aspectRatio ?>;">
-                                    <img src="/img?src=<?= $mainImg ?>&w=100&q=20" alt="<?= $project['name'] ?>" class="work-img low-res" loading="lazy">
-                                </div>
-                            <?php endif; ?>
+                            <div class="native-img" style="aspect-ratio: <?= $aspectRatio ?>;">
+                                <?php if (isset($project['images']['dark']) && isset($project['images']['light'])): ?>
+                                    <img src="/img?src=<?= $project['images']['dark'] ?>&w=1200&q=85" alt="<?= $project['name'] ?>" class="work-img dark-only" loading="lazy">
+                                    <img src="/img?src=<?= $project['images']['light'] ?>&w=1200&q=85" alt="<?= $project['name'] ?>" class="work-img light-only" loading="lazy">
+                                <?php else: ?>
+                                    <img src="/img?src=<?= $mainImg ?>&w=1200&q=85" alt="<?= $project['name'] ?>" class="work-img" loading="lazy">
+                                <?php endif; ?>
+                            </div>
                         </div>
 
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
-    <?php endforeach; ?>
+    </div>
 </section>
