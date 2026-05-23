@@ -189,28 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Horizontal Scroll Hijacking Setup
-    const workScrollTrack = document.getElementById('work-scroll-track');
-    const workScrollContainer = document.getElementById('work-scroll-container');
-
-    const initHorizontalScroll = () => {
-        if (!workScrollTrack || !workScrollContainer) return;
-
-        if (window.innerWidth > 1024) {
-            const containerWidth = workScrollContainer.scrollWidth;
-            // The height of the track equals the horizontal scroll distance plus viewport height
-            const trackHeight = containerWidth - window.innerWidth + window.innerHeight;
-            workScrollTrack.style.height = `${trackHeight}px`;
-        } else {
-            workScrollTrack.style.height = 'auto';
-        }
-    };
-
-    // Initialize and handle resizes
-    if (workScrollTrack && workScrollContainer) {
-        initHorizontalScroll();
-        window.addEventListener('resize', initHorizontalScroll);
-    }
 
     // Scroll Logic (Performance Optimized)
     const nav = document.getElementById('nav');
@@ -235,45 +213,17 @@ document.addEventListener('DOMContentLoaded', () => {
             pageProgress.style.width = `${scrollPercent}%`;
         }
 
-        // Horizontal Scroll Translation
-        if (workScrollTrack && workScrollContainer && window.innerWidth > 1024) {
-            const trackRect = workScrollTrack.getBoundingClientRect();
-            // Start scrolling horizontally when the track reaches the top of the viewport
-            if (trackRect.top <= 0 && trackRect.bottom >= window.innerHeight) {
-                const scrollProgress = -trackRect.top;
-                workScrollContainer.style.transform = `translateX(-${scrollProgress}px)`;
-            } else if (trackRect.top > 0) {
-                workScrollContainer.style.transform = `translateX(0px)`;
-            } else if (trackRect.bottom < window.innerHeight) {
-                const maxScroll = workScrollContainer.scrollWidth - window.innerWidth;
-                workScrollContainer.style.transform = `translateX(-${maxScroll}px)`;
-            }
-        } else if (workScrollContainer) {
-            workScrollContainer.style.transform = `none`;
-        }
-
-        // Project Background Transition
+                // Project Background Transition
         if (workSection) {
             let activeProject = null;
-
-            if (window.innerWidth > 1024 && workScrollTrack) {
-                const threshold = window.innerWidth * 0.4;
-                projectSections.forEach(section => {
-                    const rect = section.getBoundingClientRect();
-                    // On desktop, elements translate horizontally
-                    if (rect.left <= threshold && rect.right >= threshold) {
-                        activeProject = section;
-                    }
-                });
-            } else {
-                const threshold = window.innerHeight * 0.4;
-                projectSections.forEach(section => {
-                    const rect = section.getBoundingClientRect();
-                    if (rect.top <= threshold && rect.bottom >= threshold) {
-                        activeProject = section;
-                    }
-                });
-            }
+            const threshold = window.innerHeight * 0.5;
+            projectSections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= threshold && rect.bottom >= threshold) {
+                    activeProject = section;
+                    section.classList.add("visible");
+                }
+            });
 
             if (activeProject) {
                 const color = activeProject.getAttribute('data-color');

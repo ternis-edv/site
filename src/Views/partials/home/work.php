@@ -4,10 +4,10 @@
         <h2 class="sec-title reveal">Ausgewählte Arbeiten</h2>
     </div>
 
-    <div class="work-scroll-track" id="work-scroll-track">
-        <div class="work-scroll-sticky">
-            <div class="work-scroll-container" id="work-scroll-container">
-                <?php foreach ($projects as $index => $project): ?>
+    <div class="work-list">
+
+
+<?php foreach ($projects as $index => $project): ?>
                     <div class="project-section" id="project-<?= $project['id'] ?>" data-index="<?= $index ?>" data-color="<?= $project['color'] ?>">
                         <div class="project-container">
                             <div class="project-info">
@@ -17,7 +17,7 @@
                         <div class="p-type"><?= $project['type'] ?></div>
                         <p class="p-desc"><?= $project['desc'] ?></p>
                         <div class="p-stack">
-                            <?php foreach ($project['stack'] as $tech): ?>
+            <?php foreach ($project['stack'] as $tech): ?>
                                 <span class="tag"><?= $tech ?></span>
                             <?php endforeach; ?>
                         </div>
@@ -51,7 +51,5 @@
                         </div>
                     </div>
                 <?php endforeach; ?>
-            </div>
-        </div>
     </div>
 </section>
