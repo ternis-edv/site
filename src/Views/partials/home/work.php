@@ -22,14 +22,7 @@
                             <?php endforeach; ?>
                         </div>
                         <a href="<?= $project['link'] ?>" target="_blank" class="p-link">Live ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1em; height: 1em;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
-                        <div class="project-nav">
-                            <button class="nav-btn prev-btn" <?= $index === 0 ? 'disabled' : '' ?> data-target="<?= $index - 1 ?>" aria-label="Vorheriges Projekt">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.5em; height: 1.5em;"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                            </button>
-                            <button class="nav-btn next-btn" <?= $index === count($projects) - 1 ? 'disabled' : '' ?> data-target="<?= $index + 1 ?>" aria-label="Nächstes Projekt">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.5em; height: 1.5em;"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                            </button>
-                        </div>
+
 
                     </div>
                 </div>
@@ -60,5 +53,13 @@
                         </div>
                     </div>
                 <?php endforeach; ?>
+    </div>
+    <div class="global-project-nav project-nav">
+        <button class="nav-btn prev-btn" disabled aria-label="Vorheriges Projekt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.5em; height: 1.5em;"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="nav-btn next-btn" aria-label="Nächstes Projekt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.5em; height: 1.5em;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
     </div>
 </section>
