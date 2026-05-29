@@ -130,5 +130,17 @@ $projects = [
         ],
         'link' => '#',
         'color' => '#f59e0b'
+    ],
+    [
+        'id' => 'twins-on-ice',
+        'name' => 'twins-on-ice.de',
+        'type' => 'Unofficial Fanpage',
+        'desc' => 'A joint project by ternis-edv.de, xpsystems.eu, and dnbx.de. This unofficial fanpage serves as a community hub with a focus on modern aesthetics and interactive elements.',
+        'stack' => ['PHP', 'Vanilla JS', 'CSS3', 'Collaboration'],
+        'images' => [
+            'light' => 'assets/img/work/twins-on-ice.de_lander__LIGHT.png'
+        ],
+        'link' => 'https://twins-on-ice.de',
+        'color' => '#00a8ff'
     ]
 ];

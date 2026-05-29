@@ -34,17 +34,21 @@
                         </div>
                         <div class="image-wrapper">
                             <?php 
-                                $mainImg = isset($project['images']['dark']) ? $project['images']['dark'] : $project['images']['light'];
-                                $dimensions = getImageData($mainImg);
+                                $lightImg = $project['images']['light'] ?? (isset($project['images']['dark']) ? $project['images']['dark'] : '');
+                                $darkImg = $project['images']['dark'] ?? (isset($project['images']['light']) ? $project['images']['light'] : '');
+                                $currentImg = (isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'theme-light') ? $lightImg : $darkImg;
+                                
+                                $dimensions = getImageData($lightImg ?: $darkImg);
                                 $aspectRatio = $dimensions['w'] . ' / ' . $dimensions['h'];
                             ?>
                             <div class="native-img" style="aspect-ratio: <?= $aspectRatio ?>;">
-                                <?php if (isset($project['images']['dark']) && isset($project['images']['light'])): ?>
-                                    <img src="/img?src=<?= $project['images']['dark'] ?>&w=1200&q=85" alt="<?= $project['name'] ?>" class="work-img dark-only" loading="lazy">
-                                    <img src="/img?src=<?= $project['images']['light'] ?>&w=1200&q=85" alt="<?= $project['name'] ?>" class="work-img light-only" loading="lazy">
-                                <?php else: ?>
-                                    <img src="/img?src=<?= $mainImg ?>&w=1200&q=85" alt="<?= $project['name'] ?>" class="work-img" loading="lazy">
-                                <?php endif; ?>
+                                <img 
+                                    src="/img?src=<?= $currentImg ?>&w=1200&q=85" 
+                                    alt="<?= $project['name'] ?>" 
+                                    class="work-img theme-sensitive" 
+                                    data-light="/img?src=<?= $lightImg ?>&w=1200&q=85" 
+                                    data-dark="/img?src=<?= $darkImg ?>&w=1200&q=85"
+                                    loading="lazy">
                             </div>
                         </div>
 
