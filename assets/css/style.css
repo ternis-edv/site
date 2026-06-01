@@ -185,11 +185,11 @@ nav {
   width: calc(100% - 8rem);
   max-width: 1200px;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0.5rem 2rem;
+  padding: 0.8rem 2rem;
   background: transparent;
   transition: all 0.4s var(--ease);
   border: 1px solid transparent;
-  border-radius: calc(100px * var(--radius-factor));
+  border-radius: var(--br-lg);
 }
 .nav-logo { font-family: var(--fd); font-weight: 800; font-size: 1.2rem; letter-spacing: -.04em; transition: opacity 0.3s; flex-shrink: 0; }
 .nav-logo:hover { opacity: 0.8; }
@@ -219,7 +219,7 @@ nav {
   padding: .6rem 1.4rem; border-radius: 4px; letter-spacing: .02em;
   transition: all 0.3s;
 }
-.nav-cta:hover { transform: translateY(-2px); opacity: 0.9; }
+.nav-cta:hover { opacity: 0.9; }
 
 #mobile-toggle { 
   display: none; 
@@ -441,7 +441,6 @@ nav {
 }
 
 .global-project-nav:hover {
-  transform: translateY(-5px);
 }
 
 @media (max-width: 1024px) {
@@ -474,7 +473,6 @@ nav {
   border-color: var(--text);
   color: var(--bg);
   background: var(--text);
-  transform: translateY(-2px);
 }
 .nav-btn:disabled {
   opacity: 0.15;
@@ -803,7 +801,8 @@ body.modal-open {
 .range-ui::-webkit-slider-thumb:hover { transform: scale(1.2); }
 
 /* --- Update global radii --- */
-.nav-cta, .btn-p, .btn-g, .tag { border-radius: var(--br); }
+.btn-p, .btn-g, .tag { border-radius: var(--br); }
+.nav-cta { border-radius: calc(var(--br-lg) - 0.4rem); }
 .svc-card, .faq-card, .mascot-v2, .footer-mascot, .modal-content, .cookie-banner { border-radius: var(--br-lg); }
 /* --- Fix nav scrolled state --- */
 nav.scrolled {
