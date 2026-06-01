@@ -182,14 +182,13 @@ body.a11y-dyslexia-font {
 nav {
   position: fixed; top: 1rem; left: 50%; z-index: 1000;
   transform: translateX(-50%);
-  width: calc(100% - 4rem);
-  max-width: 1400px;
+  width: calc(100% - 8rem);
+  max-width: 1200px;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0.8rem 2rem;
+  padding: 0.5rem 2rem;
   background: transparent;
   transition: all 0.4s var(--ease);
   border: 1px solid transparent;
-  height: var(--nav-h);
   border-radius: calc(100px * var(--radius-factor));
 }
 .nav-logo { font-family: var(--fd); font-weight: 800; font-size: 1.2rem; letter-spacing: -.04em; transition: opacity 0.3s; flex-shrink: 0; }
@@ -1093,7 +1092,7 @@ nav.scrolled {
 
 /* --- Responsive Breakpoints Override --- */
 @media (max-width: 768px) {
-  nav { padding: 1rem 2rem; }
+  nav { padding: 0.8rem 1.5rem; width: calc(100% - 2rem); }
 
   #mobile-toggle { display: block; }
 
