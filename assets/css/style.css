@@ -805,15 +805,17 @@ body.modal-open {
 /* --- Fix nav scrolled state --- */
 nav.scrolled {
   background: var(--nav-bg);
-  border-color: var(--border);
+  border: 1px solid var(--border);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   padding: 0.8rem 2rem;
   top: 1rem;
   width: calc(100% - 4rem);
-  margin: 0 2rem;
+  max-width: 1400px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
   box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-  /* Influenced by settings: br-full is static, let's use a dynamic one that feels pill-like but follows the factor */
   border-radius: calc(100px * var(--radius-factor));
 }
 
