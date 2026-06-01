@@ -180,13 +180,16 @@ body.a11y-dyslexia-font {
 
 /* ── Nav ── */
 nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  position: fixed; top: 1rem; left: 50%; z-index: 1000;
+  transform: translateX(-50%);
+  width: calc(100% - 8rem);
+  max-width: 1200px;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 1.5rem 3rem;
+  padding: 0.5rem 2rem;
   background: transparent;
   transition: all 0.4s var(--ease);
-  border-bottom: 1px solid transparent;
-  height: var(--nav-h);
+  border: 1px solid transparent;
+  border-radius: calc(100px * var(--radius-factor));
 }
 .nav-logo { font-family: var(--fd); font-weight: 800; font-size: 1.2rem; letter-spacing: -.04em; transition: opacity 0.3s; flex-shrink: 0; }
 .nav-logo:hover { opacity: 0.8; }
@@ -805,16 +808,10 @@ body.modal-open {
 /* --- Fix nav scrolled state --- */
 nav.scrolled {
   background: var(--nav-bg);
-  border-color: var(--border);
+  border: 1px solid var(--border);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  padding: 0.8rem 2rem;
-  top: 1rem;
-  width: calc(100% - 4rem);
-  margin: 0 2rem;
   box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-  /* Influenced by settings: br-full is static, let's use a dynamic one that feels pill-like but follows the factor */
-  border-radius: calc(100px * var(--radius-factor));
 }
 
 /* ── Cookie Banner ── */
@@ -1095,7 +1092,7 @@ nav.scrolled {
 
 /* --- Responsive Breakpoints Override --- */
 @media (max-width: 768px) {
-  nav { padding: 1rem 2rem; }
+  nav { padding: 0.8rem 1.5rem; width: calc(100% - 2rem); }
 
   #mobile-toggle { display: block; }
 
