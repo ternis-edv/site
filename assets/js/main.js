@@ -197,8 +197,37 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('trigger-impressum')?.addEventListener('click', (e) => { e.preventDefault(); openModal('modal-impressum'); });
     document.getElementById('trigger-datenschutz')?.addEventListener('click', (e) => { e.preventDefault(); openModal('modal-datenschutz'); });
     document.getElementById('a11y-trigger')?.addEventListener('click', () => openModal('modal-a11y'));
+    document.getElementById('settings-trigger')?.addEventListener('click', () => openModal('modal-settings'));
     closeButtons.forEach(btn => btn.addEventListener('click', closeModal));
     overlay?.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+
+    // --- Settings Management ---
+    const settingTheme = document.getElementById('setting-theme');
+    const settingRadius = document.getElementById('setting-radius');
+    const settingsSave = document.getElementById('settings-save');
+
+    if (settingTheme && settingRadius && settingsSave) {
+        // Init values
+        const currentTheme = localStorage.getItem('theme') || 'theme-dark';
+        const currentRadius = localStorage.getItem('radius-factor') || '1';
+        
+        settingTheme.value = currentTheme;
+        settingRadius.value = currentRadius;
+        document.documentElement.style.setProperty('--radius-factor', currentRadius);
+
+        settingsSave.addEventListener('click', () => {
+            setTheme(settingTheme.value);
+            const radius = settingRadius.value;
+            localStorage.setItem('radius-factor', radius);
+            document.documentElement.style.setProperty('--radius-factor', radius);
+            closeModal();
+        });
+
+        // Realtime radius preview
+        settingRadius.addEventListener('input', () => {
+            document.documentElement.style.setProperty('--radius-factor', settingRadius.value);
+        });
+    }
 
     // Mascot Footer Movement
     const mascot = document.querySelector('.footer-mascot');
