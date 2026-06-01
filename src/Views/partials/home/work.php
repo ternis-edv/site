@@ -8,7 +8,13 @@
 
 
 <?php foreach ($projects as $index => $project): ?>
-                    <div class="project-section" id="project-<?= $project['id'] ?>" data-index="<?= $index ?>" data-color="<?= $project['color'] ?>">
+                    <?php 
+                        $lightImg = $project['images']['light'] ?? (isset($project['images']['dark']) ? $project['images']['dark'] : '');
+                        $darkImg = $project['images']['dark'] ?? (isset($project['images']['light']) ? $project['images']['light'] : '');
+                        $dimensions = getImageData($lightImg ?: $darkImg);
+                        $ratio = $dimensions['ratio'] ?? 1;
+                    ?>
+                    <div class="project-section" id="project-<?= $project['id'] ?>" data-index="<?= $index ?>" data-color="<?= $project['color'] ?>" data-ratio="<?= $ratio ?>">
                         <div class="project-container">
                             <div class="project-info">
                     <div class="pi-content">
@@ -34,11 +40,7 @@
                         </div>
                         <div class="image-wrapper">
                             <?php 
-                                $lightImg = $project['images']['light'] ?? (isset($project['images']['dark']) ? $project['images']['dark'] : '');
-                                $darkImg = $project['images']['dark'] ?? (isset($project['images']['light']) ? $project['images']['light'] : '');
                                 $currentImg = (isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'theme-light') ? $lightImg : $darkImg;
-                                
-                                $dimensions = getImageData($lightImg ?: $darkImg);
                                 $aspectRatio = $dimensions['w'] . ' / ' . $dimensions['h'];
                             ?>
                             <div class="native-img" style="aspect-ratio: <?= $aspectRatio ?>;">

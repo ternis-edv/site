@@ -39,58 +39,127 @@ document.addEventListener('DOMContentLoaded', () => {
     const globalNav = document.querySelector('.global-project-nav');
     const prevBtn = globalNav?.querySelector('.prev-btn');
     const nextBtn = globalNav?.querySelector('.next-btn');
+    const headerOffset = 100; // Offset for the floating header
+
+    let currentProjectIndex = 0;
 
     if (globalNav && prevBtn && nextBtn && projectSections.length > 0) {
         
-        const updateNavButtons = () => {
-            const scrollY = window.scrollY;
-            const vh = window.innerHeight;
-            const center = scrollY + (vh / 2);
-
-            let firstTop = projectSections[0].offsetTop;
-            let lastBottom = projectSections[projectSections.length - 1].offsetTop + projectSections[projectSections.length - 1].offsetHeight;
-
-            // Simple disable/enable based on global work section visibility
-            prevBtn.disabled = scrollY < firstTop;
-            nextBtn.disabled = scrollY + vh > lastBottom;
+        const getAbsoluteTop = (el) => {
+            return el.getBoundingClientRect().top + window.scrollY;
         };
 
-        const navigate = (direction) => {
+        const updateActiveProject = () => {
             const scrollY = window.scrollY;
             const vh = window.innerHeight;
             const center = scrollY + (vh / 2);
             
-            let targetSection = null;
+            let foundIndex = -1;
 
-            if (direction === 'next') {
-                // Find the first section whose top is clearly below the current "active" center
-                for (let i = 0; i < projectSections.length; i++) {
-                    if (projectSections[i].offsetTop > center + 10) {
-                        targetSection = projectSections[i];
-                        break;
-                    }
+            projectSections.forEach((section, index) => {
+                const top = getAbsoluteTop(section);
+                const height = section.offsetHeight;
+                if (center >= top && center <= top + height) {
+                    foundIndex = index;
+                    section.classList.add('visible');
                 }
-            } else {
-                // Find the last section whose top is clearly above the current "active" center
-                for (let i = projectSections.length - 1; i >= 0; i--) {
-                    if (projectSections[i].offsetTop < center - 10) {
-                        targetSection = projectSections[i];
-                        break;
-                    }
-                }
+            });
+
+            if (foundIndex !== -1) {
+                currentProjectIndex = foundIndex;
+            } else if (scrollY < getAbsoluteTop(projectSections[0])) {
+                currentProjectIndex = 0;
+            } else if (scrollY > getAbsoluteTop(projectSections[projectSections.length - 1])) {
+                currentProjectIndex = projectSections.length - 1;
             }
 
-            if (targetSection) {
-                window.scrollTo({
-                    top: targetSection.offsetTop,
-                    behavior: 'smooth'
-                });
+            updateNavButtons();
+        };
+
+        const updateNavButtons = () => {
+            const scrollY = window.scrollY;
+            const firstTop = getAbsoluteTop(projectSections[0]) - headerOffset;
+            const lastSection = projectSections[projectSections.length - 1];
+            const lastBottom = getAbsoluteTop(lastSection) + lastSection.offsetHeight;
+
+            // Before first project
+            if (scrollY < firstTop + 20) {
+                prevBtn.disabled = true;
+                nextBtn.disabled = false;
+            } 
+            // After last project
+            else if (scrollY > lastBottom - window.innerHeight + 50) {
+                prevBtn.disabled = false;
+                nextBtn.disabled = true;
+            }
+            // Within projects
+            else {
+                const currentTop = getAbsoluteTop(projectSections[currentProjectIndex]);
+                
+                // If at the very top of the first project, disable prev
+                if (currentProjectIndex === 0 && scrollY <= currentTop - headerOffset + 20) {
+                    prevBtn.disabled = true;
+                } else {
+                    prevBtn.disabled = false;
+                }
+                
+                // If at the very end of the last project, disable next
+                if (currentProjectIndex === projectSections.length - 1 && scrollY >= lastBottom - window.innerHeight - 20) {
+                    nextBtn.disabled = true;
+                } else {
+                    nextBtn.disabled = false;
+                }
             }
         };
 
-        window.addEventListener('scroll', updateNavButtons, { passive: true });
-        updateNavButtons(); // Initial
+        const navigate = (direction) => {
+            const scrollY = window.scrollY;
+            
+            if (direction === 'next') {
+                const firstTop = getAbsoluteTop(projectSections[0]) - headerOffset;
+                if (scrollY < firstTop - 20) {
+                    window.scrollTo({ top: firstTop, behavior: 'smooth' });
+                } else {
+                    let targetIndex = currentProjectIndex + 1;
+                    // If we are currently in a project but not at its bottom, and it's very tall?
+                    // No, usually we want to go to the next project's top.
+                    if (targetIndex < projectSections.length) {
+                        window.scrollTo({
+                            top: getAbsoluteTop(projectSections[targetIndex]) - headerOffset,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            } else {
+                const firstTop = getAbsoluteTop(projectSections[0]) - headerOffset;
+                if (scrollY <= firstTop + 20) return; // Already at top
 
+                const currentTop = getAbsoluteTop(projectSections[currentProjectIndex]);
+                // If deep in current project, go to top of it
+                if (scrollY > currentTop - headerOffset + 100) {
+                    window.scrollTo({
+                        top: currentTop - headerOffset,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    // Go to previous project
+                    let targetIndex = currentProjectIndex - 1;
+                    if (targetIndex >= 0) {
+                        window.scrollTo({
+                            top: getAbsoluteTop(projectSections[targetIndex]) - headerOffset,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            }
+        };
+
+        window.addEventListener('scroll', updateActiveProject, { passive: true });
+        // Also update on resize to recalculate absolute positions
+        window.addEventListener('resize', updateActiveProject, { passive: true });
+        
+        updateActiveProject(); 
+        
         nextBtn.addEventListener('click', (e) => { e.preventDefault(); navigate('next'); });
         prevBtn.addEventListener('click', (e) => { e.preventDefault(); navigate('prev'); });
     }
@@ -167,19 +236,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (pageProgress) {
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
             pageProgress.style.width = `${docHeight > 0 ? (scrollY / docHeight) * 100 : 0}%`;
-        }
-
-        // Section Background Color
-        if (workSection && projectSections.length > 0) {
-            const center = scrollY + (window.innerHeight / 2);
-            let activeProj = null;
-            projectSections.forEach(s => {
-                const top = s.offsetTop;
-                if (center >= top && center <= top + s.offsetHeight) activeProj = s;
-            });
-            if (activeProj) {
-                activeProj.classList.add('visible');
-            }
         }
     }, { passive: true });
 

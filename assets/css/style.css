@@ -279,24 +279,28 @@ nav.scrolled {
 
 .global-project-nav {
   position: sticky;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 3rem;
+  left: 3rem;
   z-index: 50;
   width: max-content;
   margin-top: 0;
   padding: 0.8rem 1.2rem;
   background: var(--nav-bg);
   border-radius: 50px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
   border: 1px solid var(--border);
-  backdrop-filter: blur(10px);
-  transition: opacity 0.3s ease, background-color 0.8s ease;
+  backdrop-filter: blur(14px);
+  transition: opacity 0.3s ease, background-color 0.8s ease, transform 0.3s ease;
+}
+
+.global-project-nav:hover {
+  transform: translateY(-5px);
 }
 
 @media (max-width: 1024px) {
   .global-project-nav {
-    left: 50%;
+    left: 2rem;
+    bottom: 2rem;
   }
 }
 
@@ -326,8 +330,10 @@ nav.scrolled {
   transform: translateY(-2px);
 }
 .nav-btn:disabled {
-  opacity: 0.3;
+  opacity: 0.15;
   cursor: not-allowed;
+  filter: grayscale(1);
+  pointer-events: none;
 }
 
 
