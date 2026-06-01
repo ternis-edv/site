@@ -5,10 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Theme Management & Image Swapping ---
     const themeToggle = document.getElementById('theme-toggle');
+    const themes = ['theme-dark', 'theme-light', 'theme-nord', 'theme-midnight', 'theme-paper'];
     
     const updateProjectImages = (theme) => {
+        const isLight = theme === 'theme-light' || theme === 'theme-paper';
         document.querySelectorAll('.work-img.theme-sensitive').forEach(img => {
-            const newSrc = theme === 'theme-light' ? img.getAttribute('data-light') : img.getAttribute('data-dark');
+            const newSrc = isLight ? img.getAttribute('data-light') : img.getAttribute('data-dark');
             if (newSrc && img.getAttribute('src') !== newSrc) {
                 img.setAttribute('src', newSrc);
             }
@@ -16,22 +18,28 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const setTheme = (theme) => {
-        body.classList.remove('theme-dark', 'theme-light');
+        body.classList.remove(...themes);
         body.classList.add(theme);
         localStorage.setItem('theme', theme);
-        // Set cookie for PHP synchronization (optional but helpful)
         document.cookie = `theme=${theme}; path=/; max-age=31536000`;
         updateProjectImages(theme);
     };
 
     if (themeToggle) {
-        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'theme-light' : 'theme-dark');
-        setTheme(savedTheme);
+        let currentTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'theme-light' : 'theme-dark');
+        if (!themes.includes(currentTheme)) currentTheme = 'theme-dark';
+        setTheme(currentTheme);
 
         themeToggle.addEventListener('click', (e) => {
             e.preventDefault();
-            const newTheme = body.classList.contains('theme-dark') ? 'theme-light' : 'theme-dark';
+            let index = themes.indexOf(localStorage.getItem('theme') || 'theme-dark');
+            index = (index + 1) % themes.length;
+            const newTheme = themes[index];
             setTheme(newTheme);
+            
+            // Subtle button animation
+            themeToggle.style.transform = 'scale(0.9) rotate(15deg)';
+            setTimeout(() => themeToggle.style.transform = 'scale(1) rotate(0deg)', 200);
         });
     }
 
