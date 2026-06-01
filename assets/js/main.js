@@ -178,15 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (center >= top && center <= top + s.offsetHeight) activeProj = s;
             });
             if (activeProj) {
-                const color = activeProj.getAttribute('data-color');
-                const isDark = body.classList.contains('theme-dark');
-                if (color) {
-                    const r = parseInt(color.slice(1,3), 16), g = parseInt(color.slice(3,5), 16), b = parseInt(color.slice(5,7), 16);
-                    workSection.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${isDark ? '0.08' : '0.05'})`;
-                }
                 activeProj.classList.add('visible');
-            } else {
-                workSection.style.backgroundColor = 'var(--bg)';
             }
         }
     }, { passive: true });
