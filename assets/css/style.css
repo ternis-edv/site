@@ -860,7 +860,6 @@ nav.scrolled {
   padding: 12rem 0 0;
   border-top: 1px solid var(--border);
   position: relative;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   z-index: 30;
