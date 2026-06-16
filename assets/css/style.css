@@ -137,6 +137,11 @@ body {
   transition: background var(--transition-speed) var(--ease), 
               color var(--transition-speed) var(--ease),
               border-color var(--transition-speed) var(--ease);
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 /* Apply transitions to common elements */
@@ -485,7 +490,7 @@ nav {
 .project-visual { width: 60%; height: 100vh; padding: 10vh 5vw; display: flex; align-items: center; justify-content: center; }
 .browser-frame {
   width: 100%;
-  height: 100%;
+
   max-height: 80vh;
   display: flex;
   flex-direction: column;
@@ -504,16 +509,17 @@ nav {
   background: var(--surface); 
   position: relative;
   scrollbar-width: thin;
-  scrollbar-color: var(--border-b) transparent;
+  scrollbar-color: var(--muted) var(--border);
 }
 .image-wrapper::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 .image-wrapper::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--border);
+  border-radius: 10px;
 }
 .image-wrapper::-webkit-scrollbar-thumb {
-  background-color: var(--border-b);
+  background-color: var(--muted);
   border-radius: 10px;
 }
 .native-img {
