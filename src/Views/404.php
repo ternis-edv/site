@@ -5,7 +5,7 @@ require_once __DIR__ . '/partials/header.php';
         <section class="error-page-v2">
             <div class="error-grid-overlay"></div>
             <div class="error-container">
-                <div class="error-label reveal">// Status 404</div>
+                <div class="error-label reveal">// Status: 404</div>
                 <h1 class="error-title reveal">Seite <span>nicht</span> gefunden.</h1>
                 <p class="error-msg reveal">Es sieht so aus, als hätte sich diese Seite in den unendlichen Weiten des Webs verirrt. Aber keine Sorge, wir navigieren dich sicher zurück.</p>
                 <div class="error-actions reveal">

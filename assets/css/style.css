@@ -190,7 +190,8 @@ nav {
   width: calc(100% - 8rem);
   max-width: 1200px;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0.8rem 2rem;
+  padding: 0.8rem;
+  padding-inline-start: 2rem;
   background: transparent;
   transition: all 0.4s var(--ease);
   border: 1px solid transparent;
@@ -487,7 +488,7 @@ nav {
 }
 
 
-.project-visual { width: 60%; height: 90vh; padding: 10vh 5vw; display: flex; align-items: center; justify-content: center; }
+.project-visual { width: 60%; height: 90vh; padding: 0 5vw; display: flex; align-items: center; justify-content: center; }
 .browser-frame {
   width: 100%;
 
@@ -1264,3 +1265,8 @@ nav.scrolled {
   color: var(--muted-b);
   margin: 0;
 }
+
+
+
+
+footer, html, body { margin: 0; }
