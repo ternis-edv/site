@@ -169,7 +169,7 @@
                 </div>
                 <div class="setting-item">
                     <div class="setting-info">
-                        <h4>Schriftart für Legastheniker</h4>
+                        <h4>Schriftart für Legastheniker (IN ARBEIT)</h4> 
                         <p>Verwendet eine besser lesbare Schriftart.</p>
                     </div>
                     <label class="switch-ui"><input type="checkbox" id="a11y-dyslexia-font"><span></span></label>

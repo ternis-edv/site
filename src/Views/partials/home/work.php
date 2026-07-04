@@ -36,7 +36,7 @@
                     <div class="browser-frame">
                         <div class="browser-top">
                             <div class="dots"><span></span><span></span><span></span></div>
-                            <div class="url-bar"><?= $project['name'] ?></div>
+                            <div class="url-bar"><?= $project['domain'] ?? $project['name'] ?></div>
                         </div>
                         <div class="image-wrapper">
                             <?php 

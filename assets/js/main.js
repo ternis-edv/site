@@ -3,7 +3,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const nav = document.getElementById('nav');
     const projectSections = document.querySelectorAll('.project-section');
 
-    // --- Theme Management & Image Swapping ---
+    // --- Project Visualization Scrollbar Check ---
+    const updateImageWrapperOverflow = () => {
+        document.querySelectorAll('.image-wrapper').forEach(wrapper => {
+            if (wrapper.scrollHeight > wrapper.clientHeight) {
+                wrapper.classList.remove('no-overflow');
+            } else {
+                wrapper.classList.add('no-overflow');
+            }
+        });
+    };
+    
+    // Check after fonts and initial layout
+    setTimeout(updateImageWrapperOverflow, 100);
+    window.addEventListener('resize', updateImageWrapperOverflow, { passive: true });
+    window.addEventListener('load', updateImageWrapperOverflow, { passive: true });
+
     const themeToggle = document.getElementById('theme-toggle');
     const themes = ['theme-dark', 'theme-light', 'theme-nord', 'theme-midnight', 'theme-paper'];
     

@@ -22,7 +22,8 @@ function getImageData($path) {
 $projects = [
     [
         'id' => 'ternismail',
-        'name' => 'ternismail.de',
+        'name' => 'Ternismail',
+        'domain' => 'ternismail.de',
         'type' => 'Private Mail Infrastructure',
         'desc' => 'Ein eigenes Mailsystem für dynamische email-addressen, spam-schutz und Privatsphäre. Zudem eine weniger generische und unprofessionenlle @gmail.com.',
         'stack' => ['PHP', 'Postfix', 'Tailwind', 'SMTP', 'DMARC', 'RoundCube Webmail', 'Landingpage'],
@@ -34,7 +35,8 @@ $projects = [
     ],
     [
         'id' => 'dnbx',
-        'name' => 'dnbx.de',
+        'name' => 'Domain Box',
+        'domain' => 'dnbx.de',
         'type' => 'Domain Management',
         'desc' => 'Ein System zum Managen meiner/unserer web-Domains.',
         'stack' => ['PHP', 'custom CSS', 'REST', 'JavaScript', 'localStorage'],
@@ -48,8 +50,9 @@ $projects = [
     [
         'id' => 'dogwaterdev',
         'name' => 'dogwaterdev.de',
+        'domain' => 'dogwaterdev.de',
         'type' => 'Dev Community',
-        'desc' => 'A community hub for open-source enthusiasts. Focused on project discovery and collaborative coding environments.',
+        'desc' => '',
         'stack' => ['custom CSS', 'External REST', 'JavaScript', 'localStorage'],
         'images' => [
             'light' => 'assets/img/work/dogwaterdev.de__LIGHT.png',
@@ -61,6 +64,7 @@ $projects = [
     [
         'id' => 'getmyname',
         'name' => 'getmy.name',
+        'domain' => 'getmy.name',
         'type' => 'Portfolio API',
         'desc' => '',
         'stack' => ['Laravel', 'PHP', 'NPM', 'REST', 'MySQL', 'Chart.JS', 'Tailwind'],
@@ -74,6 +78,7 @@ $projects = [
     [
         'id' => 'louixch',
         'name' => 'louixch.de',
+        'domain' => 'louixch.de',
         'type' => 'Creative Portfolio (Website)',
         'desc' => '',
         'stack' => ['Custom CSS', 'JavaScript', 'Three.JS', 'External REST', 'localStorage'],
@@ -86,6 +91,7 @@ $projects = [
     [
         'id' => 'api-sandbox',
         'name' => 'API Sandbox',
+        'domain' => 'api-sandbox.de',
         'type' => 'Developer Tool + Website',
         'desc' => '',
         'stack' => ['Tailwind', 'JavaScript'],
@@ -98,6 +104,7 @@ $projects = [
     [
         'id' => 'wonnegauer',
         'name' => 'Wonnegauer Designwerkstatt',
+        'domain' => 'wonnegauer-designwerkstatt.de',
         'type' => 'Website',
         'desc' => '',
         'stack' => ['Vanilla JS', 'PHP', 'Custom CSS', 'localStorage'],
@@ -110,6 +117,7 @@ $projects = [
     [
         'id' => 'pleasehireme',
         'name' => 'pleasehireme.eu',
+        'domain' => null,
         'type' => 'Job Matching Platform',
         'desc' => '',
         'stack' => ['Custom CSS', 'JavaScript'],
@@ -122,18 +130,20 @@ $projects = [
     [
         'id' => 'nocturne',
         'name' => 'Nocturne Lander',
+        'domain' => 'nocturne.tp.xpsys.de',
         'type' => 'Design Template',
         'desc' => '',
         'stack' => ['HTML5', 'CSS3'],
         'images' => [
             'dark' => 'assets/img/work/TEMPLATE__nocturne_lander__DARK.png'
         ],
-        'link' => '#',
+        'link' => 'https://nocturne.tp.xpsys.de',
         'color' => '#f59e0b'
     ],
     [
         'id' => 'twins-on-ice',
         'name' => 'twins-on-ice.de',
+        'domain' => null,
         'type' => 'Unofficial Fanpage',
         'desc' => '',
         'stack' => ['PHP', 'Vanilla JS', 'CSS3'],
@@ -146,6 +156,7 @@ $projects = [
     [
         'id' => 'leniwoess',
         'name' => 'leniwoess.de',
+        'domain' => 'leniwoess.de',
         'type' => 'Unofficial Website',
         'desc' => '',
         'stack' => ['PHP', 'Vanilla JS', 'CSS3'],

@@ -513,6 +513,9 @@ nav {
   scrollbar-width: thin;
   scrollbar-color: var(--muted) var(--border);
 }
+.image-wrapper.no-overflow {
+  padding-right: 0 !important;
+}
 .image-wrapper::-webkit-scrollbar {
   width: 8px;
 }
