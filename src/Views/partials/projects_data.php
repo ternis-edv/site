@@ -22,10 +22,11 @@ function getImageData($path) {
 $projects = [
     [
         'id' => 'ternismail',
-        'name' => 'ternismail.de',
+        'name' => 'Ternismail',
+        'domain' => 'ternismail.de',
         'type' => 'Private Mail Infrastructure',
-        'desc' => 'Custom mail infrastructure and landing page for secure, private communication. Built with a focus on privacy and high-availability architecture.',
-        'stack' => ['PHP', 'Postfix', 'Dovecot', 'Landingpage'],
+        'desc' => 'Ein eigenes Mailsystem für dynamische email-addressen, spam-schutz und Privatsphäre. Zudem eine weniger generische und unprofessionenlle @gmail.com.',
+        'stack' => ['PHP', 'Postfix', 'Tailwind', 'SMTP', 'DMARC', 'RoundCube Webmail', 'Landingpage'],
         'images' => [
             'light' => 'assets/img/work/ternismail.de__LIGHT.png'
         ],
@@ -34,10 +35,11 @@ $projects = [
     ],
     [
         'id' => 'dnbx',
-        'name' => 'dnbx.de',
-        'type' => 'Digital Asset SaaS',
-        'desc' => 'A high-performance platform for managing digital assets. Features advanced filtering, real-time collaboration, and a highly optimized delivery network.',
-        'stack' => ['React', 'Node.js', 'PostgreSQL', 'Redis'],
+        'name' => 'Domain Box',
+        'domain' => 'dnbx.de',
+        'type' => 'Domain Management',
+        'desc' => 'Ein System zum Managen meiner/unserer web-Domains.',
+        'stack' => ['PHP', 'custom CSS', 'REST', 'JavaScript', 'localStorage'],
         'images' => [
             'light' => 'assets/img/work/dnbx.de__LIGHT.png',
             'dark' => 'assets/img/work/dnbx.de__DARK.png'
@@ -48,9 +50,10 @@ $projects = [
     [
         'id' => 'dogwaterdev',
         'name' => 'dogwaterdev.de',
+        'domain' => 'dogwaterdev.de',
         'type' => 'Dev Community',
-        'desc' => 'A community hub for open-source enthusiasts. Focused on project discovery and collaborative coding environments.',
-        'stack' => ['Next.js', 'Tailwind', 'Supabase', 'TypeScript'],
+        'desc' => '',
+        'stack' => ['custom CSS', 'External REST', 'JavaScript', 'localStorage'],
         'images' => [
             'light' => 'assets/img/work/dogwaterdev.de__LIGHT.png',
             'dark' => 'assets/img/work/dogwaterdev.de__DARK.png'
@@ -61,9 +64,10 @@ $projects = [
     [
         'id' => 'getmyname',
         'name' => 'getmy.name',
-        'type' => 'Domain Branding Tool',
-        'desc' => 'Intelligent domain name generator and branding assistant. Helps startups find the perfect digital identity through AI-driven suggestions.',
-        'stack' => ['Vue 3', 'Python/FastAPI', 'OpenAI'],
+        'domain' => 'getmy.name',
+        'type' => 'Portfolio API',
+        'desc' => '',
+        'stack' => ['Laravel', 'PHP', 'NPM', 'REST', 'MySQL', 'Chart.JS', 'Tailwind'],
         'images' => [
             'light' => 'assets/img/work/getmy.name_lander_LIGHT.png',
             'dark' => 'assets/img/work/getmy.name_lander_DARK.png'
@@ -74,9 +78,10 @@ $projects = [
     [
         'id' => 'louixch',
         'name' => 'louixch.de',
-        'type' => 'Creative Portfolio',
-        'desc' => 'Portfolio for a creative director, emphasizing minimal aesthetics and fluid motion design principles.',
-        'stack' => ['GSAP', 'HTML5 Canvas', 'PHP'],
+        'domain' => 'louixch.de',
+        'type' => 'Creative Portfolio (Website)',
+        'desc' => '',
+        'stack' => ['Custom CSS', 'JavaScript', 'Three.JS', 'External REST', 'localStorage'],
         'images' => [
             'dark' => 'assets/img/work/louixch.de__DARK.png'
         ],
@@ -86,9 +91,10 @@ $projects = [
     [
         'id' => 'api-sandbox',
         'name' => 'API Sandbox',
-        'type' => 'Developer Tool',
-        'desc' => 'A lightweight testing environment for RESTful APIs. Simplifies the debugging process for backend engineers.',
-        'stack' => ['SvelteKit', 'Go', 'Docker'],
+        'domain' => 'api-sandbox.de',
+        'type' => 'Developer Tool + Website',
+        'desc' => '',
+        'stack' => ['Tailwind', 'JavaScript'],
         'images' => [
             'light' => 'assets/img/work/api-sandbox.de_lander__LIGHT.png'
         ],
@@ -97,10 +103,11 @@ $projects = [
     ],
     [
         'id' => 'wonnegauer',
-        'name' => 'Wonnegauer Design',
-        'type' => 'Agency Landingpage',
-        'desc' => 'Premium showcase for a traditional design workshop. High-resolution imagery and elegant typography drive the user experience.',
-        'stack' => ['Vanilla JS', 'SASS', 'Intersection Observer'],
+        'name' => 'Wonnegauer Designwerkstatt',
+        'domain' => 'wonnegauer-designwerkstatt.de',
+        'type' => 'Website',
+        'desc' => '',
+        'stack' => ['Vanilla JS', 'PHP', 'Custom CSS', 'localStorage'],
         'images' => [
             'light' => 'assets/img/work/wonnegauer-designwerkstatt.de_LANDER__LIGHT.png'
         ],
@@ -110,9 +117,10 @@ $projects = [
     [
         'id' => 'pleasehireme',
         'name' => 'pleasehireme.eu',
+        'domain' => null,
         'type' => 'Job Matching Platform',
-        'desc' => 'A modern platform connecting developers with innovative startups. Built with a focus on candidate experience and streamlined hiring workflows.',
-        'stack' => ['Vue.js', 'Firebase', 'Tailwind'],
+        'desc' => '',
+        'stack' => ['Custom CSS', 'JavaScript'],
         'images' => [
             'light' => 'assets/img/work/pleasehireme.eu__LIGHT.png'
         ],
@@ -122,13 +130,40 @@ $projects = [
     [
         'id' => 'nocturne',
         'name' => 'Nocturne Lander',
+        'domain' => 'nocturne.tp.xpsys.de',
         'type' => 'Design Template',
-        'desc' => 'A dark-themed, high-impact landing page template designed for creative agencies and digital artists.',
-        'stack' => ['HTML5', 'CSS3', 'GSAP'],
+        'desc' => '',
+        'stack' => ['HTML5', 'CSS3'],
         'images' => [
             'dark' => 'assets/img/work/TEMPLATE__nocturne_lander__DARK.png'
         ],
-        'link' => '#',
+        'link' => 'https://nocturne.tp.xpsys.de',
         'color' => '#f59e0b'
-    ]
+    ],
+    [
+        'id' => 'twins-on-ice',
+        'name' => 'twins-on-ice.de',
+        'domain' => null,
+        'type' => 'Unofficial Fanpage',
+        'desc' => '',
+        'stack' => ['PHP', 'Vanilla JS', 'CSS3'],
+        'images' => [
+            'light' => 'assets/img/work/twins-on-ice.de_lander__LIGHT.png'
+        ],
+        'link' => 'https://twins-on-ice.de',
+        'color' => '#00a8ff'
+    ],
+    [
+        'id' => 'leniwoess',
+        'name' => 'leniwoess.de',
+        'domain' => 'leniwoess.de',
+        'type' => 'Unofficial Website',
+        'desc' => '',
+        'stack' => ['PHP', 'Vanilla JS', 'CSS3'],
+        'images' => [
+            'light' => 'assets/img/work/leniwoess.de__DARK.png'
+        ],
+        'link' => 'https://leniwoess.de',
+        'color' => '#00a8ff'
+    ],
 ];
