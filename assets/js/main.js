@@ -38,6 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('theme', theme);
         document.cookie = `theme=${theme}; path=/; max-age=31536000`;
         updateProjectImages(theme);
+
+        // Dynamically sync the theme select dropdown in settings popover
+        const settingThemeEl = document.getElementById('setting-theme');
+        if (settingThemeEl && settingThemeEl.value !== theme) {
+            settingThemeEl.value = theme;
+        }
     };
 
     if (themeToggle) {
@@ -209,12 +215,136 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.remove('modal-open');
     };
 
-    document.getElementById('trigger-impressum')?.addEventListener('click', (e) => { e.preventDefault(); openModal('modal-impressum'); });
+    document.getElementById('trigger-impressum')?.addEventListener('click', (e) => { 
+        e.preventDefault(); 
+        openModal('modal-impressum'); 
+        setTimeout(() => window.dispatchEvent(new Event('render-protected-contacts')), 50);
+    });
     document.getElementById('trigger-datenschutz')?.addEventListener('click', (e) => { e.preventDefault(); openModal('modal-datenschutz'); });
+    document.getElementById('trigger-datenschutz-from-page')?.addEventListener('click', (e) => { e.preventDefault(); openModal('modal-datenschutz'); });
     document.getElementById('a11y-trigger')?.addEventListener('click', () => openModal('modal-a11y'));
     document.getElementById('settings-trigger')?.addEventListener('click', () => openModal('modal-settings'));
     closeButtons.forEach(btn => btn.addEventListener('click', closeModal));
     overlay?.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+
+    // --- Anti-Scraping Dynamic Contact Canvas System ---
+    const initProtectedContacts = () => {
+        const key = 0x5a;
+        const data = {
+            'phone': [113, 110, 99, 122, 107, 109, 111, 122, 108, 98, 111, 99, 105, 98, 107], // +49 175 6859381
+            'email-info': [51, 52, 60, 53, 26, 46, 63, 40, 52, 51, 41, 119, 63, 62, 44, 116, 62, 63], // info@ternis-edv.de
+            'email-edv': [63, 62, 44, 26, 46, 63, 40, 52, 51, 41, 55, 59, 51, 54, 116, 62, 63] // edv@ternismail.de
+        };
+
+        const decode = (id) => {
+            const bytes = data[id];
+            if (!bytes) return '';
+            return bytes.map(b => String.fromCharCode(b ^ key)).join('');
+        };
+
+        const renderCanvas = (el) => {
+            const id = el.getAttribute('data-protected-contact');
+            const text = decode(id);
+            if (!text) return;
+
+            const fontSize = parseInt(el.getAttribute('data-font-size') || '16', 10);
+            const fontFamily = el.getAttribute('data-font-family') || "'JetBrains Mono', monospace";
+
+            let canvas = el.querySelector('canvas');
+            if (!canvas) {
+                canvas = document.createElement('canvas');
+                canvas.setAttribute('aria-label', 'Geschützte Kontaktinformation');
+                canvas.setAttribute('role', 'img');
+                el.innerHTML = '';
+                el.appendChild(canvas);
+            }
+
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return;
+            const dpr = window.devicePixelRatio || 1;
+
+            // Get live computed theme text color
+            const style = getComputedStyle(document.body);
+            const textColor = style.getPropertyValue('--text').trim() || '#ffffff';
+
+            ctx.font = `500 ${fontSize}px ${fontFamily}`;
+            const metrics = ctx.measureText(text);
+            const width = Math.ceil(metrics.width) + 8;
+            const height = Math.ceil(fontSize * 1.6);
+
+            canvas.width = Math.round(width * dpr);
+            canvas.height = Math.round(height * dpr);
+            canvas.style.width = `${width}px`;
+            canvas.style.height = `${height}px`;
+
+            ctx.scale(dpr, dpr);
+            ctx.clearRect(0, 0, width, height);
+            ctx.font = `500 ${fontSize}px ${fontFamily}`;
+            ctx.fillStyle = textColor;
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, 4, height / 2);
+        };
+
+        const renderAll = () => {
+            document.querySelectorAll('[data-protected-contact]').forEach(renderCanvas);
+        };
+
+        renderAll();
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(renderAll);
+        }
+        setTimeout(renderAll, 100);
+        setTimeout(renderAll, 500);
+
+        window.addEventListener('resize', renderAll, { passive: true });
+        window.addEventListener('render-protected-contacts', renderAll);
+
+        const themeObserver = new MutationObserver(renderAll);
+        themeObserver.observe(document.body, { attributes: true, attributeFilter: ['class', 'style'] });
+
+        // Copy button handling
+        document.querySelectorAll('.btn-protected-copy').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const target = btn.getAttribute('data-target');
+                const text = decode(target);
+                if (!text) return;
+
+                try {
+                    await navigator.clipboard.writeText(text);
+                    const originalHtml = btn.innerHTML;
+                    btn.classList.add('copied');
+                    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><polyline points="20 6 9 17 4 12"/></svg> <span>Kopiert!</span>';
+                    setTimeout(() => {
+                        btn.classList.remove('copied');
+                        btn.innerHTML = originalHtml;
+                    }, 2000);
+                } catch (err) {
+                    prompt('Kopieren:', text);
+                }
+            });
+        });
+
+        // Direct action button handling (tel / mailto)
+        document.querySelectorAll('.btn-protected-action').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = btn.getAttribute('data-target');
+                const action = btn.getAttribute('data-action');
+                const text = decode(target);
+                if (!text) return;
+
+                if (action === 'call') {
+                    const cleanPhone = text.replace(/[^0-9+]/g, '');
+                    window.location.href = `tel:${cleanPhone}`;
+                } else if (action === 'mail') {
+                    window.location.href = `mailto:${text}`;
+                }
+            });
+        });
+    };
+
+    initProtectedContacts();
 
     // --- Settings Management ---
     const settingTheme = document.getElementById('setting-theme');
@@ -229,6 +359,11 @@ document.addEventListener('DOMContentLoaded', () => {
         settingTheme.value = currentTheme;
         settingRadius.value = currentRadius;
         document.documentElement.style.setProperty('--radius-factor', currentRadius);
+
+        // Realtime theme change on select dropdown change
+        settingTheme.addEventListener('change', () => {
+            setTheme(settingTheme.value);
+        });
 
         settingsSave.addEventListener('click', () => {
             setTheme(settingTheme.value);

@@ -23,6 +23,10 @@ $router->add('/404', function() {
     require __DIR__ . '/../src/Views/404.php';
 });
 
+$router->add('/impressum', function() {
+    require __DIR__ . '/../src/Views/impressum.php';
+});
+
 // Image processor route
 $router->add('/img', function() {
     $processor = new ImageProcessor();

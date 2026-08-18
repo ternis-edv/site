@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ternis-edv — Webentwicklung & Digitale Lösungen</title>
+    <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle) : 'ternis-edv — Webentwicklung & Digitale Lösungen' ?></title>
+    <meta name="description" content="<?= isset($pageDescription) ? htmlspecialchars($pageDescription) : 'ternis-edv — Webentwicklung, IT-Infrastruktur & performante digitale Lösungen im Rhein-Main-Gebiet.' ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body class="theme-dark">
@@ -33,16 +34,42 @@
             <div class="modal-body">
                 <h2>Impressum</h2>
                 <div class="modal-section">
-                    <h3>Angaben gemäß § 5 TMG</h3>
-                    <p><strong>Fabian Ternis</strong><br>Alzeyer Str. 97<br>67592 Flörsheim-Dalsheim<br>Deutschland</p>
+                    <h3>Angaben gemäß § 5 DDG</h3>
+                    <p><strong>Fabian Ternis</strong><br>Ternis EDV &amp; Webentwicklung<br>Alzeyer Str. 97<br>67592 Flörsheim-Dalsheim<br>Deutschland</p>
                 </div>
                 <div class="modal-section">
                     <h3>Kontakt</h3>
-                    <p>E-Mail: info@ternis-edv.de</p>
+                    <div class="protected-contact-list modal-contacts">
+                        <div class="protected-contact-item">
+                            <div class="pci-label">E-Mail:</div>
+                            <a href="mailto:info@ternis-edv.de" class="legal-link" style="font-family: var(--fm); font-size: 0.95rem;">info@ternis-edv.de</a>
+                        </div>
+                        <div class="protected-contact-item">
+                            <div class="pci-label">Telefon:</div>
+                            <div class="pci-display" data-protected-contact="phone" data-font-family="var(--fm)" data-font-size="14"></div>
+                            <div class="pci-actions">
+                                <button type="button" class="btn-protected-copy" data-target="phone" title="Kopieren">Kopieren</button>
+                                <button type="button" class="btn-protected-action" data-action="call" data-target="phone" title="Anrufen">Anrufen</button>
+                            </div>
+                        </div>
+                        <div class="protected-contact-item">
+                            <div class="pci-label">EDV &amp; Support:</div>
+                            <div class="pci-display" data-protected-contact="email-edv" data-font-family="var(--fm)" data-font-size="14"></div>
+                            <div class="pci-actions">
+                                <button type="button" class="btn-protected-copy" data-target="email-edv" title="Kopieren">Kopieren</button>
+                                <button type="button" class="btn-protected-action" data-action="mail" data-target="email-edv" title="E-Mail">E-Mail</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-section">
-                    <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
+                    <h3>Verantwortlich nach § 18 Abs. 2 MStV</h3>
                     <p>Fabian Ternis<br>Alzeyer Str. 97<br>67592 Flörsheim-Dalsheim</p>
+                </div>
+                <div class="modal-actions" style="margin-top: 2rem;">
+                    <a href="/impressum" class="btn-p" style="width: 100%; justify-content: center; text-decoration: none;">
+                        Vollständige Impressumsseite öffnen &rarr;
+                    </a>
                 </div>
             </div>
         </div>
