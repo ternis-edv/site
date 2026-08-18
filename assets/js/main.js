@@ -222,6 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.getElementById('trigger-datenschutz')?.addEventListener('click', (e) => { e.preventDefault(); openModal('modal-datenschutz'); });
     document.getElementById('trigger-datenschutz-from-page')?.addEventListener('click', (e) => { e.preventDefault(); openModal('modal-datenschutz'); });
+    document.getElementById('trigger-cookie-settings-from-page')?.addEventListener('click', (e) => { e.preventDefault(); openModal('modal-cookie-settings'); });
     document.getElementById('a11y-trigger')?.addEventListener('click', () => openModal('modal-a11y'));
     document.getElementById('settings-trigger')?.addEventListener('click', () => openModal('modal-settings'));
     closeButtons.forEach(btn => btn.addEventListener('click', closeModal));

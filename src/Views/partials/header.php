@@ -93,6 +93,11 @@
                     <h3>3. Ihre Rechte</h3>
                     <p>Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung oder Löschung dieser Daten zu verlangen. Hierzu sowie zu weiteren Fragen zum Thema Datenschutz können Sie sich jederzeit unter der im Impressum angegebenen Adresse an uns wenden.</p>
                 </div>
+                <div class="modal-actions" style="margin-top: 2rem;">
+                    <a href="/datenschutz" class="btn-p" style="width: 100%; justify-content: center; text-decoration: none;">
+                        Vollständige Datenschutzerklärung öffnen &rarr;
+                    </a>
+                </div>
             </div>
         </div>
 

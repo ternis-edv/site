@@ -27,6 +27,10 @@ $router->add('/impressum', function() {
     require __DIR__ . '/../src/Views/impressum.php';
 });
 
+$router->add('/datenschutz', function() {
+    require __DIR__ . '/../src/Views/datenschutz.php';
+});
+
 // Image processor route
 $router->add('/img', function() {
     $processor = new ImageProcessor();
