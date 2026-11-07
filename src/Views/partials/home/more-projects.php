@@ -4,11 +4,11 @@
     <h2 class="sec-title reveal">Weitere Projekte</h2>
     <article class="more-project reveal">
         <div>
-            <h3><a href="https://ternis.link" target="_blank" rel="noopener noreferrer">ternis.link <span aria-hidden="true">↗</span></a></h3>
+            <h3><a href="https://ternis.link" target="_blank" rel="noopener noreferrer">ternis.link <?= site_icon('arrow-up-right') ?></a></h3>
             <p>Souveränes und DSGVO-konformes Link-Kürzen mit KI-gestütztem Spam-Schutz – und vieles mehr.</p>
             <ul class="project-domains" aria-label="Weitere Domains von ternis.link">
                 <?php foreach (['meinlink.at', 'href.re', 'href.nz', 'clicked.at'] as $domain): ?>
-                    <li><a href="https://<?= $domain ?>" target="_blank" rel="noopener noreferrer"><?= $domain ?> ↗</a></li>
+                    <li><a href="https://<?= $domain ?>" target="_blank" rel="noopener noreferrer"><?= $domain ?> <?= site_icon('arrow-up-right') ?></a></li>
                 <?php endforeach; ?>
             </ul>
         </div>

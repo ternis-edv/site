@@ -174,7 +174,7 @@ require_once __DIR__ . '/partials/header.php';
         </div>
 
         <p class="legal-full-document">
-            <a href="https://ternis.dev/de/legal/imprint?domain=ternis-edv.de" class="btn-g">Komplettes Impressum &rarr;</a>
+            <a href="https://ternis.dev/de/legal/imprint?domain=ternis-edv.de" class="btn-g">Komplettes Impressum <?= site_icon('arrow-right') ?></a>
         </p>
 
         <!-- Navigation actions -->

@@ -1,13 +1,13 @@
-    <footer class="site-footer-v2">
+    <footer class="site-footer-v2" aria-label="Seitenabschluss">
         <div class="footer-v2-inner">
             <div class="footer-top-section">
                 <div class="footer-message">
-                    <div class="footer-cta-group reveal">
-                        <a href="mailto:info@ternis-edv.de" class="footer-mail-v2">info@ternis-edv.de</a>
-                        <p class="footer-subtext">Wir freuen uns darauf, von dir zu hören und gemeinsam innovative digitale Lösungen zu entwickeln.</p>
-                    </div>
+                    <div class="label">// Gemeinsam starten</div>
+                    <h2>Deine Idee.<br><span>Unser nächstes Projekt.</span></h2>
+                    <p class="footer-subtext">Erzähl uns, was du vorhast. Wir besprechen gemeinsam, wie wir dein Projekt umsetzen können.</p>
+                    <a href="mailto:info@ternis-edv.de" class="footer-mail-v2">info@ternis-edv.de <?= site_icon('arrow-up-right') ?></a>
                 </div>
-                <div class="footer-mascot-container reveal">
+                <div class="footer-mascot-container" aria-hidden="true">
                     <div class="footer-mascot">
                         <div class="mascot-eye"></div>
                         <div class="mascot-eye"></div>
@@ -18,52 +18,50 @@
 
             <div class="footer-middle-section">
                 <div class="footer-col">
-                    <div class="col-label">Navigation</div>
+                    <h3 class="col-label">Entdecken</h3>
                     <ul class="footer-list">
-                        <li><a href="/#home" class="mag-link">Home</a></li>
-                        <li><a href="/#services" class="mag-link">Leistungen</a></li>
-                        <li><a href="/#work" class="mag-link">Projekte</a></li>
-                        <li><a href="/#about" class="mag-link">Über uns</a></li>
-                        <li><a href="/#faq" class="mag-link">Häufige Fragen</a></li>
+                        <li><a href="/#services">Leistungen</a></li>
+                        <li><a href="/#work">Projekte</a></li>
+                        <li><a href="/#about">Über uns</a></li>
+                        <li><a href="/#faq">Häufige Fragen</a></li>
+                        <li><a href="/#contact">Kontakt</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <div class="col-label">Social</div>
+                    <h3 class="col-label">Code &amp; Projekte</h3>
                     <ul class="footer-list">
-                        <li><a href="https://codeberg.org/ternis" target="_blank" rel="noopener" class="mag-link">Codeberg</a></li>
-                        <li><a href="https://github.com/ternis-edv" target="_blank" rel="noopener" class="mag-link">GitHub</a></li>
-                        <li><a href="#" class="disabled">Instagram <small>(SOON)</small></a></li>
+                        <li><a href="https://codeberg.org/ternis" target="_blank" rel="noopener noreferrer" aria-label="Codeberg (neuer Tab)">Codeberg <?= site_icon('arrow-up-right') ?></a></li>
+                        <li><a href="https://github.com/ternis-edv" target="_blank" rel="noopener noreferrer" aria-label="GitHub (neuer Tab)">GitHub <?= site_icon('arrow-up-right') ?></a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <div class="col-label">Rechtliches</div>
+                    <h3 class="col-label">Rechtliches</h3>
                     <ul class="footer-list">
-                        <li><a href="/impressum" id="trigger-impressum" class="mag-link">Impressum</a></li>
-                        <li><a href="/datenschutz" id="trigger-datenschutz" class="mag-link">Datenschutz</a></li>
-                        <li><a href="https://ternis.dev/de/legal/imprint?domain=ternis-edv.de" class="footer-full-legal">Komplettes Impressum &rarr;</a></li>
-                        <li><a href="https://ternis.dev/de/legal/privacy?domain=ternis-edv.de" class="footer-full-legal">Komplette Datenschutzerklärung &rarr;</a></li>
+                        <li><a href="/impressum" id="trigger-impressum">Impressum</a></li>
+                        <li><a href="/datenschutz" id="trigger-datenschutz">Datenschutz</a></li>
+                        <li><a href="https://ternis.dev/de/legal/imprint?domain=ternis-edv.de" class="footer-full-legal">Komplettes Impressum <?= site_icon('arrow-up-right') ?></a></li>
+                        <li><a href="https://ternis.dev/de/legal/privacy?domain=ternis-edv.de" class="footer-full-legal">Komplette Datenschutzerklärung <?= site_icon('arrow-up-right') ?></a></li>
                     </ul>
                 </div>
-                <div class="footer-col footer-newsletter">
-                    <div class="col-label">Standort</div>
-                    <p class="footer-loc">Rhein-Main Gebiet &amp; Remote<br>Deutschland</p>
+                <div class="footer-col">
+                    <h3 class="col-label">Standort</h3>
+                    <p class="footer-loc">Rhein-Main-Gebiet<br>Deutschland &amp; Remote</p>
+                    <a href="mailto:info@ternis-edv.de" class="footer-contact-link">E-Mail schreiben <?= site_icon('arrow-right') ?></a>
                 </div>
             </div>
 
             <div class="footer-bottom-v2">
                 <div class="footer-legal-v2">
                     <div class="copy-line">&copy; <?= date('Y') ?> <a href="https://ternis-edv.de">ternis-edv.de</a> &amp; <a href="https://xpsystems.eu">xpsystems.eu</a></div>
-                    <div class="credit-line">Crafted with passion by the team.</div>
+                    <div class="credit-line">Webentwicklung mit Fokus auf das Wesentliche.</div>
                 </div>
-                <div class="footer-time-v2" id="current-time">
-                    <!-- Loaded via JS -->
-                </div>
+                <a href="/#home" class="footer-home">Zur Startseite <?= site_icon('arrow-up-right') ?></a>
             </div>
         </div>
     </footer>
 
     <button id="back-to-top" class="back-to-top" aria-label="Zurück nach oben">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M18 15l-6-6-6 6"/></svg>
     </button>
 
     <script src="/assets/js/main.js?v=<?= filemtime(__DIR__ . '/../../../assets/js/main.js') ?>"></script>

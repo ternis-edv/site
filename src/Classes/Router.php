@@ -54,7 +54,8 @@ class Router {
             'jpeg' => 'image/jpeg',
             'svg' => 'image/svg+xml',
             'webp' => 'image/webp',
-            'ico' => 'image/x-icon'
+            'ico' => 'image/x-icon',
+            'woff2' => 'font/woff2'
         ];
 
         $mime = $mimes[$ext] ?? 'application/octet-stream';

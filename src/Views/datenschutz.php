@@ -172,11 +172,11 @@ require_once __DIR__ . '/partials/header.php';
             <!-- Card 9: Externe Bibliotheken & Schriftarten -->
             <div class="legal-card reveal">
                 <div class="card-badge">9. Web Fonts</div>
-                <h2 class="card-title">Web Fonts &amp; Externe Inhalte</h2>
+                <h2 class="card-title">Lokal gespeicherte Schriftarten</h2>
                 <div class="card-body">
-                    <p>Diese Seite nutzt zur einheitlichen und ansprechenden Darstellung von Schriftarten Web Fonts (Google Fonts / Inter / JetBrains Mono).</p>
+                    <p>Diese Seite nutzt die Schriftarten Inter und JetBrains Mono. Die Schriftdateien sind lokal auf unserem Server gespeichert.</p>
 
-                    <p style="margin-top: 1rem;">Beim Aufruf einer Seite lädt Ihr Browser die benötigten Schriften, um Texte korrekt anzuzeigen. Sollte Ihr Browser Web Fonts nicht unterstützen, wird automatisch eine Standardschrift Ihres Rechners genutzt.</p>
+                    <p style="margin-top: 1rem;">Beim Aufruf lädt Ihr Browser die benötigten Schriftdateien direkt von dieser Website. Es wird keine Verbindung zu Google Fonts oder anderen externen Schriftanbietern hergestellt. Falls die Schriftdateien nicht geladen werden können, wird eine Systemschrift verwendet.</p>
 
                     <p style="margin-top: 1rem;"><strong>Rechtsgrundlage:</strong> Die Nutzung von Web Fonts erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer optisch ansprechenden und einheitlichen Darstellung des Online-Auftritts).</p>
                 </div>
@@ -195,7 +195,7 @@ require_once __DIR__ . '/partials/header.php';
         </div>
 
         <p class="legal-full-document">
-            <a href="https://ternis.dev/de/legal/privacy?domain=ternis-edv.de" class="btn-g">Komplette Datenschutzerklärung &rarr;</a>
+            <a href="https://ternis.dev/de/legal/privacy?domain=ternis-edv.de" class="btn-g">Komplette Datenschutzerklärung <?= site_icon('arrow-right') ?></a>
         </p>
 
         <!-- Navigation actions -->

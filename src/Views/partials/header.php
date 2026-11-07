@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/icons.php'; ?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -5,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle) : 'ternis-edv — Webentwicklung & Digitale Lösungen' ?></title>
     <meta name="description" content="<?= isset($pageDescription) ? htmlspecialchars($pageDescription) : 'ternis-edv — Webentwicklung, IT-Infrastruktur & performante digitale Lösungen im Rhein-Main-Gebiet.' ?>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime(__DIR__ . '/../../../assets/css/style.css') ?>">
 </head>
 <body class="theme-dark">
@@ -69,7 +67,7 @@
                 </div>
                 <div class="modal-actions" style="margin-top: 2rem;">
                     <a href="https://ternis.dev/de/legal/imprint?domain=ternis-edv.de" class="btn-p" style="width: 100%; justify-content: center; text-decoration: none;">
-                        Komplettes Impressum &rarr;
+                        Komplettes Impressum <?= site_icon('arrow-right') ?>
                     </a>
                 </div>
             </div>
@@ -96,7 +94,7 @@
                 </div>
                 <div class="modal-actions" style="margin-top: 2rem;">
                     <a href="https://ternis.dev/de/legal/privacy?domain=ternis-edv.de" class="btn-p" style="width: 100%; justify-content: center; text-decoration: none;">
-                        Komplette Datenschutzerklärung &rarr;
+                        Komplette Datenschutzerklärung <?= site_icon('arrow-right') ?>
                     </a>
                 </div>
             </div>
@@ -254,6 +252,6 @@
                     <path d="M12 16l4 6"></path>
                 </svg>
             </button>
-            <a href="/#contact" class="nav-cta">Projekt starten <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1em; height: 1em;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+            <a href="/#contact" class="nav-cta">Projekt starten <?= site_icon('arrow-right') ?></a>
         </div>
     </nav>
