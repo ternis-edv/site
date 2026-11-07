@@ -561,28 +561,29 @@ nav {
   margin: 0 auto;
 }
 .faq-card {
-  display: grid;
-  grid-template-columns: 2.25rem minmax(0, 1fr);
-  column-gap: 1.25rem;
-  align-content: start;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   background: var(--surface);
   border: 1px solid var(--border-b);
   padding: clamp(1.5rem, 3vw, 2.5rem);
   border-radius: var(--br-lg);
 }
 .faq-card-num {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border: 1px solid var(--border-b);
-  border-radius: var(--br);
-  background: var(--accent-alpha);
-  font-family: var(--fm);
-  font-size: .75rem;
-  font-weight: 600;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: -.08em;
+  transform: translateY(-50%);
+  font-family: var(--fd);
+  font-size: clamp(8rem, 15vw, 13rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.08em;
   color: var(--accent);
+  opacity: .07;
+  pointer-events: none;
+  user-select: none;
   font-variant-numeric: tabular-nums;
 }
 .faq-card-q {
@@ -595,7 +596,6 @@ nav {
   text-wrap: balance;
 }
 .faq-card-a {
-  grid-column: 2;
   margin: 0;
   max-width: 58ch;
   font-size: 1rem;
@@ -605,10 +605,6 @@ nav {
 }
 @media (max-width: 900px) {
   .faq-grid-v2 { grid-template-columns: minmax(0, 1fr); }
-}
-@media (max-width: 480px) {
-  .faq-card { column-gap: .875rem; }
-  .faq-card-a { grid-column: 1 / -1; margin-top: .25rem; }
 }
 
 /* ── Error Page V2 ── */
@@ -1063,6 +1059,14 @@ nav.scrolled {
 .footer-list a:hover {
   color: var(--text);
 }
+
+.footer-list a.footer-full-legal {
+  font-family: var(--fb);
+  font-size: .9rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+.legal-full-document { margin: 0 0 2rem; }
 
 .footer-loc {
   font-size: 1.1rem;

@@ -194,6 +194,10 @@ require_once __DIR__ . '/partials/header.php';
 
         </div>
 
+        <p class="legal-full-document">
+            <a href="https://ternis.dev/de/legal/privacy?domain=ternis-edv.de" class="btn-g">Komplette Datenschutzerklärung &rarr;</a>
+        </p>
+
         <!-- Navigation actions -->
         <div class="legal-nav-actions reveal">
             <a href="/" class="btn-p">

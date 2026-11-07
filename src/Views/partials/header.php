@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime(__DIR__ . '/../../../assets/css/style.css') ?>">
 </head>
 <body class="theme-dark">
     <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
@@ -68,8 +68,8 @@
                     <p>Fabian Ternis<br>Alzeyer Str. 97<br>67592 Flörsheim-Dalsheim</p>
                 </div>
                 <div class="modal-actions" style="margin-top: 2rem;">
-                    <a href="/impressum" class="btn-p" style="width: 100%; justify-content: center; text-decoration: none;">
-                        Vollständige Impressumsseite öffnen &rarr;
+                    <a href="https://ternis.dev/de/legal/imprint?domain=ternis-edv.de" class="btn-p" style="width: 100%; justify-content: center; text-decoration: none;">
+                        Komplettes Impressum &rarr;
                     </a>
                 </div>
             </div>
@@ -95,8 +95,8 @@
                     <p>Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung oder Löschung dieser Daten zu verlangen. Hierzu sowie zu weiteren Fragen zum Thema Datenschutz können Sie sich jederzeit unter der im Impressum angegebenen Adresse an uns wenden.</p>
                 </div>
                 <div class="modal-actions" style="margin-top: 2rem;">
-                    <a href="/datenschutz" class="btn-p" style="width: 100%; justify-content: center; text-decoration: none;">
-                        Vollständige Datenschutzerklärung öffnen &rarr;
+                    <a href="https://ternis.dev/de/legal/privacy?domain=ternis-edv.de" class="btn-p" style="width: 100%; justify-content: center; text-decoration: none;">
+                        Komplette Datenschutzerklärung &rarr;
                     </a>
                 </div>
             </div>

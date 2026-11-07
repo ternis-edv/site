@@ -24,6 +24,7 @@
                         <li><a href="/#services" class="mag-link">Leistungen</a></li>
                         <li><a href="/#work" class="mag-link">Projekte</a></li>
                         <li><a href="/#about" class="mag-link">Über uns</a></li>
+                        <li><a href="/#faq" class="mag-link">Häufige Fragen</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -37,8 +38,10 @@
                 <div class="footer-col">
                     <div class="col-label">Rechtliches</div>
                     <ul class="footer-list">
-                        <li><a href="#" id="trigger-impressum" class="mag-link">Impressum</a></li>
-                        <li><a href="#" id="trigger-datenschutz" class="mag-link">Datenschutz</a></li>
+                        <li><a href="/impressum" id="trigger-impressum" class="mag-link">Impressum</a></li>
+                        <li><a href="/datenschutz" id="trigger-datenschutz" class="mag-link">Datenschutz</a></li>
+                        <li><a href="https://ternis.dev/de/legal/imprint?domain=ternis-edv.de" class="footer-full-legal">Komplettes Impressum &rarr;</a></li>
+                        <li><a href="https://ternis.dev/de/legal/privacy?domain=ternis-edv.de" class="footer-full-legal">Komplette Datenschutzerklärung &rarr;</a></li>
                     </ul>
                 </div>
                 <div class="footer-col footer-newsletter">
@@ -59,10 +62,10 @@
         </div>
     </footer>
 
-    <button id="back-to-top" class="back-to-top" aria-label="Back to Top">
+    <button id="back-to-top" class="back-to-top" aria-label="Zurück nach oben">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
     </button>
 
-    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/main.js?v=<?= filemtime(__DIR__ . '/../../../assets/js/main.js') ?>"></script>
 </body>
 </html>
