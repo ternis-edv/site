@@ -12,5 +12,5 @@
             <a href="#contact" class="btn-g">Kontakt aufnehmen</a>
         </div>
     </div>
-    <div class="hero-hint">scroll down</div>
+    <a class="hero-hint" href="#services">Leistungen entdecken ↓</a>
 </section>

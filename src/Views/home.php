@@ -3,7 +3,7 @@ require_once __DIR__ . '/partials/projects_data.php';
 require_once __DIR__ . '/partials/header.php';
 ?>
 
-    <main>
+    <main id="main-content" tabindex="-1">
         <?php 
             include __DIR__ . '/partials/home/hero.php';
             include __DIR__ . '/partials/home/services.php';

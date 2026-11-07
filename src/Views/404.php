@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/partials/header.php';
 ?>
-    <main>
+    <main id="main-content" tabindex="-1">
         <section class="error-page-v2">
             <div class="error-grid-overlay"></div>
             <div class="error-container">

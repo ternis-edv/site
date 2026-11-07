@@ -4,7 +4,7 @@ $pageDescription = 'Rechtliche Angaben, Anbieterkennzeichnung gemäß § 5 DDG u
 require_once __DIR__ . '/partials/header.php';
 ?>
 
-<main class="legal-page">
+<main id="main-content" class="legal-page" tabindex="-1">
     <section class="legal-hero">
         <div class="legal-grid-overlay"></div>
         <div class="legal-hero-inner">

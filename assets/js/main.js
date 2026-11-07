@@ -2,6 +2,50 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
     const nav = document.getElementById('nav');
     const projectSections = document.querySelectorAll('.project-section');
+    const scrollBehavior = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches || body.classList.contains('a11y-reduce-motion') ? 'instant' : 'smooth';
+
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const navLinks = document.getElementById('nav-links');
+    const mobileViewport = window.matchMedia('(max-width: 768px)');
+    const setMenuOpen = (open) => {
+        navLinks?.classList.toggle('active', open);
+        nav?.classList.toggle('menu-open', open);
+        mobileToggle?.setAttribute('aria-expanded', String(open));
+        mobileToggle?.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+        if (navLinks) navLinks.inert = mobileViewport.matches && !open;
+    };
+    mobileToggle?.addEventListener('click', () => {
+        setMenuOpen(mobileToggle.getAttribute('aria-expanded') !== 'true');
+    });
+    navLinks?.addEventListener('click', (event) => {
+        if (event.target.closest('a')) setMenuOpen(false);
+    });
+    document.addEventListener('click', (event) => {
+        if (nav && !nav.contains(event.target)) setMenuOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && mobileToggle?.getAttribute('aria-expanded') === 'true') {
+            setMenuOpen(false);
+            mobileToggle.focus();
+        }
+    });
+    mobileViewport.addEventListener('change', () => setMenuOpen(false));
+    setMenuOpen(false);
+
+    const sectionLinks = [...document.querySelectorAll('.nav-links a')];
+    const updateSectionLinks = () => {
+        let current = '';
+        sectionLinks.forEach(link => {
+            const section = document.getElementById(new URL(link.href).hash.slice(1));
+            if (section && section.getBoundingClientRect().top <= 160) current = link.hash;
+        });
+        sectionLinks.forEach(link => {
+            if (link.hash === current) link.setAttribute('aria-current', 'location');
+            else link.removeAttribute('aria-current');
+        });
+    };
+    window.addEventListener('scroll', updateSectionLinks, { passive: true });
+    updateSectionLinks();
 
     // --- Project Visualization Scrollbar Check ---
     const updateImageWrapperOverflow = () => {
@@ -147,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (direction === 'next') {
                 const firstTop = getAbsoluteTop(projectSections[0]) - headerOffset;
                 if (scrollY < firstTop - 20) {
-                    window.scrollTo({ top: firstTop, behavior: 'smooth' });
+                    window.scrollTo({ top: firstTop, behavior: scrollBehavior() });
                 } else {
                     let targetIndex = currentProjectIndex + 1;
                     // If we are currently in a project but not at its bottom, and it's very tall?
@@ -155,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (targetIndex < projectSections.length) {
                         window.scrollTo({
                             top: getAbsoluteTop(projectSections[targetIndex]) - headerOffset,
-                            behavior: 'smooth'
+                            behavior: scrollBehavior()
                         });
                     }
                 }
@@ -168,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (scrollY > currentTop - headerOffset + 100) {
                     window.scrollTo({
                         top: currentTop - headerOffset,
-                        behavior: 'smooth'
+                        behavior: scrollBehavior()
                     });
                 } else {
                     // Go to previous project
@@ -176,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (targetIndex >= 0) {
                         window.scrollTo({
                             top: getAbsoluteTop(projectSections[targetIndex]) - headerOffset,
-                            behavior: 'smooth'
+                            behavior: scrollBehavior()
                         });
                     }
                 }
@@ -199,13 +243,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.getElementById('modal-overlay');
     const modals = document.querySelectorAll('.modal-content');
     const closeButtons = document.querySelectorAll('.modal-close');
+    let modalReturnFocus = null;
+    let activeModal = null;
+    const focusableElements = (container) => [...container.querySelectorAll('a[href], button, input, select, textarea, [tabindex="0"]')]
+        .filter(element => !element.disabled && !element.inert && element.getClientRects().length);
+
+    modals.forEach(modal => {
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        const heading = modal.querySelector('h2');
+        if (heading) {
+            heading.id = `${modal.id}-title`;
+            modal.setAttribute('aria-labelledby', heading.id);
+        }
+    });
 
     const openModal = (id) => {
         const modal = document.getElementById(id);
         if (modal && overlay) {
+            if (!activeModal) modalReturnFocus = document.activeElement;
+            modals.forEach(item => item.classList.remove('active'));
+            activeModal = modal;
             overlay.classList.add('show');
             modal.classList.add('active');
             body.classList.add('modal-open');
+            [...body.children].forEach(element => {
+                if (element !== overlay && element.tagName !== 'SCRIPT') element.inert = true;
+            });
+            focusableElements(modal)[0]?.focus();
         }
     };
 
@@ -213,7 +278,30 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay?.classList.remove('show');
         modals.forEach(m => m.classList.remove('active'));
         body.classList.remove('modal-open');
+        [...body.children].forEach(element => { element.inert = false; });
+        setMenuOpen(false);
+        activeModal = null;
+        modalReturnFocus?.focus();
     };
+
+    document.addEventListener('keydown', (event) => {
+        if (!activeModal) return;
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            closeModal();
+        } else if (event.key === 'Tab') {
+            const elements = focusableElements(activeModal);
+            const first = elements[0];
+            const last = elements[elements.length - 1];
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last?.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first?.focus();
+            }
+        }
+    });
 
     document.getElementById('trigger-impressum')?.addEventListener('click', (e) => { 
         e.preventDefault(); 
@@ -427,7 +515,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, { passive: true });
 
-    backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: scrollBehavior() }));
 
     // Reveals
     const revealObserver = new IntersectionObserver((entries) => {
