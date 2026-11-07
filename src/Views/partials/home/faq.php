@@ -12,7 +12,7 @@
         <div class="faq-card reveal">
             <div class="faq-card-num">02</div>
             <h3 class="faq-card-q">Welche Technologien nutzt ihr?</h3>
-            <p class="faq-card-a">Wir setzen auf moderne, performante Tools wie PHP, TypeScript, React und Vue. Die Auswahl erfolgt immer individuell passend zu den Projektanforderungen.</p>
+            <p class="faq-card-a">Wir entwickeln mit PHP, Laravel, Livewire, Svelte und JavaScript. Welche Technologien zum Einsatz kommen, entscheiden wir passend zu den Anforderungen deines Projekts.</p>
         </div>
         <div class="faq-card reveal">
             <div class="faq-card-num">03</div>
