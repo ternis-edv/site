@@ -1,4 +1,4 @@
-import { initScreenshotPreview } from './screenshot-preview.mjs?v=3';
+import { initScreenshotPreview } from './screenshot-preview.mjs?v=4';
 import { createPreferenceStorage, initAccessibility } from './accessibility.mjs';
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -19,6 +19,7 @@ class Element {
         this.checked = false;
         this.dataset = {};
     }
+    focus() { this.focused = true; }
     append(element) { (this.children ??= []).push(element); }
     addEventListener(name, callback) { this.listeners.set(name, callback); }
     fire(name, event = {}) { this.listeners.get(name)?.(event); }
@@ -85,7 +86,7 @@ test('Blocked browser storage preserves session preferences without throwing', (
 });
 
 function previewFixture(count = 1, window) {
-    const elements = Object.fromEntries(['screenshot-image', 'screenshot-viewport', 'screenshot-status', 'screenshot-title', 'website-frame', 'screenshot-project', 'screenshot-address', 'screenshot-counter', 'screenshot-live', 'screenshot-prev', 'screenshot-next', 'preview-website', 'preview-screenshot', 'preview-caption', 'modal-screenshot', 'modal-overlay', 'viewer-fullscreen'].map(id => [id, new Element()]));
+    const elements = Object.fromEntries(['screenshot-image', 'screenshot-viewport', 'screenshot-status', 'screenshot-title', 'website-frame', 'screenshot-project', 'screenshot-address', 'screenshot-counter', 'screenshot-live', 'screenshot-prev', 'screenshot-next', 'preview-website', 'preview-screenshot', 'preview-caption', 'modal-screenshot', 'modal-overlay', 'viewer-fullscreen', 'viewer-notice', 'viewer-info', 'viewer-notice-dismiss', 'viewer-loading', 'viewer-stage', 'viewer-loading-title', 'viewer-loading-address', 'viewer-loading-fallback'].map(id => [id, new Element()]));
     const link = new Element();
     link.href = '/assets/img/work/dnbx.de__DARK.png?v=123';
     link.dataset.previewTitle = 'Domain Box';
@@ -225,4 +226,60 @@ test('Allowed iframe navigation updates deep routes and rejects other sources an
     window.location = new URL('https://portfolio.test/viewer/dnbx/other');
     window.fire('popstate');
     assert.match(elements['website-frame'].src, /url=https%3A%2F%2Fdnbx.de%2Fother/);
+});
+
+
+test('Website loading shows its domain, busy state and screenshot fallback', () => {
+    const { elements, link } = previewFixture();
+    link.dataset.previewLive = 'https://dnbx.de';
+    link.dataset.previewId = 'dnbx';
+    link.fire('click', { preventDefault() {} });
+    assert.equal(elements['viewer-loading'].hidden, false);
+    assert.equal(elements['viewer-loading-address'].textContent, 'dnbx.de');
+    assert.equal(elements['website-frame'].getAttribute('aria-busy'), 'true');
+    assert.equal(elements['website-frame'].inert, true);
+    assert.equal(elements['viewer-loading-fallback'].hidden, false);
+    elements['viewer-loading-fallback'].fire('click');
+    assert.equal(elements['website-frame'].hidden, true);
+    assert.equal(elements['viewer-loading-fallback'].hidden, true);
+    assert.equal(elements['preview-screenshot'].focused, true);
+    elements['screenshot-image'].fire('load');
+    assert.equal(elements['viewer-loading'].hidden, true);
+    assert.equal(elements['screenshot-viewport'].getAttribute('aria-busy'), 'false');
+});
+
+test('Loading finishes on website load and screenshot errors clear the overlay', () => {
+    const { elements, link } = previewFixture();
+    link.dataset.previewLive = 'https://dnbx.de';
+    link.dataset.previewId = 'dnbx';
+    link.fire('click', { preventDefault() {} });
+    elements['website-frame'].fire('load');
+    assert.equal(elements['viewer-loading'].hidden, true);
+    assert.equal(elements['website-frame'].getAttribute('aria-busy'), 'false');
+    assert.equal(elements['website-frame'].inert, false);
+    elements['preview-screenshot'].fire('click');
+    elements['screenshot-image'].fire('error');
+    assert.equal(elements['viewer-loading'].hidden, true);
+    assert.equal(elements['screenshot-status'].classList.contains('sr-only'), false);
+});
+
+test('Preview notice can be dismissed and reopened and stays compact in fullscreen', () => {
+    const { elements, link } = previewFixture();
+    link.dataset.previewLive = 'https://dnbx.de';
+    link.dataset.previewId = 'dnbx';
+    link.fire('click', { preventDefault() {} });
+    assert.equal(elements['viewer-notice'].hidden, false);
+    elements['viewer-notice-dismiss'].fire('click');
+    assert.equal(elements['viewer-notice'].hidden, true);
+    assert.equal(elements['viewer-info'].getAttribute('aria-expanded'), 'false');
+    assert.equal(elements['viewer-info'].focused, true);
+    elements['viewer-info'].fire('click');
+    assert.equal(elements['viewer-notice'].hidden, false);
+    elements['viewer-fullscreen'].fire('click');
+    assert.equal(elements['viewer-notice'].hidden, true);
+    elements['viewer-info'].fire('click');
+    assert.equal(elements['viewer-notice'].hidden, false);
+    elements['preview-screenshot'].fire('click');
+    assert.equal(elements['viewer-info'].hidden, true);
+    assert.equal(elements['viewer-notice'].hidden, true);
 });

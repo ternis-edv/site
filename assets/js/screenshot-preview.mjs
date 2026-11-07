@@ -16,6 +16,7 @@ export function initScreenshotPreview({ document, openModal, window = globalThis
     let mode = 'website';
     let address = '';
     let immersive = false;
+    let noticeDismissed = false;
     const modal = get('modal-screenshot');
     const landingUrl = window && !window.location.pathname.startsWith('/viewer/') ? window.location.pathname + window.location.search + window.location.hash : '/#work';
     const hasWebsite = link => /^https:\/\//.test(link.dataset.previewLive || '');
@@ -29,12 +30,42 @@ export function initScreenshotPreview({ document, openModal, window = globalThis
             if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
             event.preventDefault();
             current = index;
+            noticeDismissed = false;
             mode = hasWebsite(link) ? 'website' : 'screenshot';
             address = link.dataset.previewLive || '';
             render();
             syncRoute();
             openModal('modal-screenshot');
         });
+    });
+
+    function updateNotice() {
+        const website = mode === 'website';
+        if (get('viewer-notice')) get('viewer-notice').hidden = !website || noticeDismissed;
+        if (get('viewer-info')) get('viewer-info').hidden = !website;
+        get('viewer-info')?.setAttribute('aria-expanded', String(website && !noticeDismissed));
+    }
+    function setLoading(loading) {
+        if (get('viewer-loading')) get('viewer-loading').hidden = !loading;
+        get('viewer-stage')?.classList.toggle('is-loading', loading);
+        status.classList.toggle('sr-only', loading);
+        frame.setAttribute('aria-busy', String(loading && mode === 'website'));
+        viewport.setAttribute('aria-busy', String(loading && mode === 'screenshot'));
+        frame.inert = loading;
+    }
+    get('viewer-info')?.addEventListener('click', () => {
+        noticeDismissed = !noticeDismissed;
+        updateNotice();
+    });
+    get('viewer-notice-dismiss')?.addEventListener('click', () => {
+        noticeDismissed = true;
+        updateNotice();
+        get('viewer-info')?.focus();
+    });
+    get('viewer-loading-fallback')?.addEventListener('click', () => {
+        mode = 'screenshot';
+        render();
+        get('preview-screenshot')?.focus();
     });
 
     function navigateFrame(src) {
@@ -67,6 +98,11 @@ export function initScreenshotPreview({ document, openModal, window = globalThis
         viewport.scrollTop = 0;
         viewport.scrollLeft = 0;
         status.textContent = website ? 'Website wird geladen …' : 'Screenshot wird geladen …';
+        if (get('viewer-loading-title')) get('viewer-loading-title').textContent = website ? 'Website wird geladen' : 'Screenshot wird geladen';
+        if (get('viewer-loading-address')) get('viewer-loading-address').textContent = website ? new URL(address || link.dataset.previewLive).hostname : link.dataset.previewTitle;
+        if (get('viewer-loading-fallback')) get('viewer-loading-fallback').hidden = !website;
+        updateNotice();
+        setLoading(true);
         image.hidden = true;
         navigateFrame(website ? `/preview?project=${encodeURIComponent(link.dataset.previewId)}&url=${encodeURIComponent(address || link.dataset.previewLive)}${new URL(address || link.dataset.previewLive).hash}` : 'about:blank');
         if (!website) {
@@ -93,19 +129,26 @@ export function initScreenshotPreview({ document, openModal, window = globalThis
     select?.addEventListener('change', () => choose(Number(select.value)));
     get('preview-website')?.addEventListener('click', () => { mode = 'website'; render(); });
     get('preview-screenshot')?.addEventListener('click', () => { mode = 'screenshot'; render(); });
-    frame?.addEventListener('load', () => { if (!frame.hidden) status.textContent = ''; });
+    frame?.addEventListener('load', () => {
+        if (frame.hidden) return;
+        setLoading(false);
+        status.textContent = '';
+    });
     image.addEventListener('load', () => {
         if (mode !== 'screenshot') return;
         image.hidden = false;
+        setLoading(false);
         status.textContent = '';
     });
     image.addEventListener('error', () => {
         if (mode !== 'screenshot') return;
         image.hidden = true;
+        setLoading(false);
         status.textContent = 'Der Screenshot konnte nicht geladen werden. Bitte versuche es später erneut.';
     });
     function setImmersive(value) {
         immersive = value;
+        if (value) { noticeDismissed = true; updateNotice(); }
         modal?.classList.toggle('is-immersive', value);
         get('modal-overlay')?.classList.toggle('viewer-immersive', value);
         const button = get('viewer-fullscreen');
@@ -169,6 +212,7 @@ export function initScreenshotPreview({ document, openModal, window = globalThis
         exitFullscreen,
         stop() {
             exitFullscreen();
+            setLoading(false);
             navigateFrame('about:blank');
             status.textContent = '';
             document.body?.classList.remove('viewer-route');

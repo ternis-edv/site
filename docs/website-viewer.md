@@ -16,3 +16,5 @@ Run checks with:
 node --test tests/ui-settings.test.mjs
 php tests/website-preview.test.php
 ```
+
+The viewer displays a dismissible notice about limited links, interactions, cookies, logins, and browser storage. The info control reopens it; fullscreen collapses it to keep the toolbar compact. Loading displays the selected domain and an indeterminate progress indicator, with a button to switch to the screenshot while waiting. Busy states are exposed to assistive technology, and the embedded page cannot receive focus until loading finishes.

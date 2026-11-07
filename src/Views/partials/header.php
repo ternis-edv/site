@@ -216,6 +216,7 @@
             <div class="screenshot-modal-toolbar">
                 <div class="screenshot-heading"><span class="viewer-label">Website-Viewer</span><h2 id="screenshot-title">Projektvorschau</h2></div>
                 <div class="screenshot-modal-actions">
+                    <button type="button" id="viewer-info" class="viewer-nav" aria-label="Hinweise zur Vorschau" aria-expanded="true" aria-controls="viewer-notice" title="Hinweise zur Vorschau"><?= site_icon('info') ?></button>
                     <button type="button" id="viewer-fullscreen" class="viewer-nav" aria-label="Vollbildmodus öffnen" aria-pressed="false" title="Vollbildmodus"><span class="fullscreen-enter"><?= site_icon('expand') ?></span><span class="fullscreen-exit" hidden><?= site_icon('collapse') ?></span></button>
                     <a id="screenshot-live" class="btn-g" target="_blank" rel="noopener noreferrer" hidden aria-label="Website besuchen"><span class="viewer-action-label">Website besuchen</span> <?= site_icon('arrow-up-right') ?></a>
                     <button type="button" class="modal-close" aria-label="Vorschau schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="m6 6 12 12M6 18 18 6"/></svg></button>
@@ -236,11 +237,28 @@
                 <button type="button" id="preview-screenshot" class="btn-g" aria-pressed="false">Screenshot</button>
                 <span>HTML-Vorschau · Externe Inhalte und Assets</span>
             </div>
+            <aside id="viewer-notice" class="viewer-notice" aria-label="Hinweise zur Vorschau">
+                <?= site_icon('info') ?>
+                <p><strong>Du siehst eine Vorschau.</strong> Einige Links, Schaltflächen und Funktionen sind eingeschränkt. Cookies und lokale Einstellungen werden hier nicht gespeichert; Anmeldungen sind nicht möglich. Für alle Funktionen die Website direkt öffnen.</p>
+                <button type="button" id="viewer-notice-dismiss" class="viewer-nav" aria-label="Vorschauhinweis schließen"><?= site_icon('close') ?></button>
+            </aside>
             <p id="screenshot-status" class="screenshot-status" role="status"></p>
             <div class="viewer-caption"><span id="preview-caption">Website-Vorschau</span><span>Adaptiv · Zum Entdecken scrollen</span></div>
-            <iframe id="website-frame" title="Website-Vorschau" sandbox="allow-scripts" referrerpolicy="no-referrer" hidden></iframe>
-            <div id="screenshot-viewport" class="screenshot-viewport" tabindex="0" role="region" aria-label="Screenshot, mit den Pfeiltasten scrollen">
-                <img id="screenshot-image" alt="" hidden>
+            <div id="viewer-stage" class="viewer-stage">
+                <div id="viewer-loading" class="viewer-loading" hidden>
+                    <div class="viewer-loading-card">
+                        <div class="viewer-loading-icon"><?= site_icon('browser') ?></div>
+                        <h3 id="viewer-loading-title">Website wird geladen</h3>
+                        <p id="viewer-loading-address" class="viewer-loading-address"></p>
+                        <progress aria-label="Vorschau wird geladen"></progress>
+                        <p>Die Vorschau wird vorbereitet. Das kann einen Moment dauern.</p>
+                        <button type="button" id="viewer-loading-fallback" class="btn-g">Stattdessen Screenshot ansehen <?= site_icon('arrow-right') ?></button>
+                    </div>
+                </div>
+                <iframe id="website-frame" title="Website-Vorschau" sandbox="allow-scripts" referrerpolicy="no-referrer" hidden></iframe>
+                <div id="screenshot-viewport" class="screenshot-viewport" tabindex="0" role="region" aria-label="Screenshot, mit den Pfeiltasten scrollen">
+                    <img id="screenshot-image" alt="" hidden>
+                </div>
             </div>
         </div>
     </div>

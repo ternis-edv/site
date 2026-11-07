@@ -1712,3 +1712,28 @@ body.a11y-reduce-motion *::before, body.a11y-reduce-motion *::after { animation:
   .viewer-select { flex: 1; }
   .viewer-select select { width: 100%; }
 }
+
+.viewer-notice { display: flex; align-items: flex-start; gap: .625rem; padding: .625rem 1.5rem; border-bottom: 1px solid var(--border-b); background: var(--bg); color: var(--muted-b); flex-shrink: 0; }
+.viewer-notice > .ui-icon { flex-shrink: 0; width: 18px; height: 18px; margin-top: .2rem; color: var(--accent); }
+.viewer-notice p { margin: 0; font-size: .75rem; line-height: 1.6; }
+.viewer-notice strong { color: var(--text); font-weight: 600; }
+.viewer-notice .viewer-nav { width: 44px; height: 44px; margin: -.4rem -.5rem -.4rem auto; border: 0; }
+.viewer-stage { display: flex; flex-direction: column; position: relative; flex: 1; min-height: 0; isolation: isolate; }
+.viewer-loading { position: absolute; inset: 0; z-index: 1; display: grid; place-items: center; padding: 1.5rem; overflow: auto; background: var(--bg); }
+.viewer-loading-card { width: min(100%, 340px); margin: auto; text-align: center; }
+.viewer-loading-icon { display: grid; place-items: center; width: 56px; height: 56px; margin: 0 auto 1rem; border: 1px solid var(--border-b); border-radius: calc(var(--br-lg) / 2); color: var(--accent); background: var(--surface); }
+.viewer-loading-icon .ui-icon { width: 28px; height: 28px; }
+.viewer-loading h3 { margin: 0 0 .375rem; font-size: 1rem; color: var(--text); }
+.viewer-loading p { margin: .5rem 0 1rem; color: var(--muted-b); font-size: .8rem; line-height: 1.6; }
+.viewer-loading .viewer-loading-address { font: .7rem var(--fm); overflow-wrap: anywhere; }
+.viewer-loading progress { display: block; width: 160px; height: 4px; margin: 1.25rem auto; accent-color: var(--accent); }
+.viewer-loading .btn-g { min-height: 44px; justify-content: center; padding: .625rem .875rem; font-size: .75rem; }
+.viewer-stage.is-loading #website-frame { visibility: hidden; }
+.viewer-notice[hidden], .viewer-loading[hidden], #viewer-info[hidden], #viewer-loading-fallback[hidden] { display: none; }
+@media (max-width: 600px) {
+  .viewer-notice { padding: .5rem .75rem; }
+  .viewer-notice p { font-size: .7rem; }
+  .viewer-loading { padding: 1rem; }
+}
+
+.screenshot-status.sr-only { padding: 0; margin: -1px; }
