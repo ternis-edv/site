@@ -42,4 +42,19 @@ $router->add('/preview', function() {
     (new App\Classes\WebsitePreview())->handle($projects);
 });
 
+$router->addPrefix('/viewer/', function($path) {
+    require_once __DIR__ . '/../src/Views/partials/projects_data.php';
+    $id = explode('/', substr($path, strlen('/viewer/')), 2)[0];
+    $project = current(array_filter($projects, static fn($p) => empty($p['is_hidden']) && $p['id'] === $id));
+    if (!$project) {
+        http_response_code(404);
+        require __DIR__ . '/../src/Views/404.php';
+        return;
+    }
+    header('X-Robots-Tag: noindex, nofollow');
+    $viewerRoute = true;
+    $pageTitle = $project['name'] . ' — Website-Viewer · ternis-edv';
+    require __DIR__ . '/../src/Views/home.php';
+});
+
 $router->run();

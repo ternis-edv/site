@@ -8,7 +8,7 @@
     <meta name="description" content="<?= isset($pageDescription) ? htmlspecialchars($pageDescription) : 'ternis-edv — Webentwicklung, IT-Infrastruktur & performante digitale Lösungen im Rhein-Main-Gebiet.' ?>">
     <link rel="stylesheet" href="/assets/css/style.css?v=<?= filemtime(__DIR__ . '/../../../assets/css/style.css') ?>">
 </head>
-<body class="theme-dark">
+<body class="theme-dark<?= !empty($viewerRoute) ? ' viewer-route' : '' ?>">
     <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
     <div id="page-progress"></div>
     <div id="ui-status" class="sr-only" role="status" aria-live="polite"></div>
@@ -216,17 +216,17 @@
             <div class="screenshot-modal-toolbar">
                 <div class="screenshot-heading"><span class="viewer-label">Website-Viewer</span><h2 id="screenshot-title">Projektvorschau</h2></div>
                 <div class="screenshot-modal-actions">
-                    <a id="screenshot-live" class="btn-g" target="_blank" rel="noopener noreferrer" hidden>Website besuchen <?= site_icon('arrow-up-right') ?></a>
-                    <a id="screenshot-original" class="btn-g" target="_blank" rel="noopener noreferrer">Original öffnen <?= site_icon('arrow-up-right') ?></a>
+                    <button type="button" id="viewer-fullscreen" class="viewer-nav" aria-label="Vollbildmodus öffnen" aria-pressed="false" title="Vollbildmodus"><span class="fullscreen-enter"><?= site_icon('expand') ?></span><span class="fullscreen-exit" hidden><?= site_icon('collapse') ?></span></button>
+                    <a id="screenshot-live" class="btn-g" target="_blank" rel="noopener noreferrer" hidden aria-label="Website besuchen"><span class="viewer-action-label">Website besuchen</span> <?= site_icon('arrow-up-right') ?></a>
                     <button type="button" class="modal-close" aria-label="Vorschau schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="m6 6 12 12M6 18 18 6"/></svg></button>
                 </div>
             </div>
             <div class="viewer-navigation" aria-label="Projekte im Archiv">
                 <div class="viewer-projects">
-                    <button type="button" id="screenshot-prev" class="viewer-nav" aria-label="Vorheriges Projekt">&larr;</button>
+                    <button type="button" id="screenshot-prev" class="viewer-nav" aria-label="Vorheriges Projekt"><?= site_icon('arrow-left') ?></button>
                     <label class="sr-only" for="screenshot-project">Projekt auswählen</label>
-                    <select id="screenshot-project"></select>
-                    <button type="button" id="screenshot-next" class="viewer-nav" aria-label="Nächstes Projekt">&rarr;</button>
+                    <div class="viewer-select"><select id="screenshot-project"></select><?= site_icon('chevron-down') ?></div>
+                    <button type="button" id="screenshot-next" class="viewer-nav" aria-label="Nächstes Projekt"><?= site_icon('arrow-right') ?></button>
                 </div>
                 <span id="screenshot-address" class="viewer-address"></span>
                 <span id="screenshot-counter" class="viewer-counter"></span>

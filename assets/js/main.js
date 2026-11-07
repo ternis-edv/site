@@ -1,4 +1,4 @@
-import { initScreenshotPreview } from './screenshot-preview.mjs?v=2';
+import { initScreenshotPreview } from './screenshot-preview.mjs?v=3';
 import { createPreferenceStorage, initAccessibility } from './accessibility.mjs';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!activeModal) return;
         if (event.key === 'Escape') {
             event.preventDefault();
-            closeModal();
+            if (!screenshotPreview?.exitFullscreen()) closeModal();
         } else if (event.key === 'Tab') {
             const elements = focusableElements(activeModal);
             const first = elements[0];
@@ -341,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeButtons.forEach(btn => btn.addEventListener('click', closeModal));
     overlay?.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
 
-    const screenshotPreview = initScreenshotPreview({ document, openModal });
+    const screenshotPreview = initScreenshotPreview({ document, openModal, closeModal });
 
     // --- Anti-Scraping Dynamic Contact Canvas System ---
     const initProtectedContacts = () => {

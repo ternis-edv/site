@@ -90,7 +90,7 @@ $projects = [
         'images' => [
             'dark' => 'assets/img/work/louixch.de__DARK.png'
         ],
-        'link' => '#',
+        'link' => 'https://louixch.de',
         'color' => '#f43f5e'
     ],
     [
@@ -118,7 +118,7 @@ $projects = [
         'images' => [
             'light' => 'assets/img/work/wonnegauer-designwerkstatt.de_LANDER__LIGHT.png'
         ],
-        'link' => '#',
+        'link' => 'https://wonnegauer-designwerkstatt.de',
         'color' => '#d97706'
     ],
     [

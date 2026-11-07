@@ -1,10 +1,14 @@
 # Portfolio website viewer
 
+Shareable routes use `/viewer/<project>/<path>?<query>#<anchor>`. Direct loads and browser Back/Forward restore the selected website and subpage. Allowed links, including links to other visible portfolio projects, update the parent route through a validated iframe message bridge. Unlisted hosts stay blocked.
+
+The fullscreen button uses native fullscreen when supported and falls back to an edge-to-edge layout. Its compact toolbar keeps only the project name, website link, fullscreen exit, and close control.
+
 The project viewer displays current HTML through `/preview?project=<id>`, with its controls outside a sandboxed iframe. The existing screenshot remains available through the Screenshot button and always fits the viewer width. Projects without a public HTTPS link open as screenshots.
 
 The PHP server needs cURL and DOM extensions, DNS resolution, and outbound HTTPS access. HTML is fetched without visitor cookies or credentials. Relative assets resolve against the upstream website; images, styles, scripts, and their network requests load directly from that website. This is an HTML preview, not a complete reverse proxy for APIs, authenticated sessions, or asset pipelines. Forms, popups, workers, and access to the landing page are blocked by the iframe sandbox and response policy. Sites requiring browser storage, CORS-enabled modules, or authentication may need the Screenshot or Website besuchen fallback.
 
-Only visible projects with HTTPS links in `src/Views/partials/projects_data.php` are eligible. Links within the same project are rewritten through the proxy; external navigation is disabled in the preview. Each upstream request and redirect is checked against the selected project's hostname (plus its www variant). Public IPv4 addresses are validated and pinned for the request. Requests have time and size limits. Preview routes are excluded from the sitemap and marked noindex.
+Only visible projects with HTTPS links in `src/Views/partials/projects_data.php` are eligible. Links to eligible projects are rewritten through the proxy; external navigation is disabled in the preview. Each upstream request and redirect is checked against the selected project's hostname (plus its www variant). Public IPv4 addresses are validated and pinned for the request. Requests have time and size limits. Preview routes are excluded from the sitemap and marked noindex.
 
 Run checks with:
 

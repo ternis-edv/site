@@ -19,5 +19,18 @@ check($doc->getElementsByTagName('meta')->length === 0, 'Refresh policy retained
 $_SERVER['REQUEST_URI'] = '/preview?project=dnbx';
 $fragment = (new WebsitePreview())->rewrite('<p id="section">Hello</p><a href="#section">Jump</a>', 'https://dnbx.de/', 'dnbx.de', 'dnbx');
 check(str_contains($fragment, '<head><base href="https://dnbx.de/">'), 'Missing head was not repaired');
-check(str_contains($fragment, 'http://localhost:8765/preview?project=dnbx#section'), 'Fragment escaped proxy');
+check(str_contains($fragment, 'data-viewer-url="https://dnbx.de/#section"'), 'Fragment destination lost');
+check(str_contains($fragment, 'url=https%3A%2F%2Fdnbx.de%2F%23section#section'), 'Fragment escaped proxy');
 echo "Website proxy checks passed\n";
+
+$crossProject = (new WebsitePreview())->rewrite('<a href="https://louixch.de/about?x=1#work">Allowed project</a><a href="https://hidden.test">Hidden</a>', 'https://dnbx.de/', 'dnbx.de', 'dnbx', [
+    ['id' => 'dnbx', 'link' => 'https://dnbx.de'],
+    ['id' => 'louixch', 'link' => 'https://louixch.de'],
+    ['id' => 'hidden', 'link' => 'https://hidden.test', 'is_hidden' => true],
+]);
+$crossDoc = new DOMDocument();
+@$crossDoc->loadHTML($crossProject);
+check(str_contains($crossDoc->getElementsByTagName('a')->item(0)->getAttribute('href'), 'project=louixch'), 'Allowed project link blocked');
+check(!$crossDoc->getElementsByTagName('a')->item(1)->hasAttribute('href'), 'Hidden project exposed');
+check(str_contains($crossProject, 'viewer-bridge.js'), 'Navigation bridge missing');
+echo "Cross-project navigation checks passed\n";

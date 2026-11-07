@@ -72,7 +72,7 @@ class WebsitePreview {
                     continue;
                 }
                 if ($status < 200 || $status >= 300 || stripos($type, 'text/html') === false) throw new \RuntimeException('Für diese Adresse ist keine HTML-Vorschau verfügbar.');
-                echo $this->rewrite($html, $url, $host, $id);
+                echo $this->rewrite($html, $url, $host, $id, $projects);
                 return;
             }
             throw new \RuntimeException('Die Website leitet zu häufig weiter.');
@@ -88,7 +88,7 @@ class WebsitePreview {
         return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https' : 'http') . '://' . $host;
     }
 
-    public function rewrite(string $html, string $url, string $host, string $id): string {
+    public function rewrite(string $html, string $url, string $host, string $id, array $projects = []): string {
         if (trim($html) === '') throw new \RuntimeException('Die Website hat keinen Inhalt geliefert.');
         $doc = new \DOMDocument();
         $previous = libxml_use_internal_errors(true);
@@ -100,16 +100,21 @@ class WebsitePreview {
         foreach (iterator_to_array($doc->getElementsByTagName('meta')) as $node) {
             if ($node->hasAttribute('http-equiv')) $node->parentNode->removeChild($node);
         }
+        $eligible = array_values(array_filter($projects, static fn($p) => empty($p['is_hidden']) && str_starts_with($p['link'], 'https://')));
+        if (!$eligible) $eligible = [['id' => $id, 'link' => 'https://' . $host]];
         foreach ($doc->getElementsByTagName('a') as $link) {
             $href = $link->getAttribute('href');
             if (!$href) continue;
-            if ($href[0] === '#') {
-                $link->setAttribute('href', $this->localOrigin() . ($_SERVER['REQUEST_URI'] ?? '/preview?project=' . rawurlencode($id)) . $href);
-                continue;
-            }
             $absolute = self::resolveUrl($url, $href);
-            if (self::allowedUrl($absolute, $host)) {
-                $link->setAttribute('href', $this->localOrigin() . '/preview?project=' . rawurlencode($id) . '&url=' . rawurlencode($absolute));
+            $target = null;
+            foreach ($eligible as $candidate) {
+                $candidateHost = preg_replace('/^www\./', '', strtolower(parse_url($candidate['link'], PHP_URL_HOST)));
+                if (self::allowedUrl($absolute, $candidateHost)) { $target = $candidate; break; }
+            }
+            if ($target) {
+                $fragment = parse_url($absolute, PHP_URL_FRAGMENT);
+                $link->setAttribute('href', $this->localOrigin() . '/preview?project=' . rawurlencode($target['id']) . '&url=' . rawurlencode($absolute) . ($fragment !== null ? '#' . $fragment : ''));
+                $link->setAttribute('data-viewer-url', $absolute);
                 $link->setAttribute('target', '_self');
             } else {
                 $link->removeAttribute('href');
@@ -124,6 +129,13 @@ class WebsitePreview {
         $base = $doc->createElement('base');
         $base->setAttribute('href', $url);
         $head->insertBefore($base, $head->firstChild);
+        $bridge = $doc->createElement('script');
+        $bridge->setAttribute('src', $this->localOrigin() . '/assets/js/viewer-bridge.js?v=' . filemtime(__DIR__ . '/../../assets/js/viewer-bridge.js'));
+        $bridge->setAttribute('data-viewer', json_encode([
+            'origin' => $this->localOrigin(), 'project' => $id, 'url' => $url,
+            'projects' => array_map(static fn($p) => ['id' => $p['id'], 'link' => $p['link']], $eligible),
+        ], JSON_UNESCAPED_SLASHES | JSON_INVALID_UTF8_SUBSTITUTE));
+        $head->insertBefore($bridge, $base->nextSibling);
         foreach (iterator_to_array($doc->childNodes) as $node) {
             if ($node->nodeType === XML_PI_NODE) $doc->removeChild($node);
         }

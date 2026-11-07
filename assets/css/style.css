@@ -1687,3 +1687,28 @@ body.a11y-reduce-motion *::before, body.a11y-reduce-motion *::after { animation:
   .viewer-modes > span { display: none; }
   .screenshot-modal { height: calc(100svh - 1.5rem); max-height: calc(100svh - 1.5rem); }
 }
+
+/* Keep the select arrow centered, independent of OS dropdown chrome. */
+.viewer-select { position: relative; min-width: 0; }
+.viewer-select select { appearance: none; -webkit-appearance: none; padding-right: 2.5rem; }
+.viewer-select > .ui-icon { position: absolute; top: 50%; right: .875rem; width: 1rem; height: 1rem; transform: translateY(-50%); pointer-events: none; color: var(--muted-b); }
+.viewer-nav { display: inline-flex; align-items: center; justify-content: center; }
+.viewer-nav .ui-icon { display: block; width: 20px; height: 20px; }
+#viewer-fullscreen [hidden] { display: none; }
+.viewer-route .modal-overlay, .modal-overlay.viewer-immersive { padding: 0; backdrop-filter: none; }
+.viewer-route .screenshot-modal, .screenshot-modal.is-immersive { width: 100%; max-width: none; height: 100dvh; max-height: 100dvh; border-radius: 0; border: 0; transform: none; }
+.viewer-route #main-content, .viewer-route > nav, .viewer-route > footer, .viewer-route > .cookie-banner { display: none; }
+.screenshot-modal.is-immersive .viewer-navigation,
+.screenshot-modal.is-immersive .viewer-modes,
+.screenshot-modal.is-immersive .viewer-caption,
+.screenshot-modal.is-immersive .viewer-label,
+.screenshot-modal.is-immersive .viewer-action-label { display: none; }
+.screenshot-modal.is-immersive .screenshot-modal-toolbar { flex-wrap: nowrap; gap: .5rem; padding: .25rem .75rem; }
+.screenshot-modal.is-immersive .screenshot-modal-toolbar h2 { font-size: .8rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.screenshot-modal.is-immersive .screenshot-modal-actions { width: auto; flex-wrap: nowrap; margin-left: auto; }
+.screenshot-modal.is-immersive #screenshot-live { width: 44px; padding: 0; justify-content: center; }
+.screenshot-modal:fullscreen { background: var(--surface); }
+@media (max-width: 600px) {
+  .viewer-select { flex: 1; }
+  .viewer-select select { width: 100%; }
+}

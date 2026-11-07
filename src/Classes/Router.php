@@ -4,6 +4,11 @@ namespace App\Classes;
 
 class Router {
     private $routes = [];
+    private $prefixes = [];
+
+    public function addPrefix($prefix, $callback) {
+        $this->prefixes[$prefix] = $callback;
+    }
 
     public function add($path, $callback) {
         $this->routes[$path] = $callback;
@@ -28,6 +33,10 @@ class Router {
 
         if (isset($this->routes[$path])) {
             return call_user_func($this->routes[$path]);
+        }
+
+        foreach ($this->prefixes as $prefix => $callback) {
+            if (str_starts_with($path, $prefix)) return $callback($path);
         }
 
         // 404
