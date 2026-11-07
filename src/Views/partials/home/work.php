@@ -1,3 +1,8 @@
+<?php
+$visibleProjects = array_values(array_filter($projects, static function ($project) {
+    return empty($project['is_hidden']);
+}));
+?>
 <section class="work" id="work">
     <div class="work-hd">
         <div class="label reveal">// Projekte</div>
@@ -7,7 +12,7 @@
     <div class="work-list">
 
 
-<?php foreach ($projects as $index => $project): ?>
+<?php foreach ($visibleProjects as $index => $project): ?>
                     <?php 
                         $lightImg = $project['images']['light'] ?? (isset($project['images']['dark']) ? $project['images']['dark'] : '');
                         $darkImg = $project['images']['dark'] ?? (isset($project['images']['light']) ? $project['images']['light'] : '');
@@ -18,7 +23,7 @@
                         <div class="project-container">
                             <div class="project-info">
                     <div class="pi-content">
-                        <span class="p-num"><?= str_pad($index + 1, 2, '0', STR_PAD_LEFT) ?> / <?= str_pad(count($projects), 2, '0', STR_PAD_LEFT) ?></span>
+                        <span class="p-num"><?= str_pad($index + 1, 2, '0', STR_PAD_LEFT) ?> / <?= str_pad(count($visibleProjects), 2, '0', STR_PAD_LEFT) ?></span>
                         <h3 class="p-name"><?= $project['name'] ?></h3>
                         <div class="p-type"><?= $project['type'] ?></div>
                         <p class="p-desc"><?= $project['desc'] ?></p>

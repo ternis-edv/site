@@ -18,9 +18,10 @@ function getImageData($path) {
     return $data;
 }
 
-// Re-defining projects with data for clarity
+// Set is_hidden to true to omit a project from the public showcase.
 $projects = [
     [
+        'is_hidden' => true,
         'id' => 'ternismail',
         'name' => 'Ternismail',
         'domain' => 'ternismail.de',
@@ -34,6 +35,7 @@ $projects = [
         'color' => '#10b981'
     ],
     [
+        'is_hidden' => false,
         'id' => 'dnbx',
         'name' => 'Domain Box',
         'domain' => 'dnbx.de',
@@ -48,6 +50,7 @@ $projects = [
         'color' => '#C1FF47'
     ],
     [
+        'is_hidden' => false,
         'id' => 'dogwaterdev',
         'name' => 'dogwaterdev.de',
         'domain' => 'dogwaterdev.de',
@@ -62,6 +65,7 @@ $projects = [
         'color' => '#3b82f6'
     ],
     [
+        'is_hidden' => false,
         'id' => 'getmyname',
         'name' => 'getmy.name',
         'domain' => 'getmy.name',
@@ -76,6 +80,7 @@ $projects = [
         'color' => '#8b5cf6'
     ],
     [
+        'is_hidden' => false,
         'id' => 'louixch',
         'name' => 'louixch.de',
         'domain' => 'louixch.de',
@@ -89,6 +94,7 @@ $projects = [
         'color' => '#f43f5e'
     ],
     [
+        'is_hidden' => true,
         'id' => 'api-sandbox',
         'name' => 'API Sandbox',
         'domain' => 'api-sandbox.de',
@@ -102,6 +108,7 @@ $projects = [
         'color' => '#10b981'
     ],
     [
+        'is_hidden' => false,
         'id' => 'wonnegauer',
         'name' => 'Wonnegauer Designwerkstatt',
         'domain' => 'wonnegauer-designwerkstatt.de',
@@ -115,6 +122,7 @@ $projects = [
         'color' => '#d97706'
     ],
     [
+        'is_hidden' => false,
         'id' => 'pleasehireme',
         'name' => 'pleasehireme.eu',
         'domain' => null,
@@ -128,6 +136,7 @@ $projects = [
         'color' => '#ef4444'
     ],
     [
+        'is_hidden' => false,
         'id' => 'nocturne',
         'name' => 'Nocturne Lander',
         'domain' => 'nocturne.tp.xpsys.de',
@@ -141,6 +150,7 @@ $projects = [
         'color' => '#f59e0b'
     ],
     [
+        'is_hidden' => false,
         'id' => 'twins-on-ice',
         'name' => 'twins-on-ice.de',
         'domain' => null,
@@ -154,6 +164,7 @@ $projects = [
         'color' => '#00a8ff'
     ],
     [
+        'is_hidden' => false,
         'id' => 'leniwoess',
         'name' => 'leniwoess.de',
         'domain' => 'leniwoess.de',
@@ -161,9 +172,51 @@ $projects = [
         'desc' => '',
         'stack' => ['PHP', 'Vanilla JS', 'CSS3'],
         'images' => [
-            'light' => 'assets/img/work/leniwoess.de__DARK.png'
+            'dark' => 'assets/img/work/leniwoess.de__DARK.png'
         ],
         'link' => 'https://leniwoess.de',
         'color' => '#00a8ff'
+    ],
+    [
+        'is_hidden' => false,
+        'id' => 'twinsonice-link',
+        'name' => 'Twins on Ice Links',
+        'domain' => 'twinsonice.link / icelnk.de',
+        'type' => 'Link Hub & Short Links',
+        'desc' => 'Ein zentraler Link-Hub für Twins on Ice mit Social Media, Musik, Stories und Partnern. Ergänzt durch Kurzlinks über icelnk.de und ein QR-Code-Studio.',
+        'stack' => ['Link Hub', 'Short Links', 'QR-Codes'],
+        'images' => [
+            'dark' => 'assets/img/work/twinsonice.link__DARK.png'
+        ],
+        'link' => 'https://twinsonice.link',
+        'color' => '#00a8ff'
+    ],
+    [
+        'is_hidden' => false,
+        'id' => 'risikoclo',
+        'name' => 'RISIKO.',
+        'domain' => 'risikoclo.de',
+        'type' => 'Unofficial Brand Website',
+        'desc' => 'Inoffizieller Wegweiser zur Streetwear-Marke RISIKO. von Tonverändert. Mit Produktübersicht, Schnellansichten und direkten Links zum offiziellen Shop auf risikoclo.com sowie zu den Social-Media-Kanälen.',
+        'stack' => ['Produktübersicht', 'Social Media', 'Shop-Verlinkung'],
+        'images' => [
+            'light' => 'assets/img/work/risikoclo.de__LIGHT.png'
+        ],
+        'link' => 'https://risikoclo.de',
+        'color' => '#ef4444'
+    ],
+    [
+        'is_hidden' => false,
+        'id' => 'tonveraendert',
+        'name' => 'Tonverändert',
+        'domain' => 'tonveraendert.de',
+        'type' => 'Unofficial Creator Hub',
+        'desc' => 'Ein inoffizieller Hub rund um Tonverändert: Videos, Streams und Social-Media-Kanäle auf YouTube, Twitch, Instagram und TikTok an einem Ort – ergänzt durch Links zur Modemarke RISIKO. Clothing.',
+        'stack' => ['Creator Hub', 'Social Media', 'Video & Streams'],
+        'images' => [
+            'light' => 'assets/img/work/tonveraendert.de__LIGHT.png'
+        ],
+        'link' => 'https://tonveraendert.de',
+        'color' => '#f97316'
     ],
 ];
