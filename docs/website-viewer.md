@@ -15,6 +15,9 @@ Run checks with:
 ```sh
 node --test tests/ui-settings.test.mjs
 php tests/website-preview.test.php
+php tests/website-preview-cache.test.php
 ```
 
 The viewer displays a dismissible notice about limited links, interactions, cookies, logins, and browser storage. The info control reopens it; fullscreen collapses it to keep the toolbar compact. Loading displays the selected domain and an indeterminate progress indicator, with a button to switch to the screenshot while waiting. Busy states are exposed to assistive technology, and the embedded page cannot receive focus until loading finishes.
+
+Successful upstream HTML is cached server-side for two hours in `storage/cache/website-previews/` (ignored by Git). Keys include the project, path, and query; fragments share the same document. The final redirect URL is retained, and cached HTML is rewritten on each request so host restrictions, navigation links, and the bridge remain current. Failed or empty responses are not cached. Expired entries refresh on the next request; no stale fallback is served after expiry. Atomic writes avoid partial reads, and oldest entries are pruned above 128 documents or 64 MiB. If storage is unavailable, the preview still fetches normally. `X-Preview-Cache: HIT` or `MISS` exposes cache use for diagnostics; browser responses keep `Cache-Control: no-store`. To clear the cache manually, delete its `.json` files.

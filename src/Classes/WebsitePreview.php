@@ -8,7 +8,7 @@ class WebsitePreview {
         $parts = parse_url($base);
         $origin = 'https://' . $parts['host'];
         if (str_starts_with($reference, '//')) return 'https:' . $reference;
-        if (str_starts_with($reference, '#')) return $base . $reference;
+        if (str_starts_with($reference, '#')) return explode('#', $base, 2)[0] . $reference;
         if (str_starts_with($reference, '?')) return $origin . ($parts['path'] ?? '/') . $reference;
         return $origin . (str_starts_with($reference, '/') ? $reference : preg_replace('~/[^/]*$~', '/', $parts['path'] ?? '/') . $reference);
     }
@@ -34,6 +34,20 @@ class WebsitePreview {
             $host = preg_replace('/^www\./', '', strtolower(parse_url($project['link'], PHP_URL_HOST)));
             $url = $_GET['url'] ?? $project['link'];
             if (!is_string($url) || strlen($url) > 4096) throw new \RuntimeException('Ungültige Vorschau-Adresse.');
+            if (!self::allowedUrl($url, $host)) throw new \RuntimeException('Diese Adresse gehört nicht zum ausgewählten Projekt.');
+            $requestedUrl = $url;
+            $fragment = parse_url($url, PHP_URL_FRAGMENT);
+            $url = explode('#', $url, 2)[0];
+            $cache = new WebsitePreviewCache();
+            $cached = $cache->get($id, $requestedUrl);
+            if ($cached && self::allowedUrl($cached['url'], $host)) {
+                $finalUrl = $cached['url'] . ($fragment !== null ? '#' . $fragment : '');
+                $rendered = $this->rewrite($cached['html'], $finalUrl, $host, $id, $projects);
+                header('X-Preview-Cache: HIT');
+                echo $rendered;
+                return;
+            }
+            header('X-Preview-Cache: MISS');
             $html = '';
             for ($attempt = 0; $attempt < 4; $attempt++) {
                 if (!self::allowedUrl($url, $host)) throw new \RuntimeException('Diese Adresse gehört nicht zum ausgewählten Projekt.');
@@ -72,7 +86,10 @@ class WebsitePreview {
                     continue;
                 }
                 if ($status < 200 || $status >= 300 || stripos($type, 'text/html') === false) throw new \RuntimeException('Für diese Adresse ist keine HTML-Vorschau verfügbar.');
-                echo $this->rewrite($html, $url, $host, $id, $projects);
+                $finalUrl = explode('#', $url, 2)[0] . ($fragment !== null ? '#' . $fragment : '');
+                $rendered = $this->rewrite($html, $finalUrl, $host, $id, $projects);
+                $cache->put($id, $requestedUrl, $url, $html);
+                echo $rendered;
                 return;
             }
             throw new \RuntimeException('Die Website leitet zu häufig weiter.');
