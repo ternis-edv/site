@@ -2,6 +2,10 @@
 $visibleProjects = array_values(array_filter($projects, static function ($project) {
     return empty($project['is_hidden']);
 }));
+$imageVersion = static function ($path) {
+    $fullPath = __DIR__ . '/../../../../' . $path;
+    return is_file($fullPath) ? filemtime($fullPath) : 0;
+};
 ?>
 <section class="work" id="work">
     <div class="work-hd">
@@ -13,7 +17,7 @@ $visibleProjects = array_values(array_filter($projects, static function ($projec
 
 
 <?php foreach ($visibleProjects as $index => $project): ?>
-                    <?php 
+                    <?php
                         $lightImg = $project['images']['light'] ?? (isset($project['images']['dark']) ? $project['images']['dark'] : '');
                         $darkImg = $project['images']['dark'] ?? (isset($project['images']['light']) ? $project['images']['light'] : '');
                         $dimensions = getImageData($lightImg ?: $darkImg);
@@ -44,17 +48,17 @@ $visibleProjects = array_values(array_filter($projects, static function ($projec
                             <div class="url-bar"><?= $project['domain'] ?? $project['name'] ?></div>
                         </div>
                         <div class="image-wrapper">
-                            <?php 
+                            <?php
                                 $currentImg = (isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'theme-light') ? $lightImg : $darkImg;
                                 $aspectRatio = $dimensions['w'] . ' / ' . $dimensions['h'];
                             ?>
                             <div class="native-img" style="aspect-ratio: <?= $aspectRatio ?>;">
-                                <img 
-                                    src="/img?src=<?= $currentImg ?>&w=1200&q=85" 
-                                    alt="<?= $project['name'] ?>" 
-                                    class="work-img theme-sensitive" 
-                                    data-light="/img?src=<?= $lightImg ?>&w=1200&q=85" 
-                                    data-dark="/img?src=<?= $darkImg ?>&w=1200&q=85"
+                                <img
+                                    src="/img?src=<?= $currentImg ?>&w=1200&q=85&v=<?= $imageVersion($currentImg) ?>"
+                                    alt="<?= $project['name'] ?>"
+                                    class="work-img theme-sensitive"
+                                    data-light="/img?src=<?= $lightImg ?>&w=1200&q=85&v=<?= $imageVersion($lightImg) ?>"
+                                    data-dark="/img?src=<?= $darkImg ?>&w=1200&q=85&v=<?= $imageVersion($darkImg) ?>"
                                     loading="lazy">
                             </div>
                         </div>
