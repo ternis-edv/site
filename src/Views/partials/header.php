@@ -11,6 +11,7 @@
 <body class="theme-dark">
     <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
     <div id="page-progress"></div>
+    <div id="ui-status" class="sr-only" role="status" aria-live="polite"></div>
 
     <!-- Cookie Consent -->
     <div id="cookie-consent" class="cookie-banner" role="dialog" aria-labelledby="cc-title">
@@ -172,42 +173,57 @@
                 <h2>Barrierefreiheit</h2>
                 <div class="setting-item">
                     <div class="setting-info">
-                        <h4>Kontrast erhöhen</h4>
+                        <h4 id="a11y-contrast-label">Kontrast erhöhen</h4>
                         <p>Optimiert die Farben für bessere Lesbarkeit.</p>
                     </div>
-                    <label class="switch-ui"><input type="checkbox" id="a11y-contrast"><span></span></label>
+                    <label class="switch-ui"><input type="checkbox" id="a11y-contrast" aria-labelledby="a11y-contrast-label"><span></span></label>
                 </div>
                 <div class="setting-item">
                     <div class="setting-info">
-                        <h4>Größere Schrift</h4>
+                        <h4 id="a11y-font-label">Größere Schrift</h4>
                         <p>Skaliert alle Texte der Website.</p>
                     </div>
-                    <label class="switch-ui"><input type="checkbox" id="a11y-font"><span></span></label>
+                    <label class="switch-ui"><input type="checkbox" id="a11y-font" aria-labelledby="a11y-font-label"><span></span></label>
                 </div>
                 <div class="setting-item">
                     <div class="setting-info">
-                        <h4>Bewegung reduzieren</h4>
+                        <h4 id="a11y-reduce-motion-label">Bewegung reduzieren</h4>
                         <p>Deaktiviert Animationen und Übergänge.</p>
                     </div>
-                    <label class="switch-ui"><input type="checkbox" id="a11y-reduce-motion"><span></span></label>
+                    <label class="switch-ui"><input type="checkbox" id="a11y-reduce-motion" aria-labelledby="a11y-reduce-motion-label"><span></span></label>
                 </div>
                 <div class="setting-item">
                     <div class="setting-info">
-                        <h4>Links hervorheben</h4>
+                        <h4 id="a11y-highlight-links-label">Links hervorheben</h4>
                         <p>Macht alle anklickbaren Links deutlicher sichtbar.</p>
                     </div>
-                    <label class="switch-ui"><input type="checkbox" id="a11y-highlight-links"><span></span></label>
+                    <label class="switch-ui"><input type="checkbox" id="a11y-highlight-links" aria-labelledby="a11y-highlight-links-label"><span></span></label>
                 </div>
                 <div class="setting-item">
                     <div class="setting-info">
-                        <h4>Schriftart für Legastheniker (IN ARBEIT)</h4> 
-                        <p>Verwendet eine besser lesbare Schriftart.</p>
+                        <h4 id="a11y-dyslexia-font-label">Alternative Schrift</h4>
+                        <p>Verwendet eine Systemschrift mit größerem Zeichenabstand.</p>
                     </div>
-                    <label class="switch-ui"><input type="checkbox" id="a11y-dyslexia-font"><span></span></label>
+                    <label class="switch-ui"><input type="checkbox" id="a11y-dyslexia-font" aria-labelledby="a11y-dyslexia-font-label"><span></span></label>
                 </div>
                 <div class="modal-actions">
-                    <button id="a11y-save" class="btn-p">Anwenden</button>
+                    <button type="button" id="a11y-reset" class="btn-g">Zurücksetzen</button>
+                    <button type="button" id="a11y-save" class="btn-p">Anwenden</button>
                 </div>
+            </div>
+        </div>
+        <div id="modal-screenshot" class="modal-content screenshot-modal">
+            <div class="screenshot-modal-toolbar">
+                <h2 id="screenshot-title">Projektvorschau</h2>
+                <div class="screenshot-modal-actions">
+                    <button type="button" id="screenshot-zoom" class="btn-g" aria-pressed="false" aria-controls="screenshot-viewport">Originalgröße</button>
+                    <a id="screenshot-original" class="btn-g" target="_blank" rel="noopener noreferrer">Original öffnen <?= site_icon('arrow-up-right') ?></a>
+                    <button type="button" class="modal-close" aria-label="Vorschau schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="m6 6 12 12M6 18 18 6"/></svg></button>
+                </div>
+            </div>
+            <p id="screenshot-status" class="screenshot-status" role="status"></p>
+            <div id="screenshot-viewport" class="screenshot-viewport" tabindex="0" role="region" aria-label="Screenshot, mit den Pfeiltasten scrollen">
+                <img id="screenshot-image" alt="" hidden>
             </div>
         </div>
     </div>

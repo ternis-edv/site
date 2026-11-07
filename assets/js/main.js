@@ -1,8 +1,13 @@
+import { initScreenshotPreview } from './screenshot-preview.mjs';
+import { createPreferenceStorage, initAccessibility } from './accessibility.mjs';
+
 document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
+    const storage = createPreferenceStorage();
+    const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches || body.classList.contains('a11y-reduce-motion');
     const nav = document.getElementById('nav');
     const projectSections = document.querySelectorAll('.project-section');
-    const scrollBehavior = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches || body.classList.contains('a11y-reduce-motion') ? 'instant' : 'smooth';
+    const scrollBehavior = () => reduceMotion() ? 'instant' : 'smooth';
 
     const mobileToggle = document.getElementById('mobile-toggle');
     const navLinks = document.getElementById('nav-links');
@@ -50,7 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Project Visualization Scrollbar Check ---
     const updateImageWrapperOverflow = () => {
         document.querySelectorAll('.image-wrapper').forEach(wrapper => {
-            if (wrapper.scrollHeight > wrapper.clientHeight) {
+            const overflows = wrapper.scrollHeight > wrapper.clientHeight + 1;
+            const hint = wrapper.closest('.browser-frame')?.querySelector('.screenshot-scroll-hint');
+            if (hint) hint.hidden = !overflows;
+            if (overflows) {
                 wrapper.classList.remove('no-overflow');
             } else {
                 wrapper.classList.add('no-overflow');
@@ -62,6 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(updateImageWrapperOverflow, 100);
     window.addEventListener('resize', updateImageWrapperOverflow, { passive: true });
     window.addEventListener('load', updateImageWrapperOverflow, { passive: true });
+    document.querySelectorAll('.work-img').forEach(img => img.addEventListener('load', updateImageWrapperOverflow));
+    if ('ResizeObserver' in window) {
+        const imageResizeObserver = new ResizeObserver(updateImageWrapperOverflow);
+        document.querySelectorAll('.image-wrapper, .native-img').forEach(element => imageResizeObserver.observe(element));
+    }
 
     const themeToggle = document.getElementById('theme-toggle');
     const themes = ['theme-dark', 'theme-light', 'theme-nord', 'theme-midnight', 'theme-paper'];
@@ -70,6 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const isLight = theme === 'theme-light' || theme === 'theme-paper';
         document.querySelectorAll('.work-img.theme-sensitive').forEach(img => {
             const newSrc = isLight ? img.getAttribute('data-light') : img.getAttribute('data-dark');
+            const previewLink = img.closest('.browser-frame')?.querySelector('.screenshot-preview');
+            if (previewLink) previewLink.href = img.getAttribute(isLight ? 'data-full-light' : 'data-full-dark');
             if (newSrc && img.getAttribute('src') !== newSrc) {
                 img.setAttribute('src', newSrc);
             }
@@ -79,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const setTheme = (theme) => {
         body.classList.remove(...themes);
         body.classList.add(theme);
-        localStorage.setItem('theme', theme);
+        storage.setItem('theme', theme);
         document.cookie = `theme=${theme}; path=/; max-age=31536000`;
         updateProjectImages(theme);
 
@@ -91,18 +106,19 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (themeToggle) {
-        let currentTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'theme-light' : 'theme-dark');
+        let currentTheme = storage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'theme-light' : 'theme-dark');
         if (!themes.includes(currentTheme)) currentTheme = 'theme-dark';
         setTheme(currentTheme);
 
         themeToggle.addEventListener('click', (e) => {
             e.preventDefault();
-            let index = themes.indexOf(localStorage.getItem('theme') || 'theme-dark');
+            let index = themes.indexOf(storage.getItem('theme') || 'theme-dark');
             index = (index + 1) % themes.length;
             const newTheme = themes[index];
             setTheme(newTheme);
             
-            // Subtle button animation
+            // Respect both system and saved motion preferences.
+            if (reduceMotion()) return;
             themeToggle.style.transform = 'scale(0.9) rotate(15deg)';
             setTimeout(() => themeToggle.style.transform = 'scale(1) rotate(0deg)', 200);
         });
@@ -253,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.setAttribute('aria-modal', 'true');
         const heading = modal.querySelector('h2');
         if (heading) {
-            heading.id = `${modal.id}-title`;
+            if (!heading.id) heading.id = `${modal.id}-title`;
             modal.setAttribute('aria-labelledby', heading.id);
         }
     });
@@ -311,10 +327,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('trigger-datenschutz')?.addEventListener('click', (e) => { e.preventDefault(); openModal('modal-datenschutz'); });
     document.getElementById('trigger-datenschutz-from-page')?.addEventListener('click', (e) => { e.preventDefault(); openModal('modal-datenschutz'); });
     document.getElementById('trigger-cookie-settings-from-page')?.addEventListener('click', (e) => { e.preventDefault(); openModal('modal-cookie-settings'); });
-    document.getElementById('a11y-trigger')?.addEventListener('click', () => openModal('modal-a11y'));
+    const accessibility = initAccessibility({ document, storage, onApply: () => {
+        closeModal();
+        document.getElementById('ui-status').textContent = 'Einstellungen zur Barrierefreiheit übernommen.';
+        window.dispatchEvent(new Event('resize'));
+    } });
+    document.getElementById('a11y-trigger')?.addEventListener('click', () => {
+        accessibility.sync();
+        openModal('modal-a11y');
+    });
     document.getElementById('settings-trigger')?.addEventListener('click', () => openModal('modal-settings'));
     closeButtons.forEach(btn => btn.addEventListener('click', closeModal));
     overlay?.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+
+    initScreenshotPreview({ document, openModal });
 
     // --- Anti-Scraping Dynamic Contact Canvas System ---
     const initProtectedContacts = () => {
@@ -442,8 +468,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (settingTheme && settingRadius && settingsSave) {
         // Init values
-        const currentTheme = localStorage.getItem('theme') || 'theme-dark';
-        const currentRadius = localStorage.getItem('radius-factor') || '1';
+        const currentTheme = storage.getItem('theme') || 'theme-dark';
+        const currentRadius = storage.getItem('radius-factor') || '1';
         
         settingTheme.value = currentTheme;
         settingRadius.value = currentRadius;
@@ -457,7 +483,7 @@ document.addEventListener('DOMContentLoaded', () => {
         settingsSave.addEventListener('click', () => {
             setTheme(settingTheme.value);
             const radius = settingRadius.value;
-            localStorage.setItem('radius-factor', radius);
+            storage.setItem('radius-factor', radius);
             document.documentElement.style.setProperty('--radius-factor', radius);
             closeModal();
         });
@@ -473,6 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const eyes = document.querySelectorAll('.mascot-eye');
     if (mascot && eyes.length > 0) {
         document.addEventListener('mousemove', (e) => {
+            if (reduceMotion()) return;
             const { clientX, clientY } = e;
             eyes.forEach(eye => {
                 const rect = eye.getBoundingClientRect();
@@ -490,6 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const magneticElements = document.querySelectorAll('.mag-link, .footer-mascot');
     magneticElements.forEach(el => {
         el.addEventListener('mousemove', (e) => {
+            if (reduceMotion()) return;
             const rect = el.getBoundingClientRect();
             const x = e.clientX - rect.left - rect.width / 2;
             const y = e.clientY - rect.top - rect.height / 2;

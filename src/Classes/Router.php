@@ -49,6 +49,7 @@ class Router {
         $mimes = [
             'css' => 'text/css',
             'js' => 'application/javascript',
+            'mjs' => 'application/javascript',
             'png' => 'image/png',
             'jpg' => 'image/jpeg',
             'jpeg' => 'image/jpeg',

@@ -22,6 +22,8 @@ $imageVersion = static function ($path) {
                         $darkImg = $project['images']['dark'] ?? (isset($project['images']['light']) ? $project['images']['light'] : '');
                         $dimensions = getImageData($lightImg ?: $darkImg);
                         $ratio = $dimensions['ratio'] ?? 1;
+                        $currentImg = in_array($_COOKIE['theme'] ?? '', ['theme-light', 'theme-paper'], true) ? $lightImg : $darkImg;
+                        $projectName = htmlspecialchars($project['name'], ENT_QUOTES, 'UTF-8');
                     ?>
                     <div class="project-section" id="project-<?= $project['id'] ?>" data-index="<?= $index ?>" data-color="<?= $project['color'] ?>" data-ratio="<?= $ratio ?>">
                         <div class="project-container">
@@ -47,9 +49,12 @@ $imageVersion = static function ($path) {
                             <div class="dots"><span></span><span></span><span></span></div>
                             <div class="url-bar"><?= $project['domain'] ?? $project['name'] ?></div>
                         </div>
-                        <div class="image-wrapper">
+                        <div class="screenshot-tools">
+                            <span class="screenshot-scroll-hint" hidden><?= site_icon('arrow-down') ?> Im Bild scrollen</span>
+                            <a class="screenshot-preview" href="/<?= $currentImg ?>?v=<?= $imageVersion($currentImg) ?>" target="_blank" rel="noopener noreferrer" data-preview-title="<?= $projectName ?>" aria-label="Screenshot von <?= $projectName ?> vergrößern">Vergrößern <?= site_icon('arrow-up-right') ?></a>
+                        </div>
+                        <div class="image-wrapper" tabindex="0" role="region" aria-label="Screenshot von <?= $projectName ?>">
                             <?php
-                                $currentImg = (isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'theme-light') ? $lightImg : $darkImg;
                                 $aspectRatio = $dimensions['w'] . ' / ' . $dimensions['h'];
                             ?>
                             <div class="native-img" style="aspect-ratio: <?= $aspectRatio ?>;">
@@ -59,6 +64,8 @@ $imageVersion = static function ($path) {
                                     class="work-img theme-sensitive"
                                     data-light="/img?src=<?= $lightImg ?>&w=1200&q=85&v=<?= $imageVersion($lightImg) ?>"
                                     data-dark="/img?src=<?= $darkImg ?>&w=1200&q=85&v=<?= $imageVersion($darkImg) ?>"
+                                    data-full-light="/<?= $lightImg ?>?v=<?= $imageVersion($lightImg) ?>"
+                                    data-full-dark="/<?= $darkImg ?>?v=<?= $imageVersion($darkImg) ?>"
                                     loading="lazy">
                             </div>
                         </div>
