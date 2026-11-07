@@ -19,6 +19,7 @@ class Element {
         this.checked = false;
         this.dataset = {};
     }
+    append(element) { (this.children ??= []).push(element); }
     addEventListener(name, callback) { this.listeners.set(name, callback); }
     fire(name, event = {}) { this.listeners.get(name)?.(event); }
     setAttribute(name, value) { this.attributes.set(name, value); }
@@ -83,17 +84,23 @@ test('Blocked browser storage preserves session preferences without throwing', (
     assert.equal(storage.getItem('missing'), null);
 });
 
-function previewFixture() {
-    const elements = Object.fromEntries(['screenshot-image', 'screenshot-viewport', 'screenshot-zoom', 'screenshot-status', 'screenshot-title', 'screenshot-original'].map(id => [id, new Element()]));
+function previewFixture(count = 1) {
+    const elements = Object.fromEntries(['screenshot-image', 'screenshot-viewport', 'screenshot-status', 'screenshot-title', 'screenshot-original', 'website-frame', 'screenshot-project', 'screenshot-address', 'screenshot-counter', 'screenshot-live', 'screenshot-prev', 'screenshot-next', 'preview-website', 'preview-screenshot', 'preview-caption'].map(id => [id, new Element()]));
     const link = new Element();
     link.href = '/assets/img/work/dnbx.de__DARK.png?v=123';
     link.dataset.previewTitle = 'Domain Box';
+    const links = [link, ...Array.from({ length: count - 1 }, (_, index) => {
+        const other = new Element();
+        other.href = `/screenshot-${index}.png`;
+        other.dataset.previewTitle = `Project ${index + 2}`;
+        return other;
+    })];
     const opened = [];
-    initScreenshotPreview({ document: { getElementById: id => elements[id], querySelectorAll: () => [link] }, openModal: id => opened.push(id) });
-    return { elements, link, opened };
+    const controller = initScreenshotPreview({ document: { createElement: () => new Element(), getElementById: id => elements[id], querySelectorAll: () => links }, openModal: id => opened.push(id) });
+    return { elements, link, opened, controller };
 }
 
-test('Enlarge loads the original, names the preview, and resets scroll and zoom', () => {
+test('Enlarge loads the original, names the preview, and resets scroll', () => {
     const { elements, link, opened } = previewFixture();
     let prevented = false;
     link.fire('click', { preventDefault() { prevented = true; } });
@@ -104,24 +111,25 @@ test('Enlarge loads the original, names the preview, and resets scroll and zoom'
     assert.equal(elements['screenshot-original'].href, link.href);
     assert.equal(elements['screenshot-title'].textContent, 'Domain Box');
     assert.equal(elements['screenshot-viewport'].scrollTop, 0);
-    assert.equal(elements['screenshot-zoom'].getAttribute('aria-pressed'), 'false');
     elements['screenshot-image'].fire('load');
     assert.equal(elements['screenshot-image'].hidden, false);
     assert.equal(elements['screenshot-status'].textContent, '');
 });
 
-test('Original-size control toggles zoom; reopening starts fitted to width', () => {
+test('Live HTML uses the project proxy and can switch to an adaptive screenshot', () => {
     const { elements, link } = previewFixture();
-    const click = { preventDefault() {} };
-    link.fire('click', click);
-    elements['screenshot-zoom'].fire('click');
-    assert.equal(elements['screenshot-viewport'].classList.contains('original-size'), true);
-    assert.equal(elements['screenshot-zoom'].getAttribute('aria-pressed'), 'true');
-    elements['screenshot-zoom'].fire('click');
-    assert.equal(elements['screenshot-viewport'].classList.contains('original-size'), false);
-    elements['screenshot-zoom'].fire('click');
-    link.fire('click', click);
-    assert.equal(elements['screenshot-viewport'].classList.contains('original-size'), false);
+    link.dataset.previewLive = 'https://dnbx.de';
+    link.dataset.previewId = 'dnbx';
+    link.fire('click', { preventDefault() {} });
+    assert.equal(elements['website-frame'].src, '/preview?project=dnbx');
+    assert.equal(elements['website-frame'].hidden, false);
+    assert.equal(elements['screenshot-viewport'].hidden, true);
+    assert.equal(elements['screenshot-live'].href, 'https://dnbx.de');
+    elements['preview-screenshot'].fire('click');
+    assert.equal(elements['website-frame'].src, 'about:blank');
+    assert.equal(elements['screenshot-viewport'].hidden, false);
+    assert.equal(elements['screenshot-image'].src, link.href);
+    assert.equal(elements['preview-screenshot'].getAttribute('aria-pressed'), 'true');
 });
 
 test('Preview load errors keep the original-file fallback available', () => {
@@ -139,4 +147,32 @@ test('Modified clicks preserve native browser navigation', () => {
         link.fire('click', { [modifier]: true, preventDefault() { assert.fail('Modified click intercepted'); } });
         assert.equal(opened.length, 0);
     }
+});
+
+
+test('Viewer project navigation respects boundaries and the selector', () => {
+    const { elements, link } = previewFixture(3);
+    link.fire('click', { preventDefault() {} });
+    assert.equal(elements['screenshot-project'].children.length, 3);
+    assert.equal(elements['screenshot-prev'].disabled, true);
+    elements['screenshot-next'].fire('click');
+    assert.equal(elements['screenshot-title'].textContent, 'Project 2');
+    assert.equal(elements['screenshot-project'].value, '1');
+    elements['screenshot-project'].value = '2';
+    elements['screenshot-project'].fire('change');
+    assert.equal(elements['screenshot-title'].textContent, 'Project 3');
+    assert.equal(elements['screenshot-next'].disabled, true);
+    assert.equal(elements['preview-website'].disabled, true);
+    elements['screenshot-prev'].fire('click');
+    assert.equal(elements['screenshot-counter'].textContent, '2 / 3');
+});
+
+test('Closing the viewer unloads the embedded website', () => {
+    const { elements, link, controller } = previewFixture();
+    link.dataset.previewLive = 'https://dnbx.de';
+    link.dataset.previewId = 'dnbx';
+    link.fire('click', { preventDefault() {} });
+    controller.stop();
+    assert.equal(elements['website-frame'].src, 'about:blank');
+    assert.equal(elements['screenshot-status'].textContent, '');
 });

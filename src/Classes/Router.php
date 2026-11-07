@@ -74,7 +74,7 @@ class Router {
         echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
         
         foreach ($this->routes as $path => $callback) {
-            if ($path === '/404' || $path === '/img' || strpos($path, ':') !== false) continue;
+            if ($path === '/404' || $path === '/img' || $path === '/preview' || strpos($path, ':') !== false) continue;
             
             echo '<url>';
             echo '<loc>' . $host . $path . '</loc>';

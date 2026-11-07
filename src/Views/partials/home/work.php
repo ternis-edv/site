@@ -38,7 +38,9 @@ $imageVersion = static function ($path) {
                                 <span class="tag"><?= $tech ?></span>
                             <?php endforeach; ?>
                         </div>
-                        <a href="<?= $project['link'] ?>" target="_blank" class="p-link">Live ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1em; height: 1em;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
+                        <?php if (str_starts_with($project['link'], 'https://')): ?>
+                        <a href="<?= htmlspecialchars($project['link'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener noreferrer" class="p-link">Live ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1em; height: 1em;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
+                        <?php endif; ?>
 
 
                     </div>
@@ -51,7 +53,7 @@ $imageVersion = static function ($path) {
                         </div>
                         <div class="screenshot-tools">
                             <span class="screenshot-scroll-hint" hidden><?= site_icon('arrow-down') ?> Im Bild scrollen</span>
-                            <a class="screenshot-preview" href="/<?= $currentImg ?>?v=<?= $imageVersion($currentImg) ?>" target="_blank" rel="noopener noreferrer" data-preview-title="<?= $projectName ?>" aria-label="Screenshot von <?= $projectName ?> vergrößern">Vergrößern <?= site_icon('arrow-up-right') ?></a>
+                            <a class="screenshot-preview" href="/<?= $currentImg ?>?v=<?= $imageVersion($currentImg) ?>" target="_blank" rel="noopener noreferrer" data-preview-title="<?= $projectName ?>" data-preview-address="<?= htmlspecialchars($project['domain'] ?? $project['name'], ENT_QUOTES, 'UTF-8') ?>" data-preview-id="<?= htmlspecialchars($project['id'], ENT_QUOTES, 'UTF-8') ?>" data-preview-live="<?= htmlspecialchars($project['link'], ENT_QUOTES, 'UTF-8') ?>" aria-label="<?= $projectName ?> im Website-Viewer öffnen">Im Viewer öffnen <?= site_icon('arrow-up-right') ?></a>
                         </div>
                         <div class="image-wrapper" tabindex="0" role="region" aria-label="Screenshot von <?= $projectName ?>">
                             <?php

@@ -37,4 +37,9 @@ $router->add('/img', function() {
     $processor->handle();
 });
 
+$router->add('/preview', function() {
+    require __DIR__ . '/../src/Views/partials/projects_data.php';
+    (new App\Classes\WebsitePreview())->handle($projects);
+});
+
 $router->run();

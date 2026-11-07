@@ -214,14 +214,31 @@
         </div>
         <div id="modal-screenshot" class="modal-content screenshot-modal">
             <div class="screenshot-modal-toolbar">
-                <h2 id="screenshot-title">Projektvorschau</h2>
+                <div class="screenshot-heading"><span class="viewer-label">Website-Viewer</span><h2 id="screenshot-title">Projektvorschau</h2></div>
                 <div class="screenshot-modal-actions">
-                    <button type="button" id="screenshot-zoom" class="btn-g" aria-pressed="false" aria-controls="screenshot-viewport">Originalgröße</button>
+                    <a id="screenshot-live" class="btn-g" target="_blank" rel="noopener noreferrer" hidden>Website besuchen <?= site_icon('arrow-up-right') ?></a>
                     <a id="screenshot-original" class="btn-g" target="_blank" rel="noopener noreferrer">Original öffnen <?= site_icon('arrow-up-right') ?></a>
                     <button type="button" class="modal-close" aria-label="Vorschau schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="m6 6 12 12M6 18 18 6"/></svg></button>
                 </div>
             </div>
+            <div class="viewer-navigation" aria-label="Projekte im Archiv">
+                <div class="viewer-projects">
+                    <button type="button" id="screenshot-prev" class="viewer-nav" aria-label="Vorheriges Projekt">&larr;</button>
+                    <label class="sr-only" for="screenshot-project">Projekt auswählen</label>
+                    <select id="screenshot-project"></select>
+                    <button type="button" id="screenshot-next" class="viewer-nav" aria-label="Nächstes Projekt">&rarr;</button>
+                </div>
+                <span id="screenshot-address" class="viewer-address"></span>
+                <span id="screenshot-counter" class="viewer-counter"></span>
+            </div>
+            <div class="viewer-modes" role="group" aria-label="Vorschau wählen">
+                <button type="button" id="preview-website" class="btn-g" aria-pressed="true">Website</button>
+                <button type="button" id="preview-screenshot" class="btn-g" aria-pressed="false">Screenshot</button>
+                <span>HTML-Vorschau · Externe Inhalte und Assets</span>
+            </div>
             <p id="screenshot-status" class="screenshot-status" role="status"></p>
+            <div class="viewer-caption"><span id="preview-caption">Website-Vorschau</span><span>Adaptiv · Zum Entdecken scrollen</span></div>
+            <iframe id="website-frame" title="Website-Vorschau" sandbox="allow-scripts" referrerpolicy="no-referrer" hidden></iframe>
             <div id="screenshot-viewport" class="screenshot-viewport" tabindex="0" role="region" aria-label="Screenshot, mit den Pfeiltasten scrollen">
                 <img id="screenshot-image" alt="" hidden>
             </div>
